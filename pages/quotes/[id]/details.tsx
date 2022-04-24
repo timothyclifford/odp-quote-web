@@ -4,6 +4,11 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { AreaField } from "../../../components/AreaField";
 import { ExtraField } from "../../../components/ExtraField";
+import { Heading1 } from "../../../components/Heading1";
+import { Heading2 } from "../../../components/Heading2";
+import { Layout } from "../../../components/Layout";
+import { Navigation } from "../../../components/Navigation";
+import { Row } from "../../../components/Row";
 import { Area, createArea } from "../../../domain/area/area";
 import { createExtra, Extra } from "../../../domain/extra/extra";
 import { Quote } from "../../../domain/quote/quote";
@@ -14,7 +19,6 @@ type Props = {
 };
 
 const Details: NextPage<Props> = ({ quote }) => {
-  const router = useRouter();
   const [areas, setAreas] = useState<Array<Area>>([]);
   const [extras, setExtras] = useState<Array<Extra>>([]);
 
@@ -51,55 +55,79 @@ const Details: NextPage<Props> = ({ quote }) => {
   };
 
   return (
-    <div>
+    <Layout>
       <Head>
         <title>{`Quote ${quote.id}`}</title>
       </Head>
       <main>
-        <h1>{`Quote ${quote.id}`}</h1>
-        <div>
-          <button onClick={() => router.push("/")}>Home</button>
-        </div>
-        <h2>Areas</h2>
+        <Heading1 text={`Quote ${quote.id}`}></Heading1>
+        <Navigation quoteId={quote.id}></Navigation>
+        <Heading2 text="Areas"></Heading2>
         {areas.map((area, idx) => {
           return (
-            <div>
-              <AreaField
-                area={area}
-                onSave={(a) => saveArea(a, idx)}
-              ></AreaField>
-              <div>
-                <button onClick={() => deleteArea(area)}>Delete area</button>
-              </div>
-            </div>
+            <>
+              <Row>
+                <AreaField
+                  area={area}
+                  onSave={(a) => saveArea(a, idx)}
+                ></AreaField>
+              </Row>
+              <Row>
+                <button
+                  className="btn btn-secondary btn-sm"
+                  onClick={() => deleteArea(area)}
+                >
+                  Delete area
+                </button>
+              </Row>
+            </>
           );
         })}
-        <div>
-          <button onClick={() => addArea()}>Add area</button>
-        </div>
-        <h2>Extras</h2>
+        <Row>
+          <button
+            className="btn btn-secondary btn-sm"
+            onClick={() => addArea()}
+          >
+            Add area
+          </button>
+        </Row>
+        <Heading2 text="Extras"></Heading2>
         {extras.map((extra, idx) => {
           return (
-            <div>
-              <ExtraField
-                extra={extra}
-                onSave={(e) => saveExtra(e, idx)}
-              ></ExtraField>
-              <div>
-                <button onClick={() => deleteExtra(extra)}>Delete extra</button>
-              </div>
-            </div>
+            <>
+              <Row>
+                <ExtraField
+                  extra={extra}
+                  onSave={(e) => saveExtra(e, idx)}
+                ></ExtraField>
+              </Row>
+              <Row>
+                <button
+                  className="btn btn-secondary btn-sm"
+                  onClick={() => deleteExtra(extra)}
+                >
+                  Delete extra
+                </button>
+              </Row>
+            </>
           );
         })}
-        <div>
-          <button onClick={() => addExtra()}>Add extra</button>
-        </div>
-        <div>
-          <button onClick={() => save()}>Save</button>
-        </div>
+        <Row>
+          <button
+            className="btn btn-secondary btn-sm"
+            onClick={() => addExtra()}
+          >
+            Add extra
+          </button>
+        </Row>
+        <Row>
+          <button className="btn btn-primary" onClick={() => save()}>
+            Save
+          </button>
+        </Row>
       </main>
       <footer></footer>
-    </div>
+    </Layout>
   );
 };
 

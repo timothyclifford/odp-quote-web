@@ -2,9 +2,13 @@ import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { FormField } from "../../../components/FormField";
+import { InputField } from "../../../components/InputField";
+import { Heading1 } from "../../../components/Heading1";
+import { Layout } from "../../../components/Layout";
+import { Row } from "../../../components/Row";
 import { Quote } from "../../../domain/quote/quote";
 import { QuoteService } from "../../../domain/quote/quoteService";
+import { Navigation } from "../../../components/Navigation";
 
 type Props = {
   quote: Quote;
@@ -43,71 +47,71 @@ const EditQuote: NextPage<Props> = ({ quote }) => {
     }
   };
   return (
-    <div>
+    <Layout>
       <Head>
         <title>Edit Quote</title>
       </Head>
       <main>
-        <h1>{`Edit quote ${quote.id}`}</h1>
-        <div>
-          <button onClick={() => router.push("/")}>Home</button>
-        </div>
-        <FormField
+        <Heading1 text={`Edit quote ${quote.id}`}></Heading1>
+        <Navigation quoteId={quote.id}></Navigation>
+        <InputField
           id="id"
           label="ID"
           value={quote.id}
           disabled={true}
-        ></FormField>
-        <FormField
+        ></InputField>
+        <InputField
           id="firstName"
           label="First name"
           value={firstName}
           onChange={setFirstName}
-        ></FormField>
-        <FormField
+        ></InputField>
+        <InputField
           id="lastName"
           label="Last name"
           value={lastName}
           onChange={setLastName}
-        ></FormField>
-        <FormField
+        ></InputField>
+        <InputField
           id="email"
           label="Email"
           type="email"
           value={email}
           onChange={setEmail}
-        ></FormField>
-        <FormField
+        ></InputField>
+        <InputField
           id="phone"
           label="Phone"
           type="phone"
           value={phone}
           onChange={setPhone}
-        ></FormField>
-        <FormField
+        ></InputField>
+        <InputField
           id="street"
           label="Street"
           value={street}
           onChange={setStreet}
-        ></FormField>
-        <FormField
+        ></InputField>
+        <InputField
           id="suburb"
           label="Suburb"
           value={suburb}
           onChange={setSuburb}
-        ></FormField>
-        <FormField
+        ></InputField>
+        <InputField
           id="postcode"
           label="Postcode"
           value={postcode}
           onChange={setPostcode}
-        ></FormField>
-        <div>
-          <button onClick={() => save()}>Save</button>
-        </div>
+        ></InputField>
+        <Row>
+          <button className="btn btn-primary" onClick={() => save()}>
+            Save
+          </button>
+        </Row>
       </main>
       <footer></footer>
-    </div>
+    </Layout>
   );
 };
 

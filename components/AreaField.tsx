@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Area, AREA_NAMES } from "../domain/area/area";
 import { AreaItem, createAreaItem } from "../domain/area/areaItem";
 import { AreaItemField } from "./AreaItemField";
+import { Row } from "./Row";
 
 type Props = {
   area: Area;
@@ -32,71 +33,82 @@ export const AreaField = ({ area, onSave }: Props) => {
     onSave({ name, price, includeCeilings, includeSkirting, items, comment });
   };
   return (
-    <div>
-      <div>
-        <select>
+    <>
+      <Row>
+        <select className="select select-bordered">
           <option></option>
           {AREA_NAMES.map((a) => {
             return <option>{a}</option>;
           })}
         </select>
-      </div>
-      <div>
+      </Row>
+      <Row>
         $
         <input
           type="number"
           value={price}
           onChange={(e) => save(() => setPrice(parseInt(e.target.value)))}
         />
-      </div>
-      <div>
-        <span>Ceilings</span>
-        <span>
-          <input
-            type="checkbox"
-            checked={includeCeilings}
-            onChange={(e) => setIncludeCeilings(e.target.checked)}
-          />
-        </span>
-      </div>
-      <div>
-        <span>Skirting</span>
-        <span>
-          <input
-            type="checkbox"
-            checked={includeSkirting}
-            onChange={(e) => setIncludeSkirting(e.target.checked)}
-          />
-        </span>
-      </div>
-      <div>
-        {items.map((areaItem, idx) => {
-          return (
-            <div>
+      </Row>
+      <Row>
+        <div className="form-control w-36">
+          <label className="label cursor-pointer">
+            <span className="label-text">Ceilings</span>
+            <input
+              type="checkbox"
+              className="toggle"
+              checked={includeCeilings}
+              onChange={(e) => setIncludeCeilings(e.target.checked)}
+            ></input>
+          </label>
+        </div>
+      </Row>
+      <Row>
+        <div className="form-control w-36">
+          <label className="label cursor-pointer">
+            <span className="label-text">Skirting</span>
+            <input
+              type="checkbox"
+              className="toggle"
+              checked={includeSkirting}
+              onChange={(e) => setIncludeSkirting(e.target.checked)}
+            ></input>
+          </label>
+        </div>
+      </Row>
+      {items.map((areaItem, idx) => {
+        return (
+          <>
+            <Row>
               <AreaItemField
                 areaItem={areaItem}
                 onSave={(ai) => saveAreaItem(ai, idx)}
               ></AreaItemField>
-              <div>
-                <button onClick={() => deleteAreaItem(areaItem)}>
-                  Delete item
-                </button>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      <div>
-        <button onClick={() => addItem()}>Add item</button>
-      </div>
-      <div>
+            </Row>
+            <Row>
+              <button
+                className="btn btn-secondary btn-sm"
+                onClick={() => deleteAreaItem(areaItem)}
+              >
+                Delete item
+              </button>
+            </Row>
+          </>
+        );
+      })}
+      <Row>
+        <button className="btn btn-secondary btn-sm" onClick={() => addItem()}>
+          Add item
+        </button>
+      </Row>
+      <Row>
         <input
           type="text"
           value={comment}
           placeholder="Comments..."
           onChange={(e) => save(() => setComment(e.target.value))}
         />
-      </div>
-    </div>
+      </Row>
+    </>
   );
 };

@@ -3,7 +3,11 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { FormField } from "../../components/FormField";
+import { Heading1 } from "../../components/Heading1";
+import { InputField } from "../../components/InputField";
+import { Layout } from "../../components/Layout";
+import { Navigation } from "../../components/Navigation";
+import { Row } from "../../components/Row";
 
 const quoteId = customAlphabet("123456789", 8)();
 
@@ -39,54 +43,64 @@ const CreateQuote: NextPage = () => {
     }
   };
   return (
-    <div>
+    <Layout>
       <Head>
         <title>New Quote</title>
       </Head>
       <main>
-        <h1>New quote</h1>
-        <div>
-          <button onClick={() => router.push("/")}>Home</button>
-        </div>
-        <FormField
+        <Heading1 text="New quote"></Heading1>
+        <Navigation></Navigation>
+        <InputField
           id="id"
           label="ID"
           value={quoteId}
           disabled={true}
-        ></FormField>
-        <FormField
+        ></InputField>
+        <InputField
           id="firstName"
           label="First name"
           onChange={setFirstName}
-        ></FormField>
-        <FormField
+        ></InputField>
+        <InputField
           id="lastName"
           label="Last name"
           onChange={setLastName}
-        ></FormField>
-        <FormField
+        ></InputField>
+        <InputField
           id="email"
           label="Email"
           type="email"
           onChange={setEmail}
-        ></FormField>
-        <FormField
+        ></InputField>
+        <InputField
           id="phone"
           label="Phone"
           type="phone"
           onChange={setPhone}
-        ></FormField>
-        <FormField id="street" label="Street" onChange={setStreet}></FormField>
-        <FormField id="suburb" label="Suburb" onChange={setSuburb}></FormField>
-        <FormField
+        ></InputField>
+        <InputField
+          id="street"
+          label="Street"
+          onChange={setStreet}
+        ></InputField>
+        <InputField
+          id="suburb"
+          label="Suburb"
+          onChange={setSuburb}
+        ></InputField>
+        <InputField
           id="postcode"
           label="Postcode"
           onChange={setPostcode}
-        ></FormField>
-        <button onClick={() => save()}>Save</button>
+        ></InputField>
+        <Row>
+          <button className="btn btn-primary" onClick={() => save()}>
+            Save
+          </button>
+        </Row>
       </main>
       <footer></footer>
-    </div>
+    </Layout>
   );
 };
 

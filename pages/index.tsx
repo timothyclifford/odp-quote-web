@@ -2,6 +2,9 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { Heading1 } from "../components/Heading1";
+import { Layout } from "../components/Layout";
+import { Row } from "../components/Row";
 import { Quote } from "../domain/quote/quote";
 
 const Dashboard: NextPage = () => {
@@ -20,21 +23,26 @@ const Dashboard: NextPage = () => {
       });
   }, []);
   return (
-    <div>
+    <Layout>
       <Head>
         <title>Quote</title>
       </Head>
       <main>
-        <h1>Quotes</h1>
-        <div>
-          <button onClick={() => router.push("/quotes")}>New quote</button>
-        </div>
+        <Heading1 text="Quotes"></Heading1>
+        <Row>
+          <button
+            className="btn btn-primary"
+            onClick={() => router.push("/quotes")}
+          >
+            Start new quote
+          </button>
+        </Row>
         {quotes.map((q) => {
           return <div>{q.id}</div>;
         })}
       </main>
       <footer></footer>
-    </div>
+    </Layout>
   );
 };
 

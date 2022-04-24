@@ -1,4 +1,6 @@
-export const FormField = ({
+import { Row } from "./Row";
+
+export const InputField = ({
   id,
   label,
   type = "text",
@@ -13,8 +15,10 @@ export const FormField = ({
   disabled?: boolean;
   onChange?: (value: string) => void;
 }) => (
-  <div>
-    <div>{label}</div>
+  <Row>
+    <label className="label">
+      <span className="label-text">{label}</span>
+    </label>
     <input
       type={type}
       name={id}
@@ -22,6 +26,7 @@ export const FormField = ({
       value={value}
       disabled={disabled}
       onChange={onChange ? (el) => onChange(el.target.value) : undefined}
+      className="input input-bordered"
     />
-  </div>
+  </Row>
 );
