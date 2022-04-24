@@ -102,7 +102,9 @@ const EditQuote: NextPage<Props> = ({ quote }) => {
           value={postcode}
           onChange={setPostcode}
         ></FormField>
-        <button onClick={() => save()}>Save</button>
+        <div>
+          <button onClick={() => save()}>Save</button>
+        </div>
       </main>
       <footer></footer>
     </div>
@@ -110,11 +112,21 @@ const EditQuote: NextPage<Props> = ({ quote }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const id = context.params!.id as string;
   const service = QuoteService();
-  const quote = service.getById("TODO");
+  const quote = service.getById(id);
   return {
     props: {
-      quote,
+      quote: {
+        id: "1234",
+        firstName: "Bob",
+        lastName: "Bobson",
+        email: "bob@bobson.com",
+        phone: "0400000000",
+        street: "123 Bob St",
+        suburb: "Bobville",
+        postcode: "3210",
+      },
     },
   };
 };

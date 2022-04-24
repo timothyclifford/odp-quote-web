@@ -1,3 +1,5 @@
+import { AreaItem } from "./areaItem";
+
 export const AREA_NAMES = [
   "Bedroom",
   "Living area",
@@ -9,18 +11,8 @@ export const AREA_NAMES = [
   "Garage",
 ];
 
-export const AREA_ITEM_NAMES = [
-  "Internal door",
-  "Glazed door",
-  "External door",
-  "Window",
-  "Sash window",
-  "Door frame",
-  "Cupboard door (1 side)",
-  "Addition preparation (1 hour)",
-];
-
 export type Area = {
+  id?: string;
   name: string;
   price: number;
   includeCeilings: boolean;
@@ -29,8 +21,11 @@ export type Area = {
   comment: string;
 };
 
-export type AreaItem = {
-  name: string;
-  quantity: number;
-  price: number;
-};
+export const createArea = (): Area => ({
+  name: "",
+  price: 0,
+  includeCeilings: false,
+  includeSkirting: false,
+  items: [],
+  comment: "",
+});
