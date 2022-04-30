@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { Footer } from "../components/Footer";
 import { Heading1 } from "../components/Heading1";
 import { Layout } from "../components/Layout";
 import { Row } from "../components/Row";
@@ -41,7 +42,7 @@ const Dashboard: NextPage = () => {
           return <div>{q.id}</div>;
         })}
       </main>
-      <footer></footer>
+      <Footer></Footer>
     </Layout>
   );
 };

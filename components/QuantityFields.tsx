@@ -1,12 +1,13 @@
-import { Row } from "./Row";
-
 type Props = {
   quantity: number;
   onChange: (quantity: number) => void;
 };
 
 export const QuantityField = ({ quantity, onChange }: Props) => (
-  <Row>
+  <div className="form-control">
+    <label className="label">
+      <span className="label-text">Quantity</span>
+    </label>
     <div className="input-group">
       <button
         className="btn btn-square"
@@ -23,5 +24,5 @@ export const QuantityField = ({ quantity, onChange }: Props) => (
         +
       </button>
     </div>
-  </Row>
+  </div>
 );

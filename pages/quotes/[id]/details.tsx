@@ -1,16 +1,19 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
+import { AddButton } from "../../../components/AddButton";
 import { AreaField } from "../../../components/AreaField";
 import { ExtraField } from "../../../components/ExtraField";
+import { Footer } from "../../../components/Footer";
 import { Heading1 } from "../../../components/Heading1";
 import { Heading2 } from "../../../components/Heading2";
 import { Layout } from "../../../components/Layout";
 import { Navigation } from "../../../components/Navigation";
 import { Row } from "../../../components/Row";
-import { Area, createArea } from "../../../domain/area/area";
-import { createExtra, Extra } from "../../../domain/extra/extra";
-import { Quote } from "../../../domain/quote/quote";
+import { BORDER_STYLE } from "../../../constants";
+import { Area, AREA_NAMES, BuildArea } from "../../../domain/area/area";
+import { BuildExtra, Extra, EXTRA_NAMES } from "../../../domain/extra/extra";
+import { Quote, StubQuote } from "../../../domain/quote/quote";
 import { QuoteService } from "../../../domain/quote/quoteService";
 
 type Props = {
@@ -20,36 +23,37 @@ type Props = {
 const QuoteDetails: NextPage<Props> = ({ quote }) => {
   const [areas, setAreas] = useState<Array<Area>>([]);
   const [extras, setExtras] = useState<Array<Extra>>([]);
+  const [activeTab, setActiveTab] = useState<"AREAS" | "EXTRAS">("AREAS");
 
   const save = () => {
     // TODO
   };
 
   // Area
-  const addArea = () => {
-    setAreas([...areas, createArea()]);
+  const addArea = (name: string) => {
+    setAreas([...areas, BuildArea(name)]);
   };
   const saveArea = (area: Area, idx: number) => {
     const updated = [...areas];
     updated[idx] = area;
     setAreas(updated);
   };
-  const deleteArea = (area: Area) => {
-    const updated = areas.filter((a) => a !== area);
+  const deleteArea = (id: string) => {
+    const updated = areas.filter((a) => a.id !== id);
     setAreas(updated);
   };
 
   // Extra
-  const addExtra = () => {
-    setExtras([...extras, createExtra()]);
+  const addExtra = (name: string) => {
+    setExtras([...extras, BuildExtra(name)]);
   };
   const saveExtra = (extra: Extra, idx: number) => {
     const updated = [...extras];
     updated[idx] = extra;
     setExtras(updated);
   };
-  const deleteExtra = (extra: Extra) => {
-    const updated = extras.filter((e) => e !== extra);
+  const deleteExtra = (id: string) => {
+    const updated = extras.filter((e) => e.id !== id);
     setExtras(updated);
   };
 
@@ -61,71 +65,69 @@ const QuoteDetails: NextPage<Props> = ({ quote }) => {
       <main>
         <Heading1 text={`Quote ${quote.id}`}></Heading1>
         <Navigation quoteId={quote.id}></Navigation>
-        <Heading2 text="Areas"></Heading2>
-        {areas.map((area, idx) => {
-          return (
-            <>
-              <Row>
+        <div className="tabs">
+          <a
+            className={`tab ${activeTab === "AREAS" ? "tab-active" : ""}`}
+            onClick={() => setActiveTab("AREAS")}
+          >
+            Areas
+          </a>
+          <a
+            className={`tab ${activeTab === "EXTRAS" ? "tab-active" : ""}`}
+            onClick={() => setActiveTab("EXTRAS")}
+          >
+            Extras
+          </a>
+        </div>
+        {activeTab === "AREAS" && (
+          <div>
+            <Heading2 text="Areas"></Heading2>
+            {areas.map((area, idx) => {
+              return (
                 <AreaField
                   area={area}
                   onSave={(a) => saveArea(a, idx)}
+                  onDelete={() => deleteArea(area.id)}
                 ></AreaField>
-              </Row>
-              <Row>
-                <button
-                  className="btn btn-secondary btn-sm"
-                  onClick={() => deleteArea(area)}
-                >
-                  Delete area
-                </button>
-              </Row>
-            </>
-          );
-        })}
-        <Row>
-          <button
-            className="btn btn-secondary btn-sm"
-            onClick={() => addArea()}
-          >
-            Add area
-          </button>
-        </Row>
-        <Heading2 text="Extras"></Heading2>
-        {extras.map((extra, idx) => {
-          return (
-            <>
-              <Row>
+              );
+            })}
+            <Row>
+              <AddButton
+                label="Add area"
+                options={AREA_NAMES}
+                onClick={(n) => addArea(n)}
+              ></AddButton>
+            </Row>
+          </div>
+        )}
+        {activeTab === "EXTRAS" && (
+          <div>
+            <Heading2 text="Extras"></Heading2>
+            {extras.map((extra, idx) => {
+              return (
                 <ExtraField
                   extra={extra}
                   onSave={(e) => saveExtra(e, idx)}
+                  onDelete={() => deleteExtra(extra.id)}
                 ></ExtraField>
-              </Row>
-              <Row>
-                <button
-                  className="btn btn-secondary btn-sm"
-                  onClick={() => deleteExtra(extra)}
-                >
-                  Delete extra
-                </button>
-              </Row>
-            </>
-          );
-        })}
-        <Row>
-          <button
-            className="btn btn-secondary btn-sm"
-            onClick={() => addExtra()}
-          >
-            Add extra
-          </button>
-        </Row>
+              );
+            })}
+            <Row>
+              <AddButton
+                label="Add extra"
+                options={EXTRA_NAMES}
+                onClick={(n) => addExtra(n)}
+              ></AddButton>
+            </Row>
+          </div>
+        )}
         <Row>
           <button className="btn btn-primary" onClick={() => save()}>
             Save
           </button>
         </Row>
       </main>
-      <footer></footer>
+      <Footer></Footer>
     </Layout>
   );
 };
@@ -136,16 +138,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const quote = service.getById(id);
   return {
     props: {
-      quote: {
-        id: "1234",
-        firstName: "Bob",
-        lastName: "Bobson",
-        email: "bob@bobson.com",
-        phone: "0400000000",
-        street: "123 Bob St",
-        suburb: "Bobville",
-        postcode: "3210",
-      },
+      quote: StubQuote(),
     },
   };
 };

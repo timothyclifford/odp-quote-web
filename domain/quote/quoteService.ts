@@ -1,5 +1,6 @@
-import QuoteApp from "../../pages/_app";
 import { Quote } from "./quote";
+
+const host = "http://localhost:3001/";
 
 export const QuoteService = () => {
   return {

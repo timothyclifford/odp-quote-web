@@ -1,7 +1,14 @@
 import { useState } from "react";
-import { Area, AREA_NAMES } from "../domain/area/area";
-import { AreaItem, createAreaItem } from "../domain/area/areaItem";
+import { BORDER_STYLE } from "../constants";
+import { Area } from "../domain/area/area";
+import {
+  AreaItem,
+  AREA_ITEM_NAMES,
+  BuildAreaItem,
+} from "../domain/area/areaItem";
+import { AddButton } from "./AddButton";
 import { AreaItemField } from "./AreaItemField";
+import { Heading3 } from "./Heading3";
 import { InputField } from "./InputField";
 import { Row } from "./Row";
 import { TextAreaField } from "./TextArea";
@@ -9,48 +16,49 @@ import { TextAreaField } from "./TextArea";
 type Props = {
   area: Area;
   onSave: (area: Area) => void;
+  onDelete: () => void;
 };
 
-export const AreaField = ({ area, onSave }: Props) => {
-  const [name, setName] = useState(area.name);
+export const AreaField = ({ area, onSave, onDelete }: Props) => {
   const [price, setPrice] = useState(area.price);
   const [includeCeilings, setIncludeCeilings] = useState(area.includeCeilings);
   const [includeSkirting, setIncludeSkirting] = useState(area.includeSkirting);
   const [items, setItems] = useState(area.items);
   const [comment, setComment] = useState(area.comment);
-  const addItem = () => {
-    setItems([...items, createAreaItem()]);
+  const addAreaItem = (name: string) => {
+    setItems([...items, BuildAreaItem(name)]);
   };
   const saveAreaItem = (areaItem: AreaItem, idx: number) => {
     const updated = [...items];
     updated[idx] = areaItem;
     setItems(updated);
   };
-  const deleteAreaItem = (areaItem: AreaItem) => {
-    const updated = items.filter((i) => i !== areaItem);
+  const deleteAreaItem = (id: string) => {
+    const updated = items.filter((item) => item.id !== id);
     setItems(updated);
   };
   const save = (update: () => void) => {
     update();
-    onSave({ name, price, includeCeilings, includeSkirting, items, comment });
+    onSave({
+      id: area.id,
+      name: area.name,
+      price,
+      includeCeilings,
+      includeSkirting,
+      items,
+      comment,
+    });
   };
   return (
-    <>
-      <Row>
-        <select className="select select-bordered">
-          <option></option>
-          {AREA_NAMES.map((a) => {
-            return <option>{a}</option>;
-          })}
-        </select>
-      </Row>
+    <div className={BORDER_STYLE}>
+      <Row>{area.name}</Row>
       <Row>
         <InputField
           label="Price"
           groupLabel="$"
           value={price}
           type="number"
-          onChange={(x) => save(() => setPrice(parseInt(x)))}
+          onChange={(e) => save(() => setPrice(parseInt(e)))}
         ></InputField>
       </Row>
       <Row>
@@ -79,38 +87,37 @@ export const AreaField = ({ area, onSave }: Props) => {
           </label>
         </div>
       </Row>
-      {items.map((areaItem, idx) => {
-        return (
-          <>
-            <Row>
-              <AreaItemField
-                areaItem={areaItem}
-                onSave={(ai) => saveAreaItem(ai, idx)}
-              ></AreaItemField>
-            </Row>
-            <Row>
-              <button
-                className="btn btn-secondary btn-sm"
-                onClick={() => deleteAreaItem(areaItem)}
-              >
-                Delete item
-              </button>
-            </Row>
-          </>
-        );
-      })}
-      <Row>
-        <button className="btn btn-secondary btn-sm" onClick={() => addItem()}>
-          Add item
-        </button>
-      </Row>
       <Row>
         <TextAreaField
           label="Comments"
           value={comment}
-          onChange={(x) => save(() => setComment(x))}
+          onChange={(e) => setComment(e)}
         ></TextAreaField>
       </Row>
-    </>
+      <Row>
+        <Heading3 text="Items"></Heading3>
+      </Row>
+      {items.map((areaItem, idx) => {
+        return (
+          <AreaItemField
+            areaItem={areaItem}
+            onSave={(ai) => saveAreaItem(ai, idx)}
+            onDelete={() => deleteAreaItem(areaItem.id)}
+          ></AreaItemField>
+        );
+      })}
+      <Row>
+        <AddButton
+          label="Add item"
+          options={AREA_ITEM_NAMES}
+          onClick={(n) => addAreaItem(n)}
+        ></AddButton>
+      </Row>
+      <Row>
+        <button className="btn btn-error btn-sm" onClick={onDelete}>
+          Delete {area.name}
+        </button>
+      </Row>
+    </div>
   );
 };

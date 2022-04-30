@@ -1,3 +1,7 @@
+import { customAlphabet } from "nanoid";
+
+const id = customAlphabet("123456789", 4);
+
 export const EXTRA_NAMES = [
   "Furniture relocation",
   "Kitchen cabinets",
@@ -8,15 +12,16 @@ export const EXTRA_NAMES = [
 ];
 
 export type Extra = {
-  id?: string;
+  id: string;
   name: string;
   quantity: number;
   price: number;
   comment: string;
 };
 
-export const createExtra = (): Extra => ({
-  name: "",
+export const BuildExtra = (name: string): Extra => ({
+  id: id(),
+  name,
   quantity: 0,
   price: 0,
   comment: "",

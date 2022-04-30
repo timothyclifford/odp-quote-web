@@ -1,3 +1,7 @@
+import { customAlphabet } from "nanoid";
+
+const id = customAlphabet("123456789", 4);
+
 export const AREA_ITEM_NAMES = [
   "Internal door",
   "Glazed door",
@@ -10,14 +14,15 @@ export const AREA_ITEM_NAMES = [
 ];
 
 export type AreaItem = {
-  id?: string;
+  id: string;
   name: string;
   quantity: number;
   price: number;
 };
 
-export const createAreaItem = (): AreaItem => ({
-  name: "",
+export const BuildAreaItem = (name: string): AreaItem => ({
+  id: id(),
+  name,
   quantity: 0,
   price: 0,
 });
