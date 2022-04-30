@@ -8,6 +8,7 @@ import { QuoteService } from "../../../domain/quote/quoteService";
 import { Navigation } from "../../../components/Navigation";
 import { QuoteForm } from "../../../components/forms/QuoteForm";
 import { Footer } from "../../../components/Footer";
+import { QuoteNavigation } from "../../../components/QuoteNavigation";
 
 type Props = {
   quote: Quote;
@@ -46,6 +47,7 @@ const EditQuote: NextPage<Props> = ({ quote }) => {
       <main>
         <Heading1 text={`Edit quote ${quote.id}`}></Heading1>
         <Navigation quoteId={quote.id}></Navigation>
+        <QuoteNavigation></QuoteNavigation>
         <QuoteForm quote={quote} onSubmit={save}></QuoteForm>
       </main>
       <Footer></Footer>
