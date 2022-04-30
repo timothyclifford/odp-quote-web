@@ -4,8 +4,6 @@ import { useRouter } from "next/router";
 export const QuoteNavigation = () => {
   const router = useRouter();
   const id = router.asPath.split("/")[2];
-  console.log(router.asPath);
-  console.log(id);
   const areasActive = router.pathname.indexOf("areas") !== -1;
   const extrasActive = router.pathname.indexOf("extras") !== -1;
   return (

@@ -6,12 +6,12 @@ import {
   AREA_ITEM_NAMES,
   BuildAreaItem,
 } from "../../domain/area/areaItem";
-import { AddButton } from "../AddButton";
+import { AddButton } from "../fields/AddButton";
 import { AreaItemForm } from "./AreaItemForm";
 import { Heading3 } from "../Heading3";
-import { InputField } from "../InputField";
 import { Row } from "../Row";
-import { TextAreaField } from "../TextArea";
+import { InputField } from "../fields/InputField";
+import { TextAreaField } from "../fields/TextArea";
 
 type Props = {
   area: Area;

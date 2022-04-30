@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { BORDER_STYLE } from "../../constants";
 import { Extra } from "../../domain/extra/extra";
-import { InputField } from "../InputField";
-import { QuantityField } from "../QuantityFields";
+import { InputField } from "../fields/InputField";
+import { QuantityField } from "../fields/QuantityField";
+import { TextAreaField } from "../fields/TextArea";
 import { Row } from "../Row";
-import { TextAreaField } from "../TextArea";
 
 type Props = {
   extra: Extra;

@@ -1,4 +1,6 @@
 import { customAlphabet } from "nanoid";
+import { Area } from "../area/area";
+import { Extra } from "../extra/extra";
 
 const id = customAlphabet("123456789", 8);
 
@@ -11,6 +13,8 @@ export type Quote = {
   street: string;
   suburb: string;
   postcode: string;
+  areas: Array<Area>;
+  extras: Array<Extra>;
 };
 
 export const BuildQuote = (): Quote => ({
@@ -22,6 +26,8 @@ export const BuildQuote = (): Quote => ({
   street: "123 Bob St",
   suburb: "Bobville",
   postcode: "3210",
+  areas: [],
+  extras: [],
 });
 
 export const StubQuote = (): Quote => ({
@@ -33,4 +39,6 @@ export const StubQuote = (): Quote => ({
   street: "123 Bob St",
   suburb: "Bobville",
   postcode: "3210",
+  areas: [],
+  extras: [],
 });

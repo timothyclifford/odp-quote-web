@@ -1,7 +1,7 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
-import { AddButton } from "../../../components/AddButton";
+import { AddButton } from "../../../components/fields/AddButton";
 import { ExtraForm } from "../../../components/forms/ExtraForm";
 import { Footer } from "../../../components/Footer";
 import { Heading1 } from "../../../components/Heading1";
@@ -9,7 +9,6 @@ import { Heading2 } from "../../../components/Heading2";
 import { Layout } from "../../../components/Layout";
 import { Navigation } from "../../../components/Navigation";
 import { Row } from "../../../components/Row";
-import { Area, AREA_NAMES, BuildArea } from "../../../domain/area/area";
 import { BuildExtra, Extra, EXTRA_NAMES } from "../../../domain/extra/extra";
 import { Quote, StubQuote } from "../../../domain/quote/quote";
 import { QuoteService } from "../../../domain/quote/quoteService";

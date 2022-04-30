@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Quote } from "../../domain/quote/quote";
-import { InputField } from "../InputField";
+import { InputField } from "../fields/InputField";
 import { Row } from "../Row";
 
 type Props = {
@@ -26,6 +26,8 @@ export const QuoteForm = ({ quote, onSubmit }: Props) => {
       street,
       suburb,
       postcode,
+      areas: [],
+      extras: [],
     });
   };
   return (

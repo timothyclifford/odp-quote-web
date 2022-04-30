@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { BORDER_STYLE } from "../../constants";
 import { AreaItem } from "../../domain/area/areaItem";
-import { InputField } from "../InputField";
-import { QuantityField } from "../QuantityFields";
+import { InputField } from "../fields/InputField";
+import { QuantityField } from "../fields/QuantityField";
 import { Row } from "../Row";
 
 type Props = {

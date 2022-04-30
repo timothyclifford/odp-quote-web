@@ -1,7 +1,7 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
-import { AddButton } from "../../../components/AddButton";
+import { AddButton } from "../../../components/fields/AddButton";
 import { AreaForm } from "../../../components/forms/AreaForm";
 import { ExtraForm } from "../../../components/forms/ExtraForm";
 import { Footer } from "../../../components/Footer";
