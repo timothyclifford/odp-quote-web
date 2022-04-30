@@ -1,6 +1,5 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import { useState } from "react";
 import { AreaField } from "../../../components/AreaField";
 import { ExtraField } from "../../../components/ExtraField";
@@ -18,7 +17,7 @@ type Props = {
   quote: Quote;
 };
 
-const Details: NextPage<Props> = ({ quote }) => {
+const QuoteDetails: NextPage<Props> = ({ quote }) => {
   const [areas, setAreas] = useState<Array<Area>>([]);
   const [extras, setExtras] = useState<Array<Extra>>([]);
 
@@ -151,4 +150,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default Details;
+export default QuoteDetails;

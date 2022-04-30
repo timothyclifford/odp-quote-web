@@ -1,32 +1,45 @@
-import { Row } from "./Row";
-
 export const InputField = ({
-  id,
   label,
+  groupLabel,
   type = "text",
   value,
+  placeholder,
   disabled = false,
   onChange,
 }: {
-  id: string;
   label: string;
+  groupLabel?: string;
   type?: string;
-  value?: string;
+  value?: string | number;
+  placeholder?: string;
   disabled?: boolean;
   onChange?: (value: string) => void;
 }) => (
-  <Row>
+  <>
     <label className="label">
       <span className="label-text">{label}</span>
     </label>
-    <input
-      type={type}
-      name={id}
-      id={id}
-      value={value}
-      disabled={disabled}
-      onChange={onChange ? (el) => onChange(el.target.value) : undefined}
-      className="input input-bordered"
-    />
-  </Row>
+    {groupLabel ? (
+      <label className="input-group">
+        <span>{groupLabel}</span>
+        <input
+          type={type}
+          value={value}
+          placeholder={placeholder}
+          disabled={disabled}
+          onChange={onChange ? (el) => onChange(el.target.value) : undefined}
+          className="input input-bordered"
+        />
+      </label>
+    ) : (
+      <input
+        type={type}
+        value={value}
+        placeholder={placeholder}
+        disabled={disabled}
+        onChange={onChange ? (el) => onChange(el.target.value) : undefined}
+        className="input input-bordered"
+      />
+    )}
+  </>
 );

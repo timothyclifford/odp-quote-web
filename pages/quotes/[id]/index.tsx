@@ -54,52 +54,40 @@ const EditQuote: NextPage<Props> = ({ quote }) => {
       <main>
         <Heading1 text={`Edit quote ${quote.id}`}></Heading1>
         <Navigation quoteId={quote.id}></Navigation>
+        <InputField label="ID" value={quote.id} disabled={true}></InputField>
         <InputField
-          id="id"
-          label="ID"
-          value={quote.id}
-          disabled={true}
-        ></InputField>
-        <InputField
-          id="firstName"
           label="First name"
           value={firstName}
           onChange={setFirstName}
         ></InputField>
         <InputField
-          id="lastName"
           label="Last name"
           value={lastName}
           onChange={setLastName}
         ></InputField>
         <InputField
-          id="email"
           label="Email"
           type="email"
           value={email}
           onChange={setEmail}
         ></InputField>
         <InputField
-          id="phone"
           label="Phone"
           type="phone"
           value={phone}
           onChange={setPhone}
         ></InputField>
         <InputField
-          id="street"
           label="Street"
           value={street}
           onChange={setStreet}
         ></InputField>
         <InputField
-          id="suburb"
           label="Suburb"
           value={suburb}
           onChange={setSuburb}
         ></InputField>
         <InputField
-          id="postcode"
           label="Postcode"
           value={postcode}
           onChange={setPostcode}

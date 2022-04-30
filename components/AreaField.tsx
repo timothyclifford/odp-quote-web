@@ -2,7 +2,9 @@ import { useState } from "react";
 import { Area, AREA_NAMES } from "../domain/area/area";
 import { AreaItem, createAreaItem } from "../domain/area/areaItem";
 import { AreaItemField } from "./AreaItemField";
+import { InputField } from "./InputField";
 import { Row } from "./Row";
+import { TextAreaField } from "./TextArea";
 
 type Props = {
   area: Area;
@@ -43,12 +45,13 @@ export const AreaField = ({ area, onSave }: Props) => {
         </select>
       </Row>
       <Row>
-        $
-        <input
-          type="number"
+        <InputField
+          label="Price"
+          groupLabel="$"
           value={price}
-          onChange={(e) => save(() => setPrice(parseInt(e.target.value)))}
-        />
+          type="number"
+          onChange={(x) => save(() => setPrice(parseInt(x)))}
+        ></InputField>
       </Row>
       <Row>
         <div className="form-control w-36">
@@ -102,12 +105,11 @@ export const AreaField = ({ area, onSave }: Props) => {
         </button>
       </Row>
       <Row>
-        <input
-          type="text"
+        <TextAreaField
+          label="Comments"
           value={comment}
-          placeholder="Comments..."
-          onChange={(e) => save(() => setComment(e.target.value))}
-        />
+          onChange={(x) => save(() => setComment(x))}
+        ></TextAreaField>
       </Row>
     </>
   );

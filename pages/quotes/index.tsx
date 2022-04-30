@@ -50,49 +50,65 @@ const CreateQuote: NextPage = () => {
       <main>
         <Heading1 text="New quote"></Heading1>
         <Navigation></Navigation>
-        <InputField
-          id="id"
-          label="ID"
-          value={quoteId}
-          disabled={true}
-        ></InputField>
-        <InputField
-          id="firstName"
-          label="First name"
-          onChange={setFirstName}
-        ></InputField>
-        <InputField
-          id="lastName"
-          label="Last name"
-          onChange={setLastName}
-        ></InputField>
-        <InputField
-          id="email"
-          label="Email"
-          type="email"
-          onChange={setEmail}
-        ></InputField>
-        <InputField
-          id="phone"
-          label="Phone"
-          type="phone"
-          onChange={setPhone}
-        ></InputField>
-        <InputField
-          id="street"
-          label="Street"
-          onChange={setStreet}
-        ></InputField>
-        <InputField
-          id="suburb"
-          label="Suburb"
-          onChange={setSuburb}
-        ></InputField>
-        <InputField
-          id="postcode"
-          label="Postcode"
-          onChange={setPostcode}
-        ></InputField>
+        <Row>
+          <InputField
+            id="id"
+            label="ID"
+            value={quoteId}
+            disabled={true}
+          ></InputField>
+        </Row>
+        <Row>
+          <InputField
+            id="firstName"
+            label="First name"
+            onChange={setFirstName}
+          ></InputField>
+        </Row>
+        <Row>
+          <InputField
+            id="lastName"
+            label="Last name"
+            onChange={setLastName}
+          ></InputField>
+        </Row>
+        <Row>
+          <InputField
+            id="email"
+            label="Email"
+            type="email"
+            onChange={setEmail}
+          ></InputField>
+        </Row>
+        <Row>
+          <InputField
+            id="phone"
+            label="Phone"
+            type="phone"
+            onChange={setPhone}
+          ></InputField>
+        </Row>
+        <Row>
+          <InputField
+            id="street"
+            label="Street"
+            onChange={setStreet}
+          ></InputField>
+        </Row>
+        <Row>
+          <InputField
+            id="suburb"
+            label="Suburb"
+            onChange={setSuburb}
+          ></InputField>
+        </Row>
+        <Row>
+          <InputField
+            id="postcode"
+            label="Postcode"
+            onChange={setPostcode}
+          ></InputField>
+        </Row>
         <Row>
           <button className="btn btn-primary" onClick={() => save()}>
             Save
