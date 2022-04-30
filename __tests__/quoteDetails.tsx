@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import QuoteDetails from "../pages/quotes/[id]/details";
+import QuoteForm from "../pages/quotes/[id]/details";
 
 const quote = {
   id: "1234",
@@ -15,6 +15,6 @@ const quote = {
 
 describe("Details", () => {
   it("renders the page", () => {
-    render(<QuoteDetails quote={quote} />);
+    render(<QuoteForm quote={quote} />);
   });
 });

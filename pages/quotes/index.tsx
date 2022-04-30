@@ -5,7 +5,7 @@ import { Footer } from "../../components/Footer";
 import { Heading1 } from "../../components/Heading1";
 import { Layout } from "../../components/Layout";
 import { Navigation } from "../../components/Navigation";
-import { QuoteForm } from "../../components/QuoteForm";
+import { QuoteForm } from "../../components/forms/QuoteForm";
 import { BuildQuote, Quote } from "../../domain/quote/quote";
 
 const CreateQuote: NextPage = () => {

@@ -1,17 +1,17 @@
 import { useState } from "react";
-import { BORDER_STYLE } from "../constants";
-import { Area } from "../domain/area/area";
+import { BORDER_STYLE } from "../../constants";
+import { Area } from "../../domain/area/area";
 import {
   AreaItem,
   AREA_ITEM_NAMES,
   BuildAreaItem,
-} from "../domain/area/areaItem";
-import { AddButton } from "./AddButton";
-import { AreaItemField } from "./AreaItemField";
-import { Heading3 } from "./Heading3";
-import { InputField } from "./InputField";
-import { Row } from "./Row";
-import { TextAreaField } from "./TextArea";
+} from "../../domain/area/areaItem";
+import { AddButton } from "../AddButton";
+import { AreaItemForm } from "./AreaItemForm";
+import { Heading3 } from "../Heading3";
+import { InputField } from "../InputField";
+import { Row } from "../Row";
+import { TextAreaField } from "../TextArea";
 
 type Props = {
   area: Area;
@@ -19,7 +19,7 @@ type Props = {
   onDelete: () => void;
 };
 
-export const AreaField = ({ area, onSave, onDelete }: Props) => {
+export const AreaForm = ({ area, onSave, onDelete }: Props) => {
   const [price, setPrice] = useState(area.price);
   const [includeCeilings, setIncludeCeilings] = useState(area.includeCeilings);
   const [includeSkirting, setIncludeSkirting] = useState(area.includeSkirting);
@@ -99,11 +99,11 @@ export const AreaField = ({ area, onSave, onDelete }: Props) => {
       </Row>
       {items.map((areaItem, idx) => {
         return (
-          <AreaItemField
+          <AreaItemForm
             areaItem={areaItem}
             onSave={(ai) => saveAreaItem(ai, idx)}
             onDelete={() => deleteAreaItem(areaItem.id)}
-          ></AreaItemField>
+          ></AreaItemForm>
         );
       })}
       <Row>

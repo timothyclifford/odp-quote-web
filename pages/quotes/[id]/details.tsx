@@ -2,15 +2,14 @@ import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
 import { AddButton } from "../../../components/AddButton";
-import { AreaField } from "../../../components/AreaField";
-import { ExtraField } from "../../../components/ExtraField";
+import { AreaForm } from "../../../components/forms/AreaForm";
+import { ExtraForm } from "../../../components/forms/ExtraForm";
 import { Footer } from "../../../components/Footer";
 import { Heading1 } from "../../../components/Heading1";
 import { Heading2 } from "../../../components/Heading2";
 import { Layout } from "../../../components/Layout";
 import { Navigation } from "../../../components/Navigation";
 import { Row } from "../../../components/Row";
-import { BORDER_STYLE } from "../../../constants";
 import { Area, AREA_NAMES, BuildArea } from "../../../domain/area/area";
 import { BuildExtra, Extra, EXTRA_NAMES } from "../../../domain/extra/extra";
 import { Quote, StubQuote } from "../../../domain/quote/quote";
@@ -20,7 +19,7 @@ type Props = {
   quote: Quote;
 };
 
-const QuoteDetails: NextPage<Props> = ({ quote }) => {
+const QuoteForm: NextPage<Props> = ({ quote }) => {
   const [areas, setAreas] = useState<Array<Area>>([]);
   const [extras, setExtras] = useState<Array<Extra>>([]);
   const [activeTab, setActiveTab] = useState<"AREAS" | "EXTRAS">("AREAS");
@@ -84,11 +83,11 @@ const QuoteDetails: NextPage<Props> = ({ quote }) => {
             <Heading2 text="Areas"></Heading2>
             {areas.map((area, idx) => {
               return (
-                <AreaField
+                <AreaForm
                   area={area}
                   onSave={(a) => saveArea(a, idx)}
                   onDelete={() => deleteArea(area.id)}
-                ></AreaField>
+                ></AreaForm>
               );
             })}
             <Row>
@@ -105,11 +104,11 @@ const QuoteDetails: NextPage<Props> = ({ quote }) => {
             <Heading2 text="Extras"></Heading2>
             {extras.map((extra, idx) => {
               return (
-                <ExtraField
+                <ExtraForm
                   extra={extra}
                   onSave={(e) => saveExtra(e, idx)}
                   onDelete={() => deleteExtra(extra.id)}
-                ></ExtraField>
+                ></ExtraForm>
               );
             })}
             <Row>
@@ -143,4 +142,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default QuoteDetails;
+export default QuoteForm;

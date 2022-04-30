@@ -6,7 +6,7 @@ import { Layout } from "../../../components/Layout";
 import { Quote, StubQuote } from "../../../domain/quote/quote";
 import { QuoteService } from "../../../domain/quote/quoteService";
 import { Navigation } from "../../../components/Navigation";
-import { QuoteForm } from "../../../components/QuoteForm";
+import { QuoteForm } from "../../../components/forms/QuoteForm";
 import { Footer } from "../../../components/Footer";
 
 type Props = {

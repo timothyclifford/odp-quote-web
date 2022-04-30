@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { BORDER_STYLE } from "../constants";
-import { AreaItem, AREA_ITEM_NAMES } from "../domain/area/areaItem";
-import { DropDownField } from "./DropDownField";
-import { ExtraField } from "./ExtraField";
-import { InputField } from "./InputField";
-import { QuantityField } from "./QuantityFields";
-import { Row } from "./Row";
+import { BORDER_STYLE } from "../../constants";
+import { AreaItem } from "../../domain/area/areaItem";
+import { InputField } from "../InputField";
+import { QuantityField } from "../QuantityFields";
+import { Row } from "../Row";
 
 type Props = {
   areaItem: AreaItem;
@@ -13,7 +11,7 @@ type Props = {
   onDelete: () => void;
 };
 
-export const AreaItemField = ({ areaItem, onSave, onDelete }: Props) => {
+export const AreaItemForm = ({ areaItem, onSave, onDelete }: Props) => {
   const [price, setPrice] = useState(areaItem.price);
   const [quantity, setQuantity] = useState(areaItem.quantity);
   const save = (update: () => void) => {

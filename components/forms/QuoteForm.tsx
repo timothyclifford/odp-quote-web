@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Quote } from "../domain/quote/quote";
-import { InputField } from "./InputField";
-import { Row } from "./Row";
+import { Quote } from "../../domain/quote/quote";
+import { InputField } from "../InputField";
+import { Row } from "../Row";
 
 type Props = {
   quote?: Quote;
@@ -16,7 +16,7 @@ export const QuoteForm = ({ quote, onSubmit }: Props) => {
   const [street, setStreet] = useState(quote?.street ?? "");
   const [suburb, setSuburb] = useState(quote?.suburb ?? "");
   const [postcode, setPostcode] = useState(quote?.postcode ?? "");
-  const onSave = () => {
+  const saveQuote = () => {
     onSubmit({
       id: quote!.id,
       firstName,
@@ -85,7 +85,7 @@ export const QuoteForm = ({ quote, onSubmit }: Props) => {
         ></InputField>
       </Row>
       <Row>
-        <button className="btn btn-primary" onClick={onSave}>
+        <button className="btn btn-primary" onClick={saveQuote}>
           Save quote
         </button>
       </Row>

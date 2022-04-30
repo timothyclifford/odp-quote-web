@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { BORDER_STYLE } from "../constants";
-import { Extra, EXTRA_NAMES } from "../domain/extra/extra";
-import { InputField } from "./InputField";
-import { QuantityField } from "./QuantityFields";
-import { Row } from "./Row";
-import { TextAreaField } from "./TextArea";
+import { BORDER_STYLE } from "../../constants";
+import { Extra } from "../../domain/extra/extra";
+import { InputField } from "../InputField";
+import { QuantityField } from "../QuantityFields";
+import { Row } from "../Row";
+import { TextAreaField } from "../TextArea";
 
 type Props = {
   extra: Extra;
@@ -12,7 +12,7 @@ type Props = {
   onDelete: () => void;
 };
 
-export const ExtraField = ({ extra, onSave, onDelete }: Props) => {
+export const ExtraForm = ({ extra, onSave, onDelete }: Props) => {
   const [price, setPrice] = useState(extra.price);
   const [quantity, setQuantity] = useState(extra.quantity);
   const [comment, setComment] = useState(extra.comment);

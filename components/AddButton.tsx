@@ -10,7 +10,7 @@ export const AddButton = ({ label, options, onClick }: Props) => {
   const [selected, setSelected] = useState("");
   const [error, setError] = useState(false);
   const add = () => {
-    if (selected.length === 0) {
+    if (selected.length < 1) {
       setError(true);
       return;
     }
