@@ -3,7 +3,6 @@ import Head from "next/head";
 import { useState } from "react";
 import { AddButton } from "../../../components/fields/AddButton";
 import { AreaForm } from "../../../components/forms/AreaForm";
-import { ExtraForm } from "../../../components/forms/ExtraForm";
 import { Footer } from "../../../components/Footer";
 import { Heading1 } from "../../../components/Heading1";
 import { Heading2 } from "../../../components/Heading2";
@@ -11,16 +10,17 @@ import { Layout } from "../../../components/Layout";
 import { Navigation } from "../../../components/Navigation";
 import { Row } from "../../../components/Row";
 import { Area, AREA_NAMES, BuildArea } from "../../../domain/area/area";
-import { BuildExtra, Extra, EXTRA_NAMES } from "../../../domain/extra/extra";
 import { Quote, StubQuote } from "../../../domain/quote/quote";
 import { QuoteService } from "../../../domain/quote/quoteService";
 import { QuoteNavigation } from "../../../components/QuoteNavigation";
+import { useRouter } from "next/router";
 
 type Props = {
   quote: Quote;
 };
 
 const EditAreas: NextPage<Props> = ({ quote }) => {
+  const router = useRouter();
   const [areas, setAreas] = useState<Array<Area>>(quote.areas ?? []);
 
   // Area
@@ -37,8 +37,19 @@ const EditAreas: NextPage<Props> = ({ quote }) => {
     setAreas(updated);
   };
 
-  const save = () => {
-    // TODO
+  const save = async () => {
+    const response = await fetch(`/api/quotes/${quote.id}/areas`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json;charset=UTF-8",
+      },
+      body: JSON.stringify(areas),
+    });
+    if (response.ok) {
+      router.push(`/quotes`);
+    } else {
+      alert("An error occurred...");
+    }
   };
 
   return (

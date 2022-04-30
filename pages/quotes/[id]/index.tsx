@@ -17,7 +17,7 @@ type Props = {
 const EditQuote: NextPage<Props> = ({ quote }) => {
   const router = useRouter();
   const save = async (quote: Quote) => {
-    const response = await fetch(`/api/quotes/`, {
+    const response = await fetch(`/api/quotes/${quote.id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json;charset=UTF-8",

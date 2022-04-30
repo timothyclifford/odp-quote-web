@@ -13,12 +13,14 @@ import { BuildExtra, Extra, EXTRA_NAMES } from "../../../domain/extra/extra";
 import { Quote, StubQuote } from "../../../domain/quote/quote";
 import { QuoteService } from "../../../domain/quote/quoteService";
 import { QuoteNavigation } from "../../../components/QuoteNavigation";
+import { useRouter } from "next/router";
 
 type Props = {
   quote: Quote;
 };
 
 const EditExtras: NextPage<Props> = ({ quote }) => {
+  const router = useRouter();
   const [extras, setExtras] = useState<Array<Extra>>(quote.extras ?? []);
 
   // Extra
@@ -35,8 +37,19 @@ const EditExtras: NextPage<Props> = ({ quote }) => {
     setExtras(updated);
   };
 
-  const save = () => {
-    // TODO
+  const save = async () => {
+    const response = await fetch(`/api/quotes/${quote.id}/extras`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json;charset=UTF-8",
+      },
+      body: JSON.stringify(extras),
+    });
+    if (response.ok) {
+      router.push(`/quotes`);
+    } else {
+      alert("An error occurred...");
+    }
   };
 
   return (
