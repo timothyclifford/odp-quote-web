@@ -4,7 +4,7 @@ import { Area } from "../../domain/area/area";
 import {
   AreaItem,
   AREA_ITEM_NAMES,
-  BuildAreaItem,
+  buildAreaItem,
 } from "../../domain/area/areaItem";
 import { AddButton } from "../fields/AddButton";
 import { AreaItemForm } from "./AreaItemForm";
@@ -26,7 +26,7 @@ export const AreaForm = ({ area, onSave, onDelete }: Props) => {
   const [items, setItems] = useState(area.items);
   const [comment, setComment] = useState(area.comment);
   const addAreaItem = (name: string) => {
-    setItems([...items, BuildAreaItem(name)]);
+    setItems([...items, buildAreaItem(name)]);
   };
   const saveAreaItem = (areaItem: AreaItem, idx: number) => {
     const updated = [...items];
@@ -100,6 +100,7 @@ export const AreaForm = ({ area, onSave, onDelete }: Props) => {
       {items.map((areaItem, idx) => {
         return (
           <AreaItemForm
+            key={idx}
             areaItem={areaItem}
             onSave={(ai) => saveAreaItem(ai, idx)}
             onDelete={() => deleteAreaItem(areaItem.id)}

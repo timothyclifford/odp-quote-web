@@ -19,7 +19,7 @@ export type Extra = {
   comment: string;
 };
 
-export const BuildExtra = (name: string): Extra => ({
+export const buildExtra = (name: string): Extra => ({
   id: id(),
   name,
   quantity: 0,

@@ -17,7 +17,7 @@ export type Quote = {
   extras: Array<Extra>;
 };
 
-export const BuildQuote = (): Quote => ({
+export const buildQuote = (): Quote => ({
   id: id(),
   firstName: "Bob",
   lastName: "Bobson",
@@ -30,7 +30,7 @@ export const BuildQuote = (): Quote => ({
   extras: [],
 });
 
-export const StubQuote = (): Quote => ({
+export const stubQuote = (): Quote => ({
   id: id(),
   firstName: "Bob",
   lastName: "Bobson",

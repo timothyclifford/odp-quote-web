@@ -39,7 +39,7 @@ const Dashboard: NextPage = () => {
           </button>
         </Row>
         {quotes.map((q) => {
-          return <div>{q.id}</div>;
+          return <div key={q.id}>{q.id}</div>;
         })}
       </main>
       <Footer></Footer>

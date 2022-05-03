@@ -9,8 +9,8 @@ import { Heading2 } from "../../../components/Heading2";
 import { Layout } from "../../../components/Layout";
 import { Navigation } from "../../../components/Navigation";
 import { Row } from "../../../components/Row";
-import { Area, AREA_NAMES, BuildArea } from "../../../domain/area/area";
-import { Quote, StubQuote } from "../../../domain/quote/quote";
+import { Area, AREA_NAMES, buildArea } from "../../../domain/area/area";
+import { Quote, stubQuote } from "../../../domain/quote/quote";
 import { QuoteService } from "../../../domain/quote/quoteService";
 import { QuoteNavigation } from "../../../components/QuoteNavigation";
 import { useRouter } from "next/router";
@@ -25,7 +25,7 @@ const EditAreas: NextPage<Props> = ({ quote }) => {
 
   // Area
   const addArea = (name: string) => {
-    setAreas([...areas, BuildArea(name)]);
+    setAreas([...areas, buildArea(name)]);
   };
   const saveArea = (area: Area, idx: number) => {
     const updated = [...areas];
@@ -96,7 +96,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const quote = service.getById(id);
   return {
     props: {
-      quote: StubQuote(),
+      quote: stubQuote(),
     },
   };
 };

@@ -6,7 +6,7 @@ import { Heading1 } from "../../components/Heading1";
 import { Layout } from "../../components/Layout";
 import { Navigation } from "../../components/Navigation";
 import { QuoteForm } from "../../components/forms/QuoteForm";
-import { BuildQuote, Quote } from "../../domain/quote/quote";
+import { buildQuote, Quote } from "../../domain/quote/quote";
 
 const CreateQuote: NextPage = () => {
   const router = useRouter();
@@ -41,7 +41,7 @@ const CreateQuote: NextPage = () => {
       <main>
         <Heading1 text="New quote"></Heading1>
         <Navigation></Navigation>
-        <QuoteForm quote={BuildQuote()} onSubmit={save}></QuoteForm>
+        <QuoteForm quote={buildQuote()} onSubmit={save}></QuoteForm>
       </main>
       <Footer></Footer>
     </Layout>

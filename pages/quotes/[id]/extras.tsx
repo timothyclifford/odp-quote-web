@@ -9,8 +9,8 @@ import { Heading2 } from "../../../components/Heading2";
 import { Layout } from "../../../components/Layout";
 import { Navigation } from "../../../components/Navigation";
 import { Row } from "../../../components/Row";
-import { BuildExtra, Extra, EXTRA_NAMES } from "../../../domain/extra/extra";
-import { Quote, StubQuote } from "../../../domain/quote/quote";
+import { buildExtra, Extra, EXTRA_NAMES } from "../../../domain/extra/extra";
+import { Quote, stubQuote } from "../../../domain/quote/quote";
 import { QuoteService } from "../../../domain/quote/quoteService";
 import { QuoteNavigation } from "../../../components/QuoteNavigation";
 import { useRouter } from "next/router";
@@ -25,7 +25,7 @@ const EditExtras: NextPage<Props> = ({ quote }) => {
 
   // Extra
   const addExtra = (name: string) => {
-    setExtras([...extras, BuildExtra(name)]);
+    setExtras([...extras, buildExtra(name)]);
   };
   const saveExtra = (extra: Extra, idx: number) => {
     const updated = [...extras];
@@ -96,7 +96,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const quote = service.getById(id);
   return {
     props: {
-      quote: StubQuote(),
+      quote: stubQuote(),
     },
   };
 };

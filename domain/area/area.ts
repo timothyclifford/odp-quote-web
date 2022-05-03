@@ -25,7 +25,7 @@ export type Area = {
   comment: string;
 };
 
-export const BuildArea = (name: string): Area => ({
+export const buildArea = (name: string): Area => ({
   id: id(),
   name,
   price: 0,

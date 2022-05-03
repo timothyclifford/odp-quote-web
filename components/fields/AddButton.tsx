@@ -31,7 +31,7 @@ export const AddButton = ({ label, options, onClick }: Props) => {
         >
           <option></option>
           {options.map((n) => {
-            return <option>{n}</option>;
+            return <option key={n}>{n}</option>;
           })}
         </select>
         <button className="btn" onClick={add}>

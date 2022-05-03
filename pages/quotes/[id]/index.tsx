@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { Heading1 } from "../../../components/Heading1";
 import { Layout } from "../../../components/Layout";
-import { Quote, StubQuote } from "../../../domain/quote/quote";
+import { Quote, stubQuote } from "../../../domain/quote/quote";
 import { QuoteService } from "../../../domain/quote/quoteService";
 import { Navigation } from "../../../components/Navigation";
 import { QuoteForm } from "../../../components/forms/QuoteForm";
@@ -16,27 +16,14 @@ type Props = {
 
 const EditQuote: NextPage<Props> = ({ quote }) => {
   const router = useRouter();
+  const service = QuoteService();
   const save = async (quote: Quote) => {
-    const response = await fetch(`/api/quotes/${quote.id}`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json;charset=UTF-8",
-      },
-      body: JSON.stringify({
-        id: quote.id,
-        firstName: quote.firstName,
-        lastName: quote.lastName,
-        email: quote.email,
-        phone: quote.phone,
-        street: quote.street,
-        suburb: quote.suburb,
-        postcode: quote.postcode,
-      }),
-    });
-    if (response.ok) {
+    try {
+      await service.createQuote(quote);
       router.push(`/quotes`);
-    } else {
-      alert("An error occurred...");
+    } catch (error) {
+      console.log(error);
+      // TODO handle error
     }
   };
   return (
@@ -61,7 +48,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const quote = service.getById(id);
   return {
     props: {
-      quote: StubQuote(),
+      quote: stubQuote(),
     },
   };
 };

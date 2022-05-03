@@ -20,7 +20,7 @@ export type AreaItem = {
   price: number;
 };
 
-export const BuildAreaItem = (name: string): AreaItem => ({
+export const buildAreaItem = (name: string): AreaItem => ({
   id: id(),
   name,
   quantity: 0,
