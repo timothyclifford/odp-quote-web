@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BORDER_STYLE } from "../../constants";
 import { AreaItem } from "../../domain/area/areaItem";
 import { InputField } from "../fields/InputField";
 import { QuantityField } from "../fields/QuantityField";
-import { Row } from "../Row";
 
 type Props = {
   areaItem: AreaItem;
@@ -14,33 +13,44 @@ type Props = {
 export const AreaItemForm = ({ areaItem, onSave, onDelete }: Props) => {
   const [price, setPrice] = useState(areaItem.price);
   const [quantity, setQuantity] = useState(areaItem.quantity);
-  const save = (update: () => void) => {
-    update();
+  useEffect(() => {
+    console.log("saving area item...");
     onSave({ id: areaItem.id, name: areaItem.name, price, quantity });
-  };
+  }, [price, quantity]);
   return (
     <div className={BORDER_STYLE}>
-      <Row>{areaItem.name}</Row>
-      <Row>
-        <InputField
-          label="Price"
-          groupLabel="$"
-          value={price}
-          type="number"
-          onChange={(e) => save(() => setPrice(parseInt(e)))}
-        ></InputField>
-      </Row>
-      <Row>
-        <QuantityField
-          quantity={quantity}
-          onChange={(e) => save(() => setQuantity(e))}
-        ></QuantityField>
-      </Row>
-      <Row>
-        <button className="btn btn-error btn-sm" onClick={onDelete}>
-          Delete {areaItem.name}
-        </button>
-      </Row>
+      <div className="overflow-x-auto">
+        <table className="table w-full">
+          <tbody>
+            <tr>
+              <td>{areaItem.name}</td>
+              <td>
+                <InputField
+                  label="Price"
+                  groupLabel="$"
+                  value={price}
+                  type="number"
+                  onChange={(e) => setPrice(parseInt(e))}
+                ></InputField>
+              </td>
+              <td>
+                <QuantityField
+                  quantity={quantity}
+                  onSave={(e) => setQuantity(e)}
+                ></QuantityField>
+              </td>
+              <td>
+                <button
+                  className="btn btn-error btn-sm"
+                  onClick={() => onDelete()}
+                >
+                  X
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

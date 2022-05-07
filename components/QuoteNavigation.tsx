@@ -7,7 +7,7 @@ export const QuoteNavigation = () => {
   const areasActive = router.pathname.indexOf("areas") !== -1;
   const extrasActive = router.pathname.indexOf("extras") !== -1;
   return (
-    <div className="btn-group">
+    <div className="btn-group w-full">
       <Link href={`/quotes/${id}`}>
         <a
           className={`btn ${

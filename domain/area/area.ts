@@ -11,7 +11,7 @@ export const AREA_NAMES = [
   "Kitchen",
   "Hallway",
   "WIR",
-  "Laundy",
+  "Laundry",
   "Garage",
 ];
 

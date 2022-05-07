@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -7,22 +7,13 @@ import { Heading1 } from "../components/Heading1";
 import { Layout } from "../components/Layout";
 import { Row } from "../components/Row";
 import { Quote } from "../domain/quote/quote";
+import { QuoteService } from "../domain/quote/quoteService";
 
-const Dashboard: NextPage = () => {
+type Props = {
+  quotes: Array<Quote>;
+};
+const Dashboard: NextPage<Props> = ({ quotes }) => {
   const router = useRouter();
-  const [quotes, setQuotes] = useState<Array<Quote>>([]);
-  useEffect(() => {
-    fetch(`/api/quotes/`, {
-      method: "GET",
-      headers: {
-        "content-type": "application/json;charset=UTF-8",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setQuotes(data);
-      });
-  }, []);
   return (
     <Layout>
       <Head>
@@ -38,13 +29,53 @@ const Dashboard: NextPage = () => {
             Start new quote
           </button>
         </Row>
-        {quotes.map((q) => {
-          return <div key={q.id}>{q.id}</div>;
-        })}
+        <table className="table w-full table-zebra">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Date</th>
+              <th>Email</th>
+              <th>Last name</th>
+              <th>Suburb</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {quotes.map((q) => {
+              return (
+                <tr key={q.id}>
+                  <td>{q.id}</td>
+                  <td>TODO</td>
+                  <td>{q.email}</td>
+                  <td>{q.lastName}</td>
+                  <td>{q.suburb}</td>
+                  <td>
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => router.push(`/quotes/${q.id}`)}
+                    >
+                      Edit
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </main>
       <Footer></Footer>
     </Layout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const service = QuoteService();
+  const quotes = await service.getAll();
+  return {
+    props: {
+      quotes: quotes,
+    },
+  };
 };
 
 export default Dashboard;

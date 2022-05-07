@@ -1,15 +1,18 @@
 import { Quote } from "./quote";
 
-import { getFirestore, Timestamp, FieldValue } from "firebase-admin/firestore";
+import { getFirestore } from "firebase-admin/firestore";
 import { initialiseFirebase } from "../../firebase";
 
 export const QuoteRepository = () => {
-  const app = initialiseFirebase();
+  initialiseFirebase();
   const db = getFirestore();
   return {
     getAllQuotes: async (): Promise<Array<Quote>> => {
-      const docs = await db.collection("quotes").get();
-      return docs.docs.flatMap((d) => {
+      const collection = await db.collection("quotes").get();
+      if (collection.empty) {
+        return [];
+      }
+      return collection.docs.flatMap((d) => {
         return d.data() as Quote;
       });
     },
@@ -18,15 +21,15 @@ export const QuoteRepository = () => {
       return doc.data() as Quote;
     },
     createQuote: async (quote: Quote) => {
-      const docRef = db.collection("quotes").doc(quote.id);
-      await docRef.set(quote);
+      const doc = db.collection("quotes").doc(quote.id);
+      await doc.set(quote);
     },
     updateQuote: async (quote: Quote) => {
-      const docRef = db.collection("quotes").doc(quote.id);
-      await docRef.update(quote);
+      const doc = db.collection("quotes").doc(quote.id);
+      await doc.update(quote);
     },
     deleteQuote: async (id: string) => {
-      db.collection("quotes").doc(id).delete();
+      await db.collection("quotes").doc(id).delete();
     },
   };
 };

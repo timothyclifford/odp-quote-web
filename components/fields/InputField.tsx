@@ -27,7 +27,7 @@ export const InputField = ({
           value={value}
           placeholder={placeholder}
           disabled={disabled}
-          onChange={onChange ? (el) => onChange(el.target.value) : undefined}
+          onChange={(el) => (onChange ? onChange(el.target.value) : undefined)}
           className="input input-bordered"
         />
       </label>
@@ -37,7 +37,7 @@ export const InputField = ({
         value={value}
         placeholder={placeholder}
         disabled={disabled}
-        onChange={onChange ? (el) => onChange(el.target.value) : undefined}
+        onChange={(el) => (onChange ? onChange(el.target.value) : undefined)}
         className="input input-bordered"
       />
     )}

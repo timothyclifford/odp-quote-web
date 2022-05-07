@@ -55,10 +55,10 @@ const EditExtras: NextPage<Props> = ({ quote }) => {
   return (
     <Layout>
       <Head>
-        <title>{`Quote ${quote.id}`}</title>
+        <title>Edit quote ${quote.id}</title>
       </Head>
       <main>
-        <Heading1 text={`Quote ${quote.id}`}></Heading1>
+        <Heading1 text={`Edit quote ${quote.id}`}></Heading1>
         <Navigation quoteId={quote.id}></Navigation>
         <QuoteNavigation></QuoteNavigation>
         <Heading2 text="Extras"></Heading2>
@@ -93,10 +93,10 @@ const EditExtras: NextPage<Props> = ({ quote }) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.params!.id as string;
   const service = QuoteService();
-  const quote = service.getById(id);
+  const quote = await service.getById(id);
   return {
     props: {
-      quote: stubQuote(),
+      quote,
     },
   };
 };

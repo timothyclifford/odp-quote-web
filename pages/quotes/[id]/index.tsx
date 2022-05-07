@@ -11,10 +11,10 @@ import { Footer } from "../../../components/Footer";
 import { QuoteNavigation } from "../../../components/QuoteNavigation";
 
 type Props = {
-  quote: Quote;
+  data: Quote;
 };
 
-const EditQuote: NextPage<Props> = ({ quote }) => {
+const EditQuote: NextPage<Props> = ({ data }) => {
   const router = useRouter();
   const service = QuoteService();
   const save = async (quote: Quote) => {
@@ -29,13 +29,13 @@ const EditQuote: NextPage<Props> = ({ quote }) => {
   return (
     <Layout>
       <Head>
-        <title>Edit Quote</title>
+        <title>Edit quote ${data.id}</title>
       </Head>
       <main>
-        <Heading1 text={`Edit quote ${quote.id}`}></Heading1>
-        <Navigation quoteId={quote.id}></Navigation>
+        <Heading1 text={`Edit quote ${data.id}`}></Heading1>
+        <Navigation quoteId={data.id}></Navigation>
         <QuoteNavigation></QuoteNavigation>
-        <QuoteForm quote={quote} onSubmit={save}></QuoteForm>
+        <QuoteForm quote={data} onSubmit={save}></QuoteForm>
       </main>
       <Footer></Footer>
     </Layout>
@@ -43,12 +43,12 @@ const EditQuote: NextPage<Props> = ({ quote }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const id = context.params!.id as string;
+  const quoteId = context.params!.id as string;
   const service = QuoteService();
-  const quote = service.getById(id);
+  const quote = await service.getById(quoteId);
   return {
     props: {
-      quote: stubQuote(),
+      data: quote,
     },
   };
 };

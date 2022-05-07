@@ -35,7 +35,7 @@ export const ExtraForm = ({ extra, onSave, onDelete }: Props) => {
       <Row>
         <QuantityField
           quantity={quantity}
-          onChange={(e) => save(() => setQuantity(e))}
+          onSave={(e) => save(() => setQuantity(e))}
         ></QuantityField>
       </Row>
       <Row>

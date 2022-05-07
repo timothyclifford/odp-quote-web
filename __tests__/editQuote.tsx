@@ -1,20 +1,17 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import EditQuote from "../pages/quotes/[id]";
+import { stubQuote } from "../domain/quote/quote";
 
-const quote = {
-  id: "1234",
-  firstName: "Bob",
-  lastName: "Bobson",
-  email: "bob@bobson.com",
-  phone: "0400000000",
-  street: "123 Bob St",
-  suburb: "Bobville",
-  postcode: "3210",
-};
+const quote = stubQuote();
 
-describe("Details", () => {
+const useRouter = jest.spyOn(require("next/router"), "useRouter");
+
+describe("EditQuote", () => {
   it("renders the page", () => {
-    render(<EditQuote quote={quote} />);
+    const router = { push: jest.fn(), asPath: "/abc/def/ghi", pathname: "" };
+    useRouter.mockReturnValue(router);
+    // bla
+    render(<EditQuote data={quote} />);
   });
 });

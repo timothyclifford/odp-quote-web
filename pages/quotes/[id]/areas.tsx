@@ -10,20 +10,19 @@ import { Layout } from "../../../components/Layout";
 import { Navigation } from "../../../components/Navigation";
 import { Row } from "../../../components/Row";
 import { Area, AREA_NAMES, buildArea } from "../../../domain/area/area";
-import { Quote, stubQuote } from "../../../domain/quote/quote";
-import { QuoteService } from "../../../domain/quote/quoteService";
 import { QuoteNavigation } from "../../../components/QuoteNavigation";
 import { useRouter } from "next/router";
+import { AreaService } from "../../../domain/area/areaService";
 
 type Props = {
-  quote: Quote;
+  quoteId: string;
+  data: Array<Area>;
 };
 
-const EditAreas: NextPage<Props> = ({ quote }) => {
+const EditAreas: NextPage<Props> = ({ quoteId, data }) => {
   const router = useRouter();
-  const [areas, setAreas] = useState<Array<Area>>(quote.areas ?? []);
+  const [areas, setAreas] = useState<Array<Area>>(data);
 
-  // Area
   const addArea = (name: string) => {
     setAreas([...areas, buildArea(name)]);
   };
@@ -38,7 +37,7 @@ const EditAreas: NextPage<Props> = ({ quote }) => {
   };
 
   const save = async () => {
-    const response = await fetch(`/api/quotes/${quote.id}/areas`, {
+    const response = await fetch(`/api/quotes/${quoteId}/areas`, {
       method: "PUT",
       headers: {
         "content-type": "application/json;charset=UTF-8",
@@ -55,11 +54,11 @@ const EditAreas: NextPage<Props> = ({ quote }) => {
   return (
     <Layout>
       <Head>
-        <title>{`Quote ${quote.id}`}</title>
+        <title>Edit quote {quoteId}</title>
       </Head>
       <main>
-        <Heading1 text={`Quote ${quote.id}`}></Heading1>
-        <Navigation quoteId={quote.id}></Navigation>
+        <Heading1 text={`Edit quote ${quoteId}`}></Heading1>
+        <Navigation quoteId={quoteId}></Navigation>
         <QuoteNavigation></QuoteNavigation>
         <Heading2 text="Areas"></Heading2>
         {areas.map((area, idx) => {
@@ -91,12 +90,13 @@ const EditAreas: NextPage<Props> = ({ quote }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const id = context.params!.id as string;
-  const service = QuoteService();
-  const quote = service.getById(id);
+  const quoteId = context.params!.id as string;
+  const service = AreaService();
+  const areas = await service.getQuoteAreas(quoteId);
   return {
     props: {
-      quote: stubQuote(),
+      quoteId,
+      data: areas,
     },
   };
 };

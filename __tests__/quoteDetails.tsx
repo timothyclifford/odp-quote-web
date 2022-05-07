@@ -1,20 +1,12 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import QuoteForm from "../pages/quotes/[id]/details";
+import { QuoteForm } from "../components/forms/QuoteForm";
+import { stubQuote } from "../domain/quote/quote";
 
-const quote = {
-  id: "1234",
-  firstName: "Bob",
-  lastName: "Bobson",
-  email: "bob@bobson.com",
-  phone: "0400000000",
-  street: "123 Bob St",
-  suburb: "Bobville",
-  postcode: "3210",
-};
+const quote = stubQuote();
 
-describe("Details", () => {
+describe("QuoteForm", () => {
   it("renders the page", () => {
-    render(<QuoteForm quote={quote} />);
+    render(<QuoteForm quote={quote} onSubmit={() => {}} />);
   });
 });

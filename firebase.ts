@@ -1,14 +1,15 @@
-import { initializeApp, cert, ServiceAccount } from "firebase-admin/app";
+import { initializeApp, cert } from "firebase-admin/app";
+import * as admin from "firebase-admin";
 
 export const initialiseFirebase = () => {
-  const firstbaseServiceAccount = process.env.FIREBASE_SERVICE_ACCOUNT;
-  if (firstbaseServiceAccount === undefined) {
-    throw Error("FIREBASE_SERVICE_ACCOUNT environment variable not configured");
+  if (!admin.apps.length) {
+    return initializeApp({
+      credential: cert({
+        projectId: process.env.FIREBASE_PROJECT_ID,
+        privateKey: process.env.FIREBASE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
+        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      }),
+      databaseURL: process.env.FIREBASE_DATABASE_URL,
+    });
   }
-
-  var serviceAccount: ServiceAccount = JSON.parse(firstbaseServiceAccount);
-
-  return initializeApp({
-    credential: cert(serviceAccount),
-  });
 };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BORDER_STYLE } from "../../constants";
 import { Area } from "../../domain/area/area";
 import {
@@ -23,12 +23,13 @@ export const AreaForm = ({ area, onSave, onDelete }: Props) => {
   const [price, setPrice] = useState(area.price);
   const [includeCeilings, setIncludeCeilings] = useState(area.includeCeilings);
   const [includeSkirting, setIncludeSkirting] = useState(area.includeSkirting);
-  const [items, setItems] = useState(area.items);
   const [comment, setComment] = useState(area.comment);
+  const [items, setItems] = useState(area.items);
   const addAreaItem = (name: string) => {
     setItems([...items, buildAreaItem(name)]);
   };
   const saveAreaItem = (areaItem: AreaItem, idx: number) => {
+    console.log(areaItem);
     const updated = [...items];
     updated[idx] = areaItem;
     setItems(updated);
@@ -37,8 +38,8 @@ export const AreaForm = ({ area, onSave, onDelete }: Props) => {
     const updated = items.filter((item) => item.id !== id);
     setItems(updated);
   };
-  const save = (update: () => void) => {
-    update();
+  useEffect(() => {
+    console.log("saving area...");
     onSave({
       id: area.id,
       name: area.name,
@@ -48,7 +49,7 @@ export const AreaForm = ({ area, onSave, onDelete }: Props) => {
       items,
       comment,
     });
-  };
+  }, [price, includeCeilings, includeSkirting, comment, items]);
   return (
     <div className={BORDER_STYLE}>
       <Row>{area.name}</Row>
@@ -58,7 +59,7 @@ export const AreaForm = ({ area, onSave, onDelete }: Props) => {
           groupLabel="$"
           value={price}
           type="number"
-          onChange={(e) => save(() => setPrice(parseInt(e)))}
+          onChange={(e) => setPrice(parseInt(e))}
         ></InputField>
       </Row>
       <Row>
@@ -68,7 +69,7 @@ export const AreaForm = ({ area, onSave, onDelete }: Props) => {
             <input
               type="checkbox"
               className="toggle"
-              checked={includeCeilings}
+              defaultChecked={includeCeilings}
               onChange={(e) => setIncludeCeilings(e.target.checked)}
             ></input>
           </label>
@@ -81,7 +82,7 @@ export const AreaForm = ({ area, onSave, onDelete }: Props) => {
             <input
               type="checkbox"
               className="toggle"
-              checked={includeSkirting}
+              defaultChecked={includeSkirting}
               onChange={(e) => setIncludeSkirting(e.target.checked)}
             ></input>
           </label>

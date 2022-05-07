@@ -26,8 +26,6 @@ export const QuoteForm = ({ quote, onSubmit }: Props) => {
       street,
       suburb,
       postcode,
-      areas: [],
-      extras: [],
     });
   };
   return (
