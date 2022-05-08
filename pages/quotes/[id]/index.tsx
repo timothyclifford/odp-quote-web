@@ -33,7 +33,6 @@ const EditQuote: NextPage<Props> = ({ data }) => {
         <Heading2 text={`Quote ${data.id} customer details`}></Heading2>
         <QuoteForm quote={data} onSubmit={save}></QuoteForm>
       </main>
-      <Footer></Footer>
     </Layout>
   );
 };

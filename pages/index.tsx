@@ -77,7 +77,6 @@ const Dashboard: NextPage<Props> = ({ quotes }) => {
           </tbody>
         </table>
       </main>
-      <Footer></Footer>
     </Layout>
   );
 };

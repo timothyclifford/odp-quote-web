@@ -82,7 +82,6 @@ const EditExtras: NextPage<Props> = ({ quoteId, data }) => {
           </button>
         </Row>
       </main>
-      <Footer></Footer>
     </Layout>
   );
 };

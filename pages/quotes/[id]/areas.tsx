@@ -81,7 +81,6 @@ const EditAreas: NextPage<Props> = ({ quoteId, data }) => {
           </button>
         </Row>
       </main>
-      <Footer></Footer>
     </Layout>
   );
 };

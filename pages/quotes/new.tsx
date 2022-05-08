@@ -43,7 +43,6 @@ const CreateQuote: NextPage = () => {
         <Navigation></Navigation>
         <QuoteForm quote={buildQuote()} onSubmit={save}></QuoteForm>
       </main>
-      <Footer></Footer>
     </Layout>
   );
 };
