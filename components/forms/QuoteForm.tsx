@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { QuoteMutation, Quote } from "../../domain/quote/quote";
+import { QuoteMutation } from "../../domain/quote/quote";
 import { InputField } from "../fields/InputField";
 import { Row } from "../Row";
 
@@ -30,9 +30,9 @@ export const QuoteForm = ({ quote, onSubmit }: Props) => {
   };
   return (
     <>
-      <Row>
+      {/* <Row>
         <InputField label="ID" value={quote!.id} disabled={true}></InputField>
-      </Row>
+      </Row> */}
       <Row>
         <InputField
           label="First name"

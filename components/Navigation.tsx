@@ -11,7 +11,7 @@ export const Navigation = () => {
       <div className="flex-none">
         <ul className="menu menu-horizontal p-0">
           <li className="ml-4">
-            <Link href="/">
+            <Link href="/quotes/new">
               <a className="btn btn-primary">New quote</a>
             </Link>
           </li>

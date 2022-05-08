@@ -40,7 +40,6 @@ const CreateQuote: NextPage = () => {
       </Head>
       <main>
         <Heading1 text="New quote"></Heading1>
-        <Navigation></Navigation>
         <QuoteForm quote={buildQuote()} onSubmit={save}></QuoteForm>
       </main>
     </Layout>
