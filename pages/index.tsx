@@ -1,34 +1,40 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { Footer } from "../components/Footer";
 import { Heading1 } from "../components/Heading1";
 import { Layout } from "../components/Layout";
 import { Row } from "../components/Row";
 import { Quote } from "../domain/quote/quote";
-import { QuoteService } from "../domain/quote/quoteService";
+import { QuoteRepository } from "../domain/quote/quoteRepository";
 
 type Props = {
   quotes: Array<Quote>;
 };
+
 const Dashboard: NextPage<Props> = ({ quotes }) => {
   const router = useRouter();
+  const deleteQuote = async (id: string) => {
+    const really = confirm("Are you sure?");
+    if (!really) return;
+    const response = await fetch(`/api/quotes/${id}`, {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json;charset=UTF-8",
+      },
+    });
+    if (response.ok) {
+      router.push(`/`);
+    } else {
+      alert("An error occurred...");
+    }
+  };
   return (
     <Layout>
       <Head>
         <title>Quote</title>
       </Head>
       <main>
-        <Heading1 text="Quotes"></Heading1>
-        <Row>
-          <button
-            className="btn btn-primary"
-            onClick={() => router.push("/quotes")}
-          >
-            Start new quote
-          </button>
-        </Row>
         <table className="table w-full table-zebra">
           <thead>
             <tr>
@@ -45,7 +51,7 @@ const Dashboard: NextPage<Props> = ({ quotes }) => {
               return (
                 <tr key={q.id}>
                   <td>{q.id}</td>
-                  <td>TODO</td>
+                  <td>{q.created}</td>
                   <td>{q.email}</td>
                   <td>{q.lastName}</td>
                   <td>{q.suburb}</td>
@@ -53,8 +59,16 @@ const Dashboard: NextPage<Props> = ({ quotes }) => {
                     <button
                       className="btn btn-secondary"
                       onClick={() => router.push(`/quotes/${q.id}`)}
+                      title="View quote"
                     >
-                      Edit
+                      <img src="/view.png" width={24} />
+                    </button>
+                    <button
+                      className="btn btn-error ml-2"
+                      onClick={() => deleteQuote(q.id)}
+                      title="Delete quote"
+                    >
+                      <img src="/trash.png" width={24} />
                     </button>
                   </td>
                 </tr>
@@ -69,8 +83,8 @@ const Dashboard: NextPage<Props> = ({ quotes }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const service = QuoteService();
-  const quotes = await service.getAll();
+  const repository = QuoteRepository();
+  const quotes = await repository.getAllQuotes();
   return {
     props: {
       quotes: quotes,

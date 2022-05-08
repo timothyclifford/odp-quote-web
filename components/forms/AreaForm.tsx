@@ -1,11 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
-import { BORDER_STYLE } from "../../constants";
+import { useEffect, useState } from "react";
+import { AREA_ITEM_NAMES } from "../../lib/constants";
 import { Area } from "../../domain/area/area";
-import {
-  AreaItem,
-  AREA_ITEM_NAMES,
-  buildAreaItem,
-} from "../../domain/area/areaItem";
+import { AreaItem, buildAreaItem } from "../../domain/area/areaItem";
 import { AddButton } from "../fields/AddButton";
 import { AreaItemForm } from "./AreaItemForm";
 import { Heading3 } from "../Heading3";
@@ -51,7 +47,7 @@ export const AreaForm = ({ area, onSave, onDelete }: Props) => {
     });
   }, [price, includeCeilings, includeSkirting, comment, items]);
   return (
-    <div className={BORDER_STYLE}>
+    <div className="border p-6 mb-6">
       <Row>{area.name}</Row>
       <Row>
         <InputField
@@ -98,16 +94,6 @@ export const AreaForm = ({ area, onSave, onDelete }: Props) => {
       <Row>
         <Heading3 text="Items"></Heading3>
       </Row>
-      {items.map((areaItem, idx) => {
-        return (
-          <AreaItemForm
-            key={idx}
-            areaItem={areaItem}
-            onSave={(ai) => saveAreaItem(ai, idx)}
-            onDelete={() => deleteAreaItem(areaItem.id)}
-          ></AreaItemForm>
-        );
-      })}
       <Row>
         <AddButton
           label="Add item"
@@ -115,8 +101,32 @@ export const AreaForm = ({ area, onSave, onDelete }: Props) => {
           onClick={(n) => addAreaItem(n)}
         ></AddButton>
       </Row>
+      {items.length > 0 && (
+        <div className="overflow-x-auto">
+          <table className="table w-full">
+            <thead>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <td></td>
+            </thead>
+            <tbody>
+              {items.map((areaItem, idx) => {
+                return (
+                  <AreaItemForm
+                    key={idx}
+                    areaItem={areaItem}
+                    onSave={(ai) => saveAreaItem(ai, idx)}
+                    onDelete={() => deleteAreaItem(areaItem.id)}
+                  ></AreaItemForm>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
       <Row>
-        <button className="btn btn-error btn-sm" onClick={onDelete}>
+        <button className="btn btn-error" onClick={onDelete}>
           Delete {area.name}
         </button>
       </Row>

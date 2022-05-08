@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { HTTP_METHODS } from "../../../constants";
+import { HTTP_METHODS } from "../../../lib/constants";
 import { QuoteRepository } from "../../../domain/quote/quoteRepository";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -15,7 +15,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(200).json(quote);
     }
     default: {
-      return res.status(404).json({});
+      return res.status(404).send(`${method} not supported`);
     }
   }
 };

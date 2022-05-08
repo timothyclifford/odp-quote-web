@@ -7,7 +7,7 @@ export const InputField = ({
   disabled = false,
   onChange,
 }: {
-  label: string;
+  label?: string;
   groupLabel?: string;
   type?: string;
   value?: string | number;
@@ -16,9 +16,11 @@ export const InputField = ({
   onChange?: (value: string) => void;
 }) => (
   <>
-    <label className="label">
-      <span className="label-text">{label}</span>
-    </label>
+    {label && (
+      <label className="label">
+        <span className="label-text">{label}</span>
+      </label>
+    )}
     {groupLabel ? (
       <label className="input-group">
         <span>{groupLabel}</span>

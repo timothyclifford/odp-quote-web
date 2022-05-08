@@ -1,5 +1,5 @@
-import { HTTP_METHODS } from "../../constants";
-import { Quote } from "./quote";
+import { HTTP_METHODS } from "../../lib/constants";
+import { QuoteMutation, Quote } from "./quote";
 
 const host = process.env.HOST ?? "http://localhost:3000";
 
@@ -29,7 +29,7 @@ export const QuoteService = () => {
       }
       return undefined;
     },
-    createQuote: async (quote: Quote): Promise<Quote> => {
+    createQuote: async (quote: QuoteMutation): Promise<Quote> => {
       const response = await fetch(`${host}/api/quotes`, {
         method: HTTP_METHODS.POST,
         headers: {
@@ -40,9 +40,9 @@ export const QuoteService = () => {
       if (response.ok) {
         throw new Error("Error creating quote");
       }
-      return quote;
+      return response.json();
     },
-    updateQuote: async (quote: Quote): Promise<Quote> => {
+    updateQuote: async (quote: QuoteMutation): Promise<Quote> => {
       const response = await fetch(`${host}/api/quotes/${quote.id}`, {
         method: HTTP_METHODS.PUT,
         headers: {
@@ -53,7 +53,7 @@ export const QuoteService = () => {
       if (response.ok) {
         throw new Error("Error updating quote");
       }
-      return quote;
+      return response.json();
     },
   };
 };

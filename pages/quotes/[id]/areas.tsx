@@ -9,10 +9,10 @@ import { Heading2 } from "../../../components/Heading2";
 import { Layout } from "../../../components/Layout";
 import { Navigation } from "../../../components/Navigation";
 import { Row } from "../../../components/Row";
-import { Area, AREA_NAMES, buildArea } from "../../../domain/area/area";
+import { Area, buildArea } from "../../../domain/area/area";
 import { QuoteNavigation } from "../../../components/QuoteNavigation";
-import { useRouter } from "next/router";
 import { AreaService } from "../../../domain/area/areaService";
+import { AREA_NAMES } from "../../../lib/constants";
 
 type Props = {
   quoteId: string;
@@ -20,7 +20,6 @@ type Props = {
 };
 
 const EditAreas: NextPage<Props> = ({ quoteId, data }) => {
-  const router = useRouter();
   const [areas, setAreas] = useState<Array<Area>>(data);
 
   const addArea = (name: string) => {
@@ -45,7 +44,7 @@ const EditAreas: NextPage<Props> = ({ quoteId, data }) => {
       body: JSON.stringify(areas),
     });
     if (response.ok) {
-      router.push(`/quotes`);
+      alert("Saved");
     } else {
       alert("An error occurred...");
     }
@@ -54,13 +53,18 @@ const EditAreas: NextPage<Props> = ({ quoteId, data }) => {
   return (
     <Layout>
       <Head>
-        <title>Edit quote {quoteId}</title>
+        <title>{`Quote ${quoteId} areas to paint`}</title>
       </Head>
       <main>
-        <Heading1 text={`Edit quote ${quoteId}`}></Heading1>
-        <Navigation quoteId={quoteId}></Navigation>
         <QuoteNavigation></QuoteNavigation>
-        <Heading2 text="Areas"></Heading2>
+        <Heading2 text={`Quote ${quoteId} areas to paint`}></Heading2>
+        <Row>
+          <AddButton
+            label="Add area"
+            options={AREA_NAMES}
+            onClick={(n) => addArea(n)}
+          ></AddButton>
+        </Row>
         {areas.map((area, idx) => {
           return (
             <AreaForm
@@ -71,13 +75,6 @@ const EditAreas: NextPage<Props> = ({ quoteId, data }) => {
             ></AreaForm>
           );
         })}
-        <Row>
-          <AddButton
-            label="Add area"
-            options={AREA_NAMES}
-            onClick={(n) => addArea(n)}
-          ></AddButton>
-        </Row>
         <Row>
           <button className="btn btn-primary" onClick={() => save()}>
             Save

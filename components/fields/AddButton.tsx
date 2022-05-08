@@ -15,6 +15,7 @@ export const AddButton = ({ label, options, onClick }: Props) => {
       return;
     }
     onClick(selected);
+    setSelected("");
   };
   return (
     <div className="form-control">
@@ -24,6 +25,7 @@ export const AddButton = ({ label, options, onClick }: Props) => {
       <div className="input-group">
         <select
           className={`select select-bordered ${error ? "select-error" : ""}`}
+          value={selected}
           onChange={(e) => {
             setError(false);
             setSelected(e.target.value);

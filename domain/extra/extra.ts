@@ -1,15 +1,7 @@
 import { customAlphabet } from "nanoid";
+import { getExtraPrice } from "../../lib/helpers";
 
 const id = customAlphabet("123456789", 4);
-
-export const EXTRA_NAMES = [
-  "Furniture relocation",
-  "Kitchen cabinets",
-  "Wall only",
-  "Ceiling only",
-  "Fireplace",
-  "Ceiling rose",
-];
 
 export type Extra = {
   id: string;
@@ -23,6 +15,6 @@ export const buildExtra = (name: string): Extra => ({
   id: id(),
   name,
   quantity: 0,
-  price: 0,
+  price: getExtraPrice(name),
   comment: "",
 });

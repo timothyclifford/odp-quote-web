@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Quote } from "../../domain/quote/quote";
+import { QuoteMutation, Quote } from "../../domain/quote/quote";
 import { InputField } from "../fields/InputField";
 import { Row } from "../Row";
 
 type Props = {
-  quote?: Quote;
-  onSubmit: (quote: Quote) => void;
+  quote?: QuoteMutation;
+  onSubmit: (quote: QuoteMutation) => void;
 };
 
 export const QuoteForm = ({ quote, onSubmit }: Props) => {
@@ -86,7 +86,7 @@ export const QuoteForm = ({ quote, onSubmit }: Props) => {
       </Row>
       <Row>
         <button className="btn btn-primary" onClick={saveQuote}>
-          Save quote
+          Save
         </button>
       </Row>
     </>

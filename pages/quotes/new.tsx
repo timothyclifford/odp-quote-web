@@ -6,11 +6,11 @@ import { Heading1 } from "../../components/Heading1";
 import { Layout } from "../../components/Layout";
 import { Navigation } from "../../components/Navigation";
 import { QuoteForm } from "../../components/forms/QuoteForm";
-import { buildQuote, Quote } from "../../domain/quote/quote";
+import { buildQuote, QuoteMutation, Quote } from "../../domain/quote/quote";
 
 const CreateQuote: NextPage = () => {
   const router = useRouter();
-  const save = async (quote: Quote) => {
+  const save = async (quote: QuoteMutation) => {
     const response = await fetch(`/api/quotes/`, {
       method: "POST",
       headers: {

@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
-import { BORDER_STYLE } from "../../constants";
+import { useEffect, useState } from "react";
 import { AreaItem } from "../../domain/area/areaItem";
 import { InputField } from "../fields/InputField";
 import { QuantityField } from "../fields/QuantityField";
@@ -18,39 +17,26 @@ export const AreaItemForm = ({ areaItem, onSave, onDelete }: Props) => {
     onSave({ id: areaItem.id, name: areaItem.name, price, quantity });
   }, [price, quantity]);
   return (
-    <div className={BORDER_STYLE}>
-      <div className="overflow-x-auto">
-        <table className="table w-full">
-          <tbody>
-            <tr>
-              <td>{areaItem.name}</td>
-              <td>
-                <InputField
-                  label="Price"
-                  groupLabel="$"
-                  value={price}
-                  type="number"
-                  onChange={(e) => setPrice(parseInt(e))}
-                ></InputField>
-              </td>
-              <td>
-                <QuantityField
-                  quantity={quantity}
-                  onSave={(e) => setQuantity(e)}
-                ></QuantityField>
-              </td>
-              <td>
-                <button
-                  className="btn btn-error btn-sm"
-                  onClick={() => onDelete()}
-                >
-                  X
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <tr>
+      <td>{areaItem.name}</td>
+      <td>
+        <InputField
+          value={price}
+          type="number"
+          onChange={(e) => setPrice(parseInt(e))}
+        ></InputField>
+      </td>
+      <td>
+        <QuantityField
+          quantity={quantity}
+          onSave={(e) => setQuantity(e)}
+        ></QuantityField>
+      </td>
+      <td>
+        <button className="btn btn-error" onClick={() => onDelete()}>
+          <img src="/trash.png" width={24} />
+        </button>
+      </td>
+    </tr>
   );
 };

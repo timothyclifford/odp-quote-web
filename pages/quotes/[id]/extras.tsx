@@ -9,19 +9,18 @@ import { Heading2 } from "../../../components/Heading2";
 import { Layout } from "../../../components/Layout";
 import { Navigation } from "../../../components/Navigation";
 import { Row } from "../../../components/Row";
-import { buildExtra, Extra, EXTRA_NAMES } from "../../../domain/extra/extra";
-import { Quote, stubQuote } from "../../../domain/quote/quote";
-import { QuoteService } from "../../../domain/quote/quoteService";
+import { buildExtra, Extra } from "../../../domain/extra/extra";
 import { QuoteNavigation } from "../../../components/QuoteNavigation";
-import { useRouter } from "next/router";
+import { EXTRA_NAMES } from "../../../lib/constants";
+import { ExtraService } from "../../../domain/extra/extraService";
 
 type Props = {
-  quote: Quote;
+  quoteId: string;
+  data: Array<Extra>;
 };
 
-const EditExtras: NextPage<Props> = ({ quote }) => {
-  const router = useRouter();
-  const [extras, setExtras] = useState<Array<Extra>>(quote.extras ?? []);
+const EditExtras: NextPage<Props> = ({ quoteId, data }) => {
+  const [extras, setExtras] = useState<Array<Extra>>(data);
 
   // Extra
   const addExtra = (name: string) => {
@@ -38,7 +37,7 @@ const EditExtras: NextPage<Props> = ({ quote }) => {
   };
 
   const save = async () => {
-    const response = await fetch(`/api/quotes/${quote.id}/extras`, {
+    const response = await fetch(`/api/quotes/${quoteId}/extras`, {
       method: "PUT",
       headers: {
         "content-type": "application/json;charset=UTF-8",
@@ -46,7 +45,7 @@ const EditExtras: NextPage<Props> = ({ quote }) => {
       body: JSON.stringify(extras),
     });
     if (response.ok) {
-      router.push(`/quotes`);
+      alert("Saved");
     } else {
       alert("An error occurred...");
     }
@@ -55,13 +54,18 @@ const EditExtras: NextPage<Props> = ({ quote }) => {
   return (
     <Layout>
       <Head>
-        <title>Edit quote ${quote.id}</title>
+        <title>{`Quote ${quoteId} extras`}</title>
       </Head>
       <main>
-        <Heading1 text={`Edit quote ${quote.id}`}></Heading1>
-        <Navigation quoteId={quote.id}></Navigation>
         <QuoteNavigation></QuoteNavigation>
-        <Heading2 text="Extras"></Heading2>
+        <Heading2 text={`Quote ${quoteId} extras`}></Heading2>
+        <Row>
+          <AddButton
+            label="Add extra"
+            options={EXTRA_NAMES}
+            onClick={(n) => addExtra(n)}
+          ></AddButton>
+        </Row>
         {extras.map((extra, idx) => {
           return (
             <ExtraForm
@@ -72,13 +76,6 @@ const EditExtras: NextPage<Props> = ({ quote }) => {
             ></ExtraForm>
           );
         })}
-        <Row>
-          <AddButton
-            label="Add extra"
-            options={EXTRA_NAMES}
-            onClick={(n) => addExtra(n)}
-          ></AddButton>
-        </Row>
         <Row>
           <button className="btn btn-primary" onClick={() => save()}>
             Save
@@ -91,12 +88,13 @@ const EditExtras: NextPage<Props> = ({ quote }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const id = context.params!.id as string;
-  const service = QuoteService();
-  const quote = await service.getById(id);
+  const quoteId = context.params!.id as string;
+  const service = ExtraService();
+  const extras = await service.getQuoteExtras(quoteId);
   return {
     props: {
-      quote,
+      quoteId,
+      data: extras,
     },
   };
 };

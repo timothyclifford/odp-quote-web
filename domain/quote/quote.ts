@@ -11,9 +11,13 @@ export type Quote = {
   street: string;
   suburb: string;
   postcode: string;
+  created: string;
+  updated: string;
 };
 
-export const buildQuote = (): Quote => ({
+export type QuoteMutation = Omit<Quote, "created" | "updated">;
+
+export const buildQuote = (): QuoteMutation => ({
   id: id(),
   firstName: "Bob",
   lastName: "Bobson",
@@ -33,4 +37,6 @@ export const stubQuote = (): Quote => ({
   street: "123 Bob St",
   suburb: "Bobville",
   postcode: "3210",
+  created: "01/01/2022",
+  updated: "01/01/2022",
 });

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { BORDER_STYLE } from "../../constants";
 import { Extra } from "../../domain/extra/extra";
 import { InputField } from "../fields/InputField";
 import { QuantityField } from "../fields/QuantityField";
@@ -21,7 +20,7 @@ export const ExtraForm = ({ extra, onSave, onDelete }: Props) => {
     onSave({ id: extra.id, name: extra.name, price, quantity, comment });
   };
   return (
-    <div className={BORDER_STYLE}>
+    <div className="border p-6 mb-6">
       <Row>{extra.name}</Row>
       <Row>
         <InputField
@@ -34,6 +33,7 @@ export const ExtraForm = ({ extra, onSave, onDelete }: Props) => {
       </Row>
       <Row>
         <QuantityField
+          label="Quantity"
           quantity={quantity}
           onSave={(e) => save(() => setQuantity(e))}
         ></QuantityField>
@@ -46,7 +46,7 @@ export const ExtraForm = ({ extra, onSave, onDelete }: Props) => {
         ></TextAreaField>
       </Row>
       <Row>
-        <button className="btn btn-error btn-sm" onClick={onDelete}>
+        <button className="btn btn-error" onClick={onDelete}>
           Delete {extra.name}
         </button>
       </Row>

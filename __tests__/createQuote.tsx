@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import CreateQuote from "../pages/quotes";
+import CreateQuote from "../pages/quotes/new";
 
 const fieldLabels = [
   "ID",

@@ -1,21 +1,20 @@
-import { Area } from "./area";
-
 import { getFirestore } from "firebase-admin/firestore";
 import { initialiseFirebase } from "../../firebase";
+import { Extra } from "./extra";
 
-export const AreaRepository = () => {
+export const ExtraRepository = () => {
   initialiseFirebase();
   const db = getFirestore();
   return {
-    getAreasByQuoteId: async (
+    getExtrasByQuoteId: async (
       quoteId: string
-    ): Promise<Array<Area> | undefined> => {
+    ): Promise<Array<Extra> | undefined> => {
       const quote = await db.collection("quotes").doc(quoteId).get();
-      return quote.get("areas") ?? [];
+      return quote.get("extras") ?? [];
     },
-    updateQuoteAreas: async (quoteId: string, areas: Array<Area>) => {
+    updateQuoteExtras: async (quoteId: string, extras: Array<Extra>) => {
       const quote = db.collection("quotes").doc(quoteId);
-      await quote.set({ areas }, { merge: true });
+      await quote.set({ extras: extras }, { merge: true });
     },
   };
 };
