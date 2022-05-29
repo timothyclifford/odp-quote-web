@@ -1,0 +1,68 @@
+<mjml>
+  <mj-body>
+    <mj-section background-color="#FAF0F3">
+      <mj-column>
+        <mj-text>
+          OneDayPaint
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#FAF0F3">
+      <mj-column>
+        <mj-text>
+          Hi {{FIRST_NAME}}
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#FAF0F3">
+      <mj-column>
+        <mj-text>
+          Areas
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#FAF0F3">
+      <mj-column>
+        <mj-text>
+          Extras
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#FAF0F3">
+      <mj-column>
+        <mj-text>
+          Inclusions / exclusions
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#FAF0F3">
+      <mj-column>
+        <mj-text>
+          Price
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#FAF0F3">
+      <mj-column>
+        <mj-text>
+          Book now
+          Email us
+          Call us
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#FAF0F3">
+      <mj-column>
+        <mj-text>
+          A member of our team will be in touch shortly.
+        </mj-text>
+        <mj-text>
+          Have a great day!
+        </mj-text>
+        <mj-text>
+          The team from One Day Paint
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

@@ -1,4 +1,7 @@
 import { customAlphabet } from "nanoid";
+import { Area } from "../area/area";
+import { Extra } from "../extra/extra";
+import { Inclusions } from "../inclusions/inclusion";
 
 const id = customAlphabet("123456789", 8);
 
@@ -13,6 +16,12 @@ export type Quote = {
   postcode: string;
   created: string;
   updated: string;
+};
+
+export type DetailedQuote = Quote & {
+  areas: Array<Area>;
+  extras: Array<Extra>;
+  inclusions: Inclusions;
 };
 
 export type QuoteMutation = Omit<Quote, "created" | "updated">;

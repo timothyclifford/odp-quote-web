@@ -19,7 +19,7 @@ export const AddButton = ({ label, options, onClick }: Props) => {
         {label}
       </button>
       <div
-        className={`absolute w-full h-full top-0 left-0 bg-pink ${
+        className={`fixed w-full h-full top-0 left-0 bg-pink ${
           modal ? "" : "hidden"
         }`}
       >

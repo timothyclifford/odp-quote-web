@@ -11,6 +11,7 @@ export type ItemPricing = { name: string; price: number };
 export type ExtraPricing = { name: string; price: number };
 
 export const PricingService = () => {
+  const cache = new NodeCache({ stdTTL: 1800, checkperiod: 120 });
   const getPricingSpreadsheet = async () => {
     const spreadsheet = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID!);
     await spreadsheet.useServiceAccountAuth({
@@ -22,7 +23,6 @@ export const PricingService = () => {
   };
   return {
     getAreaPricing: async (): Promise<Array<AreaPricing>> => {
-      const cache = new NodeCache({ stdTTL: 1800, checkperiod: 120 });
       const cached = cache.get<Array<AreaPricing>>("getAreaPricing");
       if (cached !== undefined) {
         console.log("Returning areas from cache");
@@ -50,7 +50,6 @@ export const PricingService = () => {
       return data;
     },
     getItemPricing: async (): Promise<Array<ItemPricing>> => {
-      const cache = new NodeCache({ stdTTL: 1800, checkperiod: 120 });
       const cached = cache.get<Array<ItemPricing>>("getItemPricing");
       if (cached !== undefined) {
         console.log("Returning items from cache");
@@ -71,7 +70,6 @@ export const PricingService = () => {
       return data;
     },
     getExtraPricing: async (): Promise<Array<ExtraPricing>> => {
-      const cache = new NodeCache({ stdTTL: 1800, checkperiod: 120 });
       const cached = cache.get<Array<ExtraPricing>>("getExtraPricing");
       if (cached !== undefined) {
         console.log("Returning extras from cache");

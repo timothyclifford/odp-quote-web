@@ -26,7 +26,7 @@ export const QuoteNavigation = () => {
     return router.pathname.indexOf("summary") !== -1;
   };
   const tabFiveActive = () => {
-    return router.pathname.indexOf("email") !== -1;
+    return router.pathname.indexOf("review") !== -1;
   };
   return (
     <div className="p-2 mb-5 grid grid-cols-5 bg-white border border-pink-100 rounded shadow">
@@ -59,9 +59,9 @@ export const QuoteNavigation = () => {
         </Link>
       </div>
       <div>
-        <Link href={`/quotes/${id}/email`}>
+        <Link href={`/quotes/${id}/review`}>
           <a className={`${tab} ${tabFiveActive() ? active : inactive}`}>
-            Submit
+            Review
           </a>
         </Link>
       </div>

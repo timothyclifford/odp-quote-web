@@ -16,6 +16,6 @@ export const buildAreaItem = (
 ): AreaItem => ({
   id: id(),
   name,
-  quantity: 0,
+  quantity: 1,
   price: pricing.find((p) => p.name === name)!.price,
 });

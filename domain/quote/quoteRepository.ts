@@ -1,4 +1,4 @@
-import { QuoteMutation, Quote } from "./quote";
+import { QuoteMutation, Quote, DetailedQuote } from "./quote";
 
 import { getFirestore } from "firebase-admin/firestore";
 import { initialiseFirebase } from "../../firebase";
@@ -28,6 +28,19 @@ export const QuoteRepository = () => {
       }
       return {
         ...(doc.data() as Quote),
+        created: formatDate(doc.createTime?.toDate() ?? new Date()),
+        updated: formatDate(doc.updateTime?.toDate() ?? new Date()),
+      };
+    },
+    getDetailedQuoteById: async (
+      id: string
+    ): Promise<DetailedQuote | undefined> => {
+      const doc = await db.collection("quotes").doc(id).get();
+      if (!doc.exists) {
+        return undefined;
+      }
+      return {
+        ...(doc.data() as DetailedQuote),
         created: formatDate(doc.createTime?.toDate() ?? new Date()),
         updated: formatDate(doc.updateTime?.toDate() ?? new Date()),
       };

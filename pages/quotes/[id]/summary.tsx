@@ -44,7 +44,7 @@ const EditQuote: NextPage<Props> = ({ quoteId, data }) => {
   const toggleExcluded = (name: string, checked: boolean) => {
     const updated: Array<Inclusion> = [];
     for (let x = 0; x < exclusions.length; x++) {
-      if (inclusions[x].name === name) {
+      if (exclusions[x].name === name) {
         updated.push({ name, included: checked });
       } else {
         updated.push(exclusions.slice(x, x + 1)[0]);
@@ -52,18 +52,19 @@ const EditQuote: NextPage<Props> = ({ quoteId, data }) => {
     }
     setExclusions(updated);
   };
+  const buildInclusions = (): Omit<Inclusions, "id"> => ({
+    inclusions,
+    exclusions,
+    comments,
+    discountCode,
+  });
   const save = async () => {
-    const response = await fetch(`/api/quotes/${quoteId}/extras`, {
+    const response = await fetch(`/api/quotes/${quoteId}/inclusions`, {
       method: "PUT",
       headers: {
         "content-type": "application/json;charset=UTF-8",
       },
-      body: JSON.stringify({
-        inclusions,
-        exclusions,
-        comments,
-        discountCode,
-      }),
+      body: JSON.stringify(buildInclusions()),
     });
     if (response.ok) {
       alert("Saved");

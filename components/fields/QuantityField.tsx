@@ -10,7 +10,7 @@ type Props = {
 export const QuantityField = ({ label, quantity, onSave }: Props) => {
   const [value, setValue] = useState(quantity);
   const decrement = () => {
-    if (value > 0) {
+    if (value > 1) {
       setValue(value - 1);
       onSave(value);
     }

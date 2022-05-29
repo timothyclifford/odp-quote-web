@@ -36,7 +36,7 @@ export const AreaItemForm = ({ areaItem, onSave, onDelete }: Props) => {
       </td>
       <td>
         <button className="btn btn-delete" onClick={() => onDelete()}>
-          Delete
+          Remove
         </button>
       </td>
     </tr>

@@ -1,5 +1,5 @@
 import { HTTP_METHODS } from "../../lib/constants";
-import { QuoteMutation, Quote } from "./quote";
+import { QuoteMutation, Quote, DetailedQuote } from "./quote";
 
 const host = process.env.HOST ?? "http://localhost:3000";
 
@@ -18,6 +18,18 @@ export const QuoteService = () => ({
   },
   getById: async (id: string): Promise<Quote | undefined> => {
     const response = await fetch(`${host}/api/quotes/${id}`, {
+      method: HTTP_METHODS.GET,
+      headers: {
+        "content-type": "application/json;charset=UTF-8",
+      },
+    });
+    if (response.ok) {
+      return await response.json();
+    }
+    return undefined;
+  },
+  getDetailedQuote: async (id: string): Promise<DetailedQuote | undefined> => {
+    const response = await fetch(`${host}/api/quotes/${id}/detailed`, {
       method: HTTP_METHODS.GET,
       headers: {
         "content-type": "application/json;charset=UTF-8",

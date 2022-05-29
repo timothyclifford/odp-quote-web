@@ -55,7 +55,7 @@ export const AreaForm = ({ area, itemPricing, onSave, onDelete }: Props) => {
         <HeadingWithAction>
           <Heading2>{area.name}</Heading2>
           <button className="btn btn-delete" onClick={onDelete}>
-            Delete
+            Remove {area.name.toLowerCase()}
           </button>
         </HeadingWithAction>
       </Row>
@@ -107,10 +107,12 @@ export const AreaForm = ({ area, itemPricing, onSave, onDelete }: Props) => {
         <div className="mb-5">
           <table className="area-items-table">
             <thead>
-              <th style={{ textAlign: "left" }}>Name</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th></th>
+              <tr>
+                <th style={{ textAlign: "left" }}>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th></th>
+              </tr>
             </thead>
             <tbody>
               {items.map((areaItem, idx) => {

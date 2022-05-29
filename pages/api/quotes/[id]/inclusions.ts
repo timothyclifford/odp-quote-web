@@ -14,6 +14,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
       return res.status(200).json(inclusions);
     }
+    case HTTP_METHODS.PUT: {
+      const inclusions = await repo.updateQuoteInclusions(quoteId, req.body);
+      return res.status(200).json(inclusions);
+    }
     default: {
       return res.status(404).send(`${method} not supported`);
     }

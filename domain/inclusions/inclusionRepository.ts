@@ -1,6 +1,6 @@
 import { getFirestore } from "firebase-admin/firestore";
 import { initialiseFirebase } from "../../firebase";
-import { Inclusion } from "./inclusion";
+import { Inclusion, Inclusions } from "./inclusion";
 
 export const InclusionRepository = () => {
   initialiseFirebase();
@@ -15,12 +15,9 @@ export const InclusionRepository = () => {
       }
       return undefined;
     },
-    updateQuoteInclusions: async (
-      quoteId: string,
-      inclusions: Array<Inclusion>
-    ) => {
+    updateQuoteInclusions: async (quoteId: string, inclusions: Inclusions) => {
       const quote = db.collection("quotes").doc(quoteId);
-      await quote.set({ inclusions: inclusions }, { merge: true });
+      await quote.set({ inclusions }, { merge: true });
     },
   };
 };

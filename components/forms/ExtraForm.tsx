@@ -6,6 +6,7 @@ import { InputField } from "../fields/InputField";
 import { QuantityField } from "../fields/QuantityField";
 import { TextAreaField } from "../fields/TextArea";
 import { Heading2 } from "../Heading2";
+import { HeadingWithAction } from "../HeadingWithAction";
 import { Row } from "../Row";
 
 type Props = {
@@ -26,7 +27,12 @@ export const ExtraForm = ({ extra, onSave, onDelete }: Props) => {
   return (
     <Card>
       <Row>
-        <Heading2>{extra.name}</Heading2>
+        <HeadingWithAction>
+          <Heading2>{extra.name}</Heading2>
+          <button className="btn btn-delete" onClick={onDelete}>
+            Remove {extra.name.toLowerCase()}
+          </button>
+        </HeadingWithAction>
       </Row>
       <Row>
         <InputField
@@ -50,11 +56,6 @@ export const ExtraForm = ({ extra, onSave, onDelete }: Props) => {
           value={comment}
           onChange={(e) => save(() => setComment(e))}
         ></TextAreaField>
-      </Row>
-      <Row>
-        <button className="btn btn-delete" onClick={onDelete}>
-          Delete {extra.name}
-        </button>
       </Row>
     </Card>
   );
