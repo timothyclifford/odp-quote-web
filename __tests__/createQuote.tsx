@@ -3,7 +3,7 @@ import "@testing-library/jest-dom";
 import CreateQuote from "../pages/quotes/new";
 
 const fieldLabels = [
-  "ID",
+  "Quote number",
   "First name",
   "Last name",
   "Email",

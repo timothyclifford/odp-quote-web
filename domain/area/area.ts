@@ -1,7 +1,7 @@
 import { AreaItem } from "./areaItem";
 
 import { customAlphabet } from "nanoid";
-import { getAreaPrice } from "../../lib/helpers";
+import { AreaPricing } from "../pricing/pricingService";
 
 const id = customAlphabet("123456789", 4);
 
@@ -15,10 +15,10 @@ export type Area = {
   comment: string;
 };
 
-export const buildArea = (name: string): Area => ({
+export const buildArea = (name: string, pricing: AreaPricing[]): Area => ({
   id: id(),
   name,
-  price: getAreaPrice(name),
+  price: pricing.find((p) => p.name === name)!.price,
   includeCeilings: false,
   includeSkirting: false,
   items: [],

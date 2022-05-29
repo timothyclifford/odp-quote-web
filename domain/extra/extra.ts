@@ -1,5 +1,5 @@
 import { customAlphabet } from "nanoid";
-import { getExtraPrice } from "../../lib/helpers";
+import { ExtraPricing } from "../pricing/pricingService";
 
 const id = customAlphabet("123456789", 4);
 
@@ -11,10 +11,13 @@ export type Extra = {
   comment: string;
 };
 
-export const buildExtra = (name: string): Extra => ({
+export const buildExtra = (
+  name: string,
+  pricing: Array<ExtraPricing>
+): Extra => ({
   id: id(),
   name,
   quantity: 0,
-  price: getExtraPrice(name),
+  price: pricing.find((p) => p.name === name)!.price,
   comment: "",
 });

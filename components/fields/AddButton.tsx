@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Heading2 } from "../Heading2";
 
 type Props = {
   label: string;
@@ -7,39 +8,44 @@ type Props = {
 };
 
 export const AddButton = ({ label, options, onClick }: Props) => {
-  const [selected, setSelected] = useState("");
-  const [error, setError] = useState(false);
-  const add = () => {
-    if (selected.length < 1) {
-      setError(true);
-      return;
-    }
+  const [modal, setModal] = useState(false);
+  const select = (selected: string) => {
     onClick(selected);
-    setSelected("");
+    setModal(false);
   };
   return (
-    <div className="form-control">
-      <label className="label">
-        <span className="label-text">{label}</span>
-      </label>
-      <div className="input-group">
-        <select
-          className={`select select-bordered ${error ? "select-error" : ""}`}
-          value={selected}
-          onChange={(e) => {
-            setError(false);
-            setSelected(e.target.value);
-          }}
-        >
-          <option></option>
+    <>
+      <button className="btn btn-add" onClick={() => setModal(true)}>
+        {label}
+      </button>
+      <div
+        className={`absolute w-full h-full top-0 left-0 bg-pink ${
+          modal ? "" : "hidden"
+        }`}
+      >
+        <div className="h-full grid grid-cols-1 place-content-center text-center">
+          <div className="py-3 my-3 font-bold text-xl uppercase">{label}</div>
           {options.map((n) => {
-            return <option key={n}>{n}</option>;
+            return (
+              <div
+                key={n}
+                className="w-72 py-3 my-3 mx-auto bg-white border border-pink-100 rounded cursor-pointer"
+                onClick={() => {
+                  select(n);
+                }}
+              >
+                {n}
+              </div>
+            );
           })}
-        </select>
-        <button className="btn" onClick={add}>
-          Add
-        </button>
+        </div>
+        <div
+          className="absolute top-5 right-8 px-4 py-2 bg-red-400 text-white text-xl rounded-3xl cursor-pointer"
+          onClick={() => setModal(false)}
+        >
+          ✖
+        </div>
       </div>
-    </div>
+    </>
   );
 };

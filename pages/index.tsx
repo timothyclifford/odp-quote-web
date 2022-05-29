@@ -1,10 +1,7 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { Footer } from "../components/Footer";
-import { Heading1 } from "../components/Heading1";
 import { Layout } from "../components/Layout";
-import { Row } from "../components/Row";
 import { Quote } from "../domain/quote/quote";
 import { QuoteRepository } from "../domain/quote/quoteRepository";
 
@@ -35,10 +32,10 @@ const Dashboard: NextPage<Props> = ({ quotes }) => {
         <title>Quote</title>
       </Head>
       <main>
-        <table className="table w-full table-zebra">
+        <table className="w-full quotes-table">
           <thead>
             <tr>
-              <th>ID</th>
+              <th>Number</th>
               <th>Date</th>
               <th>Email</th>
               <th>Last name</th>
@@ -57,18 +54,11 @@ const Dashboard: NextPage<Props> = ({ quotes }) => {
                   <td>{q.suburb}</td>
                   <td>
                     <button
-                      className="btn btn-secondary"
+                      className="btn"
                       onClick={() => router.push(`/quotes/${q.id}`)}
                       title="View quote"
                     >
-                      <img src="/view.png" width={24} />
-                    </button>
-                    <button
-                      className="btn btn-error ml-2"
-                      onClick={() => deleteQuote(q.id)}
-                      title="Delete quote"
-                    >
-                      <img src="/trash.png" width={24} />
+                      View
                     </button>
                   </td>
                 </tr>

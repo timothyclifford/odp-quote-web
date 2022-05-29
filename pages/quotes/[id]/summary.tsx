@@ -8,12 +8,17 @@ import { Row } from "../../../components/Row";
 import { useState } from "react";
 import { TextAreaField } from "../../../components/fields/TextArea";
 import { InputField } from "../../../components/fields/InputField";
-import { InclusionsService } from "../../../domain/inclusions/extraService";
+import { InclusionsService } from "../../../domain/inclusions/inclusionsService";
 import {
   buildInclusions,
   Inclusion,
   Inclusions,
 } from "../../../domain/inclusions/inclusion";
+import { Heading1 } from "../../../components/Heading1";
+import { Checkbox } from "../../../components/fields/Checkbox";
+import { Card } from "../../../components/Card";
+import { Label } from "../../../components/fields/Label";
+import { HeadingWithAction } from "../../../components/HeadingWithAction";
 
 type Props = {
   quoteId: string;
@@ -69,67 +74,70 @@ const EditQuote: NextPage<Props> = ({ quoteId, data }) => {
   return (
     <Layout>
       <Head>
-        <title>{`Quote ${data.id} summary`}</title>
+        <title>{`Quote ${quoteId}`}</title>
       </Head>
       <main>
         <QuoteNavigation></QuoteNavigation>
-        <Heading2 text={`Quote ${data.id} summary`}></Heading2>
-        <Heading3 text="Inclusions"></Heading3>
-        {inclusions.map((inc) => {
-          return (
-            <Row>
-              <div className="form-control w-36">
-                <label className="label cursor-pointer">
-                  <span className="label-text">{inc.name}</span>
-                  <input
-                    type="checkbox"
-                    className="toggle"
-                    defaultChecked={inc.included}
-                    onChange={(e) => toggleIncluded(inc.name, e.target.checked)}
-                  ></input>
-                </label>
+        <Row>
+          <HeadingWithAction>
+            <Heading1>Quote {quoteId}</Heading1>
+          </HeadingWithAction>
+        </Row>
+        <Card>
+          <Row>
+            <div className="grid grid-cols-2">
+              <div>
+                <Label>Inclusions</Label>
+                {inclusions.map((inc) => {
+                  return (
+                    <div className="mb-2" key={inc.name}>
+                      <Checkbox
+                        label={inc.name}
+                        checked={inc.included}
+                        onChange={(e) =>
+                          toggleIncluded(inc.name, e.target.checked)
+                        }
+                      ></Checkbox>
+                    </div>
+                  );
+                })}
               </div>
-            </Row>
-          );
-        })}
-        <Heading3 text="Exclusions"></Heading3>
-        {exclusions.map((exc) => {
-          return (
-            <Row>
-              <div className="form-control w-36">
-                <label className="label cursor-pointer">
-                  <span className="label-text">{exc.name}</span>
-                  <input
-                    type="checkbox"
-                    className="toggle"
-                    defaultChecked={exc.included}
-                    onChange={(e) => toggleExcluded(exc.name, e.target.checked)}
-                  ></input>
-                </label>
+              <div>
+                <Label>Exclusions</Label>
+                {exclusions.map((exc) => {
+                  return (
+                    <div className="mb-2" key={exc.name}>
+                      <Checkbox
+                        label={exc.name}
+                        checked={exc.included}
+                        onChange={(e) =>
+                          toggleExcluded(exc.name, e.target.checked)
+                        }
+                      ></Checkbox>
+                    </div>
+                  );
+                })}
               </div>
-            </Row>
-          );
-        })}
-        <Heading3 text="Comments"></Heading3>
-        <Row>
-          <TextAreaField
-            label="Comments"
-            value={comments}
-            onChange={(e) => setComments(e)}
-          ></TextAreaField>
-        </Row>
-        <Heading3 text="Discount code"></Heading3>
-        <Row>
-          <InputField
-            value={discountCode}
-            onChange={(e) => setDiscountCode(e)}
-          ></InputField>
-        </Row>
-        <Row>
-          <button className="btn btn-primary" onClick={save}>
-            Review quote
-          </button>
-        </Row>
+            </div>
+          </Row>
+          <Row>
+            <Label>Comments</Label>
+            <TextAreaField
+              value={comments}
+              onChange={(e) => setComments(e)}
+            ></TextAreaField>
+          </Row>
+          <Row>
+            <Label>Discount code</Label>
+            <InputField
+              value={discountCode}
+              onChange={(e) => setDiscountCode(e)}
+            ></InputField>
+          </Row>
+        </Card>
+        <button className="btn" onClick={save}>
+          Save
+        </button>
       </main>
     </Layout>
   );
@@ -139,7 +147,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const quoteId = context.params!.id as string;
   const service = InclusionsService();
   let inclusions = await service.getQuoteInclusions(quoteId);
-  console.log(inclusions);
   return {
     props: {
       quoteId,

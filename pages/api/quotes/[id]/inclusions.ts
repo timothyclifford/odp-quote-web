@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { HTTP_METHODS } from "../../../../lib/constants";
-import { InclusionRepository } from "../../../../domain/inclusions/InclusionRepository";
+import { InclusionRepository } from "../../../../domain/inclusions/inclusionRepository";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const repo = InclusionRepository();

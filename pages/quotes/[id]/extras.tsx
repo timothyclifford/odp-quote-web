@@ -3,28 +3,33 @@ import Head from "next/head";
 import { useState } from "react";
 import { AddButton } from "../../../components/fields/AddButton";
 import { ExtraForm } from "../../../components/forms/ExtraForm";
-import { Footer } from "../../../components/Footer";
 import { Heading1 } from "../../../components/Heading1";
-import { Heading2 } from "../../../components/Heading2";
 import { Layout } from "../../../components/Layout";
-import { Navigation } from "../../../components/Navigation";
 import { Row } from "../../../components/Row";
 import { buildExtra, Extra } from "../../../domain/extra/extra";
 import { QuoteNavigation } from "../../../components/QuoteNavigation";
-import { EXTRA_NAMES } from "../../../lib/constants";
 import { ExtraService } from "../../../domain/extra/extraService";
+import { HeadingWithAction } from "../../../components/HeadingWithAction";
+import {
+  ExtraPricing,
+  PricingService,
+} from "../../../domain/pricing/pricingService";
 
 type Props = {
   quoteId: string;
-  data: Array<Extra>;
+  quoteExtras: Array<Extra>;
+  extraPricing: Array<ExtraPricing>;
 };
 
-const EditExtras: NextPage<Props> = ({ quoteId, data }) => {
-  const [extras, setExtras] = useState<Array<Extra>>(data);
+const EditExtras: NextPage<Props> = ({
+  quoteId,
+  quoteExtras,
+  extraPricing,
+}) => {
+  const [extras, setExtras] = useState<Array<Extra>>(quoteExtras);
 
-  // Extra
   const addExtra = (name: string) => {
-    setExtras([...extras, buildExtra(name)]);
+    setExtras([...extras, buildExtra(name, extraPricing)]);
   };
   const saveExtra = (extra: Extra, idx: number) => {
     const updated = [...extras];
@@ -54,30 +59,34 @@ const EditExtras: NextPage<Props> = ({ quoteId, data }) => {
   return (
     <Layout>
       <Head>
-        <title>{`Quote ${quoteId} extras`}</title>
+        <title>{`Quote ${quoteId}`}</title>
       </Head>
       <main>
         <QuoteNavigation></QuoteNavigation>
-        <Heading2 text={`Quote ${quoteId} extras`}></Heading2>
         <Row>
-          <AddButton
-            label="Add extra"
-            options={EXTRA_NAMES}
-            onClick={(n) => addExtra(n)}
-          ></AddButton>
+          <HeadingWithAction>
+            <Heading1>Quote {quoteId}</Heading1>
+            <AddButton
+              label="Add extra"
+              options={extraPricing.map((p) => p.name)}
+              onClick={(n) => addExtra(n)}
+            ></AddButton>
+          </HeadingWithAction>
         </Row>
         {extras.map((extra, idx) => {
           return (
             <ExtraForm
               key={idx}
               extra={extra}
+              pricing={extraPricing}
               onSave={(e) => saveExtra(e, idx)}
               onDelete={() => deleteExtra(extra.id)}
             ></ExtraForm>
           );
         })}
+        {extras.length === 0 && <Row>Nothing added yet...</Row>}
         <Row>
-          <button className="btn btn-primary" onClick={() => save()}>
+          <button className="btn" onClick={() => save()}>
             Save
           </button>
         </Row>
@@ -86,14 +95,19 @@ const EditExtras: NextPage<Props> = ({ quoteId, data }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps<Props> = async (
+  context
+) => {
   const quoteId = context.params!.id as string;
   const service = ExtraService();
-  const extras = await service.getQuoteExtras(quoteId);
+  const quoteExtras = await service.getQuoteExtras(quoteId);
+  const pricingService = PricingService();
+  const extraPricing = await pricingService.getExtraPricing();
   return {
     props: {
       quoteId,
-      data: extras,
+      quoteExtras,
+      extraPricing,
     },
   };
 };

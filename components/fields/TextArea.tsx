@@ -1,20 +1,20 @@
+import { Label } from "./Label";
+
 export const TextAreaField = ({
   label,
   value,
   placeholder,
   onChange,
 }: {
-  label: string;
+  label?: string;
   value?: string;
   placeholder?: string;
   onChange?: (value: string) => void;
 }) => (
-  <div className="form-control">
-    <label className="label">
-      <span className="label-text">{label}</span>
-    </label>
+  <div>
+    <Label>{label}</Label>
     <textarea
-      className="textarea textarea-bordered h-24"
+      className="w-full h-24 p-4 border border-gray-200 bg-gray-50"
       value={value}
       placeholder={placeholder}
       onChange={onChange ? (el) => onChange(el.target.value) : undefined}

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { AREA_ITEM_NAMES } from "../../lib/constants";
 import { Area } from "../../domain/area/area";
 import { AreaItem, buildAreaItem } from "../../domain/area/areaItem";
 import { AddButton } from "../fields/AddButton";
@@ -8,24 +7,29 @@ import { Heading3 } from "../Heading3";
 import { Row } from "../Row";
 import { InputField } from "../fields/InputField";
 import { TextAreaField } from "../fields/TextArea";
+import { Heading2 } from "../Heading2";
+import { Checkbox } from "../fields/Checkbox";
+import { Card } from "../Card";
+import { HeadingWithAction } from "../HeadingWithAction";
+import { ItemPricing } from "../../domain/pricing/pricingService";
 
 type Props = {
   area: Area;
+  itemPricing: Array<ItemPricing>;
   onSave: (area: Area) => void;
   onDelete: () => void;
 };
 
-export const AreaForm = ({ area, onSave, onDelete }: Props) => {
+export const AreaForm = ({ area, itemPricing, onSave, onDelete }: Props) => {
   const [price, setPrice] = useState(area.price);
   const [includeCeilings, setIncludeCeilings] = useState(area.includeCeilings);
   const [includeSkirting, setIncludeSkirting] = useState(area.includeSkirting);
   const [comment, setComment] = useState(area.comment);
   const [items, setItems] = useState(area.items);
   const addAreaItem = (name: string) => {
-    setItems([...items, buildAreaItem(name)]);
+    setItems([...items, buildAreaItem(name, itemPricing)]);
   };
   const saveAreaItem = (areaItem: AreaItem, idx: number) => {
-    console.log(areaItem);
     const updated = [...items];
     updated[idx] = areaItem;
     setItems(updated);
@@ -35,7 +39,6 @@ export const AreaForm = ({ area, onSave, onDelete }: Props) => {
     setItems(updated);
   };
   useEffect(() => {
-    console.log("saving area...");
     onSave({
       id: area.id,
       name: area.name,
@@ -47,8 +50,15 @@ export const AreaForm = ({ area, onSave, onDelete }: Props) => {
     });
   }, [price, includeCeilings, includeSkirting, comment, items]);
   return (
-    <div className="border p-6 mb-6">
-      <Row>{area.name}</Row>
+    <Card>
+      <Row>
+        <HeadingWithAction>
+          <Heading2>{area.name}</Heading2>
+          <button className="btn btn-delete" onClick={onDelete}>
+            Delete
+          </button>
+        </HeadingWithAction>
+      </Row>
       <Row>
         <InputField
           label="Price"
@@ -59,29 +69,21 @@ export const AreaForm = ({ area, onSave, onDelete }: Props) => {
         ></InputField>
       </Row>
       <Row>
-        <div className="form-control w-36">
-          <label className="label cursor-pointer">
-            <span className="label-text">Ceilings</span>
-            <input
-              type="checkbox"
-              className="toggle"
-              defaultChecked={includeCeilings}
+        <div className="flex">
+          <div className="mr-16">
+            <Checkbox
+              label="Include ceilings?"
+              checked={includeCeilings}
               onChange={(e) => setIncludeCeilings(e.target.checked)}
-            ></input>
-          </label>
-        </div>
-      </Row>
-      <Row>
-        <div className="form-control w-36">
-          <label className="label cursor-pointer">
-            <span className="label-text">Skirting</span>
-            <input
-              type="checkbox"
-              className="toggle"
-              defaultChecked={includeSkirting}
+            ></Checkbox>
+          </div>
+          <div>
+            <Checkbox
+              label="Include skirting?"
+              checked={includeSkirting}
               onChange={(e) => setIncludeSkirting(e.target.checked)}
-            ></input>
-          </label>
+            ></Checkbox>
+          </div>
         </div>
       </Row>
       <Row>
@@ -92,23 +94,23 @@ export const AreaForm = ({ area, onSave, onDelete }: Props) => {
         ></TextAreaField>
       </Row>
       <Row>
-        <Heading3 text="Items"></Heading3>
-      </Row>
-      <Row>
-        <AddButton
-          label="Add item"
-          options={AREA_ITEM_NAMES}
-          onClick={(n) => addAreaItem(n)}
-        ></AddButton>
+        <HeadingWithAction>
+          <Heading3>{area.name} items</Heading3>
+          <AddButton
+            label={`Add ${area.name.toLowerCase()} item`}
+            options={itemPricing.map((p) => p.name)}
+            onClick={(n) => addAreaItem(n)}
+          ></AddButton>
+        </HeadingWithAction>
       </Row>
       {items.length > 0 && (
-        <div className="overflow-x-auto">
-          <table className="table w-full">
+        <div className="mb-5">
+          <table className="area-items-table">
             <thead>
-              <th>Name</th>
+              <th style={{ textAlign: "left" }}>Name</th>
               <th>Price</th>
               <th>Quantity</th>
-              <td></td>
+              <th></th>
             </thead>
             <tbody>
               {items.map((areaItem, idx) => {
@@ -125,11 +127,6 @@ export const AreaForm = ({ area, onSave, onDelete }: Props) => {
           </table>
         </div>
       )}
-      <Row>
-        <button className="btn btn-error" onClick={onDelete}>
-          Delete {area.name}
-        </button>
-      </Row>
-    </div>
+    </Card>
   );
 };

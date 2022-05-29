@@ -4,6 +4,9 @@ import { useRouter } from "next/router";
 export const QuoteNavigation = () => {
   const router = useRouter();
   const id = router.asPath.split("/")[2];
+  const tab = "block py-3 text-center text-sm rounded cursor-pointer";
+  const active = "bg-pink-100 text-pink-300";
+  const inactive = "text-pink-300";
 
   const tabOneActive = () => {
     return !(
@@ -26,50 +29,40 @@ export const QuoteNavigation = () => {
     return router.pathname.indexOf("email") !== -1;
   };
   return (
-    <div className="tabs w-full my-8 bg-pink-200">
-      <div
-        className={`tab bordered flex-auto px-0 ${
-          tabOneActive() ? "tab-active" : ""
-        }`}
-      >
+    <div className="p-2 mb-5 grid grid-cols-5 bg-white border border-pink-100 rounded shadow">
+      <div>
         <Link href={`/quotes/${id}/`}>
-          <a>Customer details</a>
+          <a className={`${tab} ${tabOneActive() ? active : inactive}`}>
+            Customer
+          </a>
         </Link>
       </div>
-      <div
-        className={`tab bordered flex-auto px-0 ${
-          tabTwoActive() ? "tab-active" : ""
-        }`}
-      >
+      <div>
         <Link href={`/quotes/${id}/areas`}>
-          <a>Areas to paint</a>
+          <a className={`${tab} ${tabTwoActive() ? active : inactive}`}>
+            Areas
+          </a>
         </Link>
       </div>
-      <div
-        className={`tab bordered flex-auto px-0 ${
-          tabThreeActive() ? "tab-active" : ""
-        }`}
-      >
+      <div>
         <Link href={`/quotes/${id}/extras`}>
-          <a>Extras</a>
+          <a className={`${tab} ${tabThreeActive() ? active : inactive}`}>
+            Extras
+          </a>
         </Link>
       </div>
-      <div
-        className={`tab bordered flex-auto px-0 ${
-          tabFourActive() ? "tab-active" : ""
-        }`}
-      >
+      <div>
         <Link href={`/quotes/${id}/summary`}>
-          <a>Quote summary</a>
+          <a className={`${tab} ${tabFourActive() ? active : inactive}`}>
+            Summary
+          </a>
         </Link>
       </div>
-      <div
-        className={`tab bordered flex-auto px-0 ${
-          tabFiveActive() ? "tab-active" : ""
-        }`}
-      >
+      <div>
         <Link href={`/quotes/${id}/email`}>
-          <a>Email customer</a>
+          <a className={`${tab} ${tabFiveActive() ? active : inactive}`}>
+            Submit
+          </a>
         </Link>
       </div>
     </div>

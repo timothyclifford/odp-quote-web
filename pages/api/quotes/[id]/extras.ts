@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { HTTP_METHODS } from "../../../../lib/constants";
-import { AreaRepository } from "../../../../domain/area/areaRepository";
 import { ExtraRepository } from "../../../../domain/extra/extraRepository";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

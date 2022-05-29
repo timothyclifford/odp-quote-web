@@ -3,27 +3,36 @@ import Head from "next/head";
 import { useState } from "react";
 import { AddButton } from "../../../components/fields/AddButton";
 import { AreaForm } from "../../../components/forms/AreaForm";
-import { Footer } from "../../../components/Footer";
 import { Heading1 } from "../../../components/Heading1";
-import { Heading2 } from "../../../components/Heading2";
 import { Layout } from "../../../components/Layout";
-import { Navigation } from "../../../components/Navigation";
 import { Row } from "../../../components/Row";
 import { Area, buildArea } from "../../../domain/area/area";
 import { QuoteNavigation } from "../../../components/QuoteNavigation";
 import { AreaService } from "../../../domain/area/areaService";
-import { AREA_NAMES } from "../../../lib/constants";
+import { HeadingWithAction } from "../../../components/HeadingWithAction";
+import {
+  AreaPricing,
+  ItemPricing,
+  PricingService,
+} from "../../../domain/pricing/pricingService";
 
 type Props = {
   quoteId: string;
-  data: Array<Area>;
+  quoteAreas: Array<Area>;
+  areaPricing: Array<AreaPricing>;
+  itemPricing: Array<ItemPricing>;
 };
 
-const EditAreas: NextPage<Props> = ({ quoteId, data }) => {
-  const [areas, setAreas] = useState<Array<Area>>(data);
+const EditAreas: NextPage<Props> = ({
+  quoteId,
+  quoteAreas,
+  areaPricing,
+  itemPricing,
+}) => {
+  const [areas, setAreas] = useState<Array<Area>>(quoteAreas);
 
   const addArea = (name: string) => {
-    setAreas([...areas, buildArea(name)]);
+    setAreas([...areas, buildArea(name, areaPricing)]);
   };
   const saveArea = (area: Area, idx: number) => {
     const updated = [...areas];
@@ -53,30 +62,34 @@ const EditAreas: NextPage<Props> = ({ quoteId, data }) => {
   return (
     <Layout>
       <Head>
-        <title>{`Quote ${quoteId} areas to paint`}</title>
+        <title>{`Quote ${quoteId}`}</title>
       </Head>
       <main>
         <QuoteNavigation></QuoteNavigation>
-        <Heading2 text={`Quote ${quoteId} areas to paint`}></Heading2>
         <Row>
-          <AddButton
-            label="Add area"
-            options={AREA_NAMES}
-            onClick={(n) => addArea(n)}
-          ></AddButton>
+          <HeadingWithAction>
+            <Heading1>Quote {quoteId}</Heading1>
+            <AddButton
+              label="Add area"
+              options={areaPricing.map((a) => a.name)}
+              onClick={(n) => addArea(n)}
+            ></AddButton>
+          </HeadingWithAction>
         </Row>
         {areas.map((area, idx) => {
           return (
             <AreaForm
               key={idx}
               area={area}
+              itemPricing={itemPricing}
               onSave={(a) => saveArea(a, idx)}
               onDelete={() => deleteArea(area.id)}
             ></AreaForm>
           );
         })}
+        {areas.length === 0 && <Row>Nothing added yet...</Row>}
         <Row>
-          <button className="btn btn-primary" onClick={() => save()}>
+          <button className="btn btn-save" onClick={() => save()}>
             Save
           </button>
         </Row>
@@ -85,14 +98,21 @@ const EditAreas: NextPage<Props> = ({ quoteId, data }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps<Props> = async (
+  context
+) => {
   const quoteId = context.params!.id as string;
-  const service = AreaService();
-  const areas = await service.getQuoteAreas(quoteId);
+  const areaService = AreaService();
+  const quoteAreas = await areaService.getQuoteAreas(quoteId);
+  const pricingService = PricingService();
+  const areaPricing = await pricingService.getAreaPricing();
+  const itemPricing = await pricingService.getItemPricing();
   return {
     props: {
       quoteId,
-      data: areas,
+      quoteAreas,
+      areaPricing,
+      itemPricing,
     },
   };
 };

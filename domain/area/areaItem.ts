@@ -1,5 +1,5 @@
 import { customAlphabet } from "nanoid";
-import { getAreaItemPrice } from "../../lib/helpers";
+import { ItemPricing } from "../pricing/pricingService";
 
 const id = customAlphabet("123456789", 4);
 
@@ -10,9 +10,12 @@ export type AreaItem = {
   price: number;
 };
 
-export const buildAreaItem = (name: string): AreaItem => ({
+export const buildAreaItem = (
+  name: string,
+  pricing: Array<ItemPricing>
+): AreaItem => ({
   id: id(),
   name,
   quantity: 0,
-  price: getAreaItemPrice(name),
+  price: pricing.find((p) => p.name === name)!.price,
 });

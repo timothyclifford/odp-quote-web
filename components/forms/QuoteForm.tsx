@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { QuoteMutation } from "../../domain/quote/quote";
+import { Card } from "../Card";
 import { InputField } from "../fields/InputField";
 import { Row } from "../Row";
 
@@ -30,65 +31,69 @@ export const QuoteForm = ({ quote, onSubmit }: Props) => {
   };
   return (
     <>
-      {/* <Row>
-        <InputField label="ID" value={quote!.id} disabled={true}></InputField>
-      </Row> */}
-      <Row>
-        <InputField
-          label="First name"
-          value={firstName}
-          onChange={setFirstName}
-        ></InputField>
-      </Row>
-      <Row>
-        <InputField
-          label="Last name"
-          value={lastName}
-          onChange={setLastName}
-        ></InputField>
-      </Row>
-      <Row>
-        <InputField
-          label="Email"
-          type="email"
-          value={email}
-          onChange={setEmail}
-        ></InputField>
-      </Row>
-      <Row>
-        <InputField
-          label="Phone"
-          type="phone"
-          value={phone}
-          onChange={setPhone}
-        ></InputField>
-      </Row>
-      <Row>
-        <InputField
-          label="Street"
-          value={street}
-          onChange={setStreet}
-        ></InputField>
-      </Row>
-      <Row>
-        <InputField
-          label="Suburb"
-          value={suburb}
-          onChange={setSuburb}
-        ></InputField>
-      </Row>
-      <Row>
-        <InputField
-          label="Postcode"
-          value={postcode}
-          onChange={setPostcode}
-        ></InputField>
-      </Row>
-      <Row>
-        <button className="btn btn-primary" onClick={saveQuote}>
-          Save
-        </button>
-      </Row>
+      <Card>
+        <Row>
+          <InputField
+            label="Quote number"
+            value={quote!.id}
+            disabled={true}
+          ></InputField>
+        </Row>
+        <Row>
+          <InputField
+            label="First name"
+            value={firstName}
+            onChange={setFirstName}
+          ></InputField>
+        </Row>
+        <Row>
+          <InputField
+            label="Last name"
+            value={lastName}
+            onChange={setLastName}
+          ></InputField>
+        </Row>
+        <Row>
+          <InputField
+            label="Email"
+            type="email"
+            value={email}
+            onChange={setEmail}
+          ></InputField>
+        </Row>
+        <Row>
+          <InputField
+            label="Phone"
+            type="phone"
+            value={phone}
+            onChange={setPhone}
+          ></InputField>
+        </Row>
+        <Row>
+          <InputField
+            label="Street"
+            value={street}
+            onChange={setStreet}
+          ></InputField>
+        </Row>
+        <Row>
+          <InputField
+            label="Suburb"
+            value={suburb}
+            onChange={setSuburb}
+          ></InputField>
+        </Row>
+        <Row>
+          <InputField
+            label="Postcode"
+            value={postcode}
+            onChange={setPostcode}
+          ></InputField>
+        </Row>
+      </Card>
+      <button className="btn" onClick={saveQuote}>
+        Save
+      </button>
     </>
   );
 };

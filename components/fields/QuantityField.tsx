@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
+import { Label } from "./Label";
 
 type Props = {
   label?: string;
@@ -8,34 +9,35 @@ type Props = {
 
 export const QuantityField = ({ label, quantity, onSave }: Props) => {
   const [value, setValue] = useState(quantity);
-  useEffect(() => {
-    console.log("Saving...");
+  const decrement = () => {
+    if (value > 0) {
+      setValue(value - 1);
+      onSave(value);
+    }
+  };
+  const increment = () => {
+    setValue(value + 1);
     onSave(value);
-  }, [value]);
+  };
   return (
-    <div className="form-control">
-      {label && (
-        <label className="label">
-          <span className="label-text">Quantity</span>
-        </label>
-      )}
+    <>
+      <Label>{label}</Label>
       <div className="flex">
-        <button
-          className="btn"
-          onClick={() => (value > 0 ? setValue(value - 1) : undefined)}
-        >
+        <button className="btn btn-quanity" onClick={() => decrement()}>
           -
         </button>
         <input
           type="text"
-          className="input input-bordered w-14 mx-3 text-center rounded"
+          className="border border-gray-200 bg-gray-50 w-12 mx-3 text-center"
+          inputMode="numeric"
+          pattern="[0-9]*"
           value={value}
           readOnly
         ></input>
-        <button className="btn" onClick={() => setValue(value + 1)}>
+        <button className="btn btn-quanity" onClick={() => increment()}>
           +
         </button>
       </div>
-    </div>
+    </>
   );
 };

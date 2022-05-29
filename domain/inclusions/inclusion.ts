@@ -18,12 +18,12 @@ export type Inclusions = {
 export const buildInclusions = (): Inclusions => ({
   id: id(),
   inclusions: [
-    { name: "inclusion1", included: true },
-    { name: "inclusion2", included: true },
+    { name: "Minor patching", included: false },
+    { name: "10 year warranty", included: false },
   ],
   exclusions: [
-    { name: "exclusion1", included: false },
-    { name: "exclusion2", included: false },
+    { name: "Aluminium windows", included: false },
+    { name: "Carptet cleaning", included: false },
   ],
   comments: "",
   discountCode: "",

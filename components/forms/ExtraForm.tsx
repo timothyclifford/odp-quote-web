@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { Extra } from "../../domain/extra/extra";
+import { ExtraPricing } from "../../domain/pricing/pricingService";
+import { Card } from "../Card";
 import { InputField } from "../fields/InputField";
 import { QuantityField } from "../fields/QuantityField";
 import { TextAreaField } from "../fields/TextArea";
+import { Heading2 } from "../Heading2";
 import { Row } from "../Row";
 
 type Props = {
   extra: Extra;
+  pricing: Array<ExtraPricing>;
   onSave: (extra: Extra) => void;
   onDelete: () => void;
 };
@@ -20,8 +24,10 @@ export const ExtraForm = ({ extra, onSave, onDelete }: Props) => {
     onSave({ id: extra.id, name: extra.name, price, quantity, comment });
   };
   return (
-    <div className="border p-6 mb-6">
-      <Row>{extra.name}</Row>
+    <Card>
+      <Row>
+        <Heading2>{extra.name}</Heading2>
+      </Row>
       <Row>
         <InputField
           label="Price"
@@ -46,10 +52,10 @@ export const ExtraForm = ({ extra, onSave, onDelete }: Props) => {
         ></TextAreaField>
       </Row>
       <Row>
-        <button className="btn btn-error" onClick={onDelete}>
+        <button className="btn btn-delete" onClick={onDelete}>
           Delete {extra.name}
         </button>
       </Row>
-    </div>
+    </Card>
   );
 };

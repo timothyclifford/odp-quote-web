@@ -1,7 +1,5 @@
-type Props = {
-  text: string;
-};
+import { PropsWithChildren } from "react";
 
-export const Heading1 = ({ text }: Props) => {
-  return <h1 className="text-3xl mb-4">{text}</h1>;
+export const Heading1 = ({ children }: PropsWithChildren<{}>) => {
+  return <h1 className="text-3xl">{children}</h1>;
 };
