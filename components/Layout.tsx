@@ -25,7 +25,7 @@ export const Layout = ({ children }: PropsWithChildren<{}>) => {
           backgroundSize: "55%",
         }}
       ></div>
-      <div className="container mx-auto py-5">
+      <div className="container mx-auto p-5">
         <Navigation></Navigation>
         {children}
       </div>

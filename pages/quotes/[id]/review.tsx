@@ -54,7 +54,7 @@ const EmailQuote: NextPage<Props> = ({ quote }) => {
                 </Row>
                 <Row>Items</Row>
                 {area.items.map((item) => (
-                  <div>
+                  <div key={item.id}>
                     {item.quantity} x {item.name}
                   </div>
                 ))}
