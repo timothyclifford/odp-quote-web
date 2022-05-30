@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { Heading1 } from "../../components/Heading1";
 import { Layout } from "../../components/Layout";
 import { QuoteForm } from "../../components/forms/QuoteForm";
-import { buildQuote, QuoteMutation, Quote } from "../../domain/quote/quote";
+import { buildQuote, QuoteMutation } from "../../domain/quote/quote";
 import { Row } from "../../components/Row";
 import toast from "react-hot-toast";
 

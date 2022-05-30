@@ -49,9 +49,9 @@ export const QuoteService = () => ({
       body: JSON.stringify(quote),
     });
     if (response.ok) {
-      throw new Error("Error creating quote");
+      return response.json();
     }
-    return response.json();
+    throw new Error("Error creating quote");
   },
   updateQuote: async (quote: QuoteMutation): Promise<Quote> => {
     const response = await fetch(`${host}/api/quotes/${quote.id}`, {
@@ -62,8 +62,8 @@ export const QuoteService = () => ({
       body: JSON.stringify(quote),
     });
     if (response.ok) {
-      throw new Error("Error updating quote");
+      return response.json();
     }
-    return response.json();
+    throw new Error("Error updating quote");
   },
 });
