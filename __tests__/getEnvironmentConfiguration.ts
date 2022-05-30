@@ -4,8 +4,6 @@ describe("environmentConfiguration", () => {
   it("downloads area pricing", async () => {
     const environmentConfiguration = getEnvironmentConfiguration();
 
-    console.log(environmentConfiguration);
-
     expect(environmentConfiguration).not.toBeNull();
     expect(environmentConfiguration).toHaveProperty("FIRESTORE_EMULATOR_HOST");
     expect(environmentConfiguration).toHaveProperty("FIREBASE_PROJECT_ID");

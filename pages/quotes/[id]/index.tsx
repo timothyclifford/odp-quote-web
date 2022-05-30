@@ -8,6 +8,7 @@ import { QuoteNavigation } from "../../../components/QuoteNavigation";
 import { Heading1 } from "../../../components/Heading1";
 import { Row } from "../../../components/Row";
 import { HeadingWithAction } from "../../../components/HeadingWithAction";
+import toast from "react-hot-toast";
 
 type Props = {
   quote: Quote;
@@ -18,10 +19,9 @@ const EditQuote: NextPage<Props> = ({ quote }) => {
   const save = async (quote: QuoteMutation) => {
     try {
       await service.updateQuote(quote);
-      alert("Saved");
+      toast.success("Saved ✅");
     } catch (error) {
-      console.log(error);
-      // TODO handle error
+      toast.error("Something went wrong 😭");
     }
   };
   return (

@@ -14,6 +14,7 @@ import {
   ExtraPricing,
   PricingService,
 } from "../../../domain/pricing/pricingService";
+import toast from "react-hot-toast";
 
 type Props = {
   quoteId: string;
@@ -50,9 +51,9 @@ const EditExtras: NextPage<Props> = ({
       body: JSON.stringify(extras),
     });
     if (response.ok) {
-      alert("Saved");
+      toast.success("Saved ✅");
     } else {
-      alert("An error occurred...");
+      toast.error("Something went wrong 😭");
     }
   };
 

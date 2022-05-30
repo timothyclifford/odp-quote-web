@@ -1,6 +1,7 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { Layout } from "../components/Layout";
 import { Quote } from "../domain/quote/quote";
 import { QuoteRepository } from "../domain/quote/quoteRepository";
@@ -11,21 +12,6 @@ type Props = {
 
 const Dashboard: NextPage<Props> = ({ quotes }) => {
   const router = useRouter();
-  const deleteQuote = async (id: string) => {
-    const really = confirm("Are you sure?");
-    if (!really) return;
-    const response = await fetch(`/api/quotes/${id}`, {
-      method: "DELETE",
-      headers: {
-        "content-type": "application/json;charset=UTF-8",
-      },
-    });
-    if (response.ok) {
-      router.push(`/`);
-    } else {
-      alert("An error occurred...");
-    }
-  };
   return (
     <Layout>
       <Head>

@@ -8,6 +8,7 @@ import { Navigation } from "../../components/Navigation";
 import { QuoteForm } from "../../components/forms/QuoteForm";
 import { buildQuote, QuoteMutation, Quote } from "../../domain/quote/quote";
 import { Row } from "../../components/Row";
+import toast from "react-hot-toast";
 
 const CreateQuote: NextPage = () => {
   const router = useRouter();
@@ -31,7 +32,7 @@ const CreateQuote: NextPage = () => {
     if (response.ok) {
       router.push(`/quotes/${quote.id}`);
     } else {
-      alert("An error occurred...");
+      toast.error("Something went wrong 😭");
     }
   };
   return (

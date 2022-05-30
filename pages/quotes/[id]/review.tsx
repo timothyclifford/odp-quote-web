@@ -23,9 +23,9 @@ const EmailQuote: NextPage<Props> = ({ quote }) => {
         method: "POST",
       });
       if (response.ok) {
-        alert("Emailed");
+        toast.success("Saved ✅");
       } else {
-        alert("An error occurred...");
+        toast.error("Something went wrong 😭");
       }
     }
   };
