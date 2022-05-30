@@ -4,14 +4,18 @@ import fs from "fs";
 import path from "path";
 import mjml2html from "mjml";
 import { getEnvironmentConfiguration } from "./environmentConfiguration";
+var appRoot = require("app-root-path");
 
 export const EmailClient = () => {
   const env = getEnvironmentConfiguration();
   sgMail.setApiKey(env.SENDGRID_API_KEY!);
   const buildQuoteEmail = (quote: DetailedQuote) => {
-    const mjml = fs
-      .readFileSync(path.join(__dirname, "./quote.mjml"))
-      .toString();
+    const templateFilePath = path.join(
+      appRoot.toString(),
+      "./emails/quote.mjml"
+    );
+    console.log(templateFilePath);
+    const mjml = fs.readFileSync(templateFilePath).toString();
     let regexFirstName = /{{FIRST_NAME}}/gi;
     let template = mjml.replace(regexFirstName, quote.firstName);
     return mjml2html(template).html;
