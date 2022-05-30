@@ -48,7 +48,15 @@ export const AreaForm = ({ area, itemPricing, onSave, onDelete }: Props) => {
       items,
       comment,
     });
-  }, [price, includeCeilings, includeSkirting, comment, items]);
+  }, [
+    area.id,
+    area.name,
+    price,
+    includeCeilings,
+    includeSkirting,
+    items,
+    comment,
+  ]);
   return (
     <Card>
       <Row>

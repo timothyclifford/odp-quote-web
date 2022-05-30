@@ -14,7 +14,7 @@ export const AreaItemForm = ({ areaItem, onSave, onDelete }: Props) => {
   const [quantity, setQuantity] = useState(areaItem.quantity);
   useEffect(() => {
     onSave({ id: areaItem.id, name: areaItem.name, price, quantity });
-  }, [price, quantity]);
+  }, [areaItem.id, areaItem.name, price, quantity]);
   return (
     <tr>
       <td style={{ textAlign: "left" }}>{areaItem.name}</td>
