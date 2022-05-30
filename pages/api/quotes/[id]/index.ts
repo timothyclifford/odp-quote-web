@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { HTTP_METHODS } from "../../../../lib/constants";
 import { QuoteRepository } from "../../../../domain/quote/quoteRepository";
+import { withSentry } from "@sentry/nextjs";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const repo = QuoteRepository();
@@ -28,4 +29,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default handler;
+export default withSentry(handler);
