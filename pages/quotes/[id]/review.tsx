@@ -10,6 +10,7 @@ import { HeadingWithAction } from "../../../components/HeadingWithAction";
 import { Card } from "../../../components/Card";
 import { Heading2 } from "../../../components/Heading2";
 import { Heading3 } from "../../../components/Heading3";
+import toast from "react-hot-toast";
 
 type Props = {
   quote: DetailedQuote;

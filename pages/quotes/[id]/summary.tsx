@@ -19,6 +19,7 @@ import { Checkbox } from "../../../components/fields/Checkbox";
 import { Card } from "../../../components/Card";
 import { Label } from "../../../components/fields/Label";
 import { HeadingWithAction } from "../../../components/HeadingWithAction";
+import toast from "react-hot-toast";
 
 type Props = {
   quoteId: string;
