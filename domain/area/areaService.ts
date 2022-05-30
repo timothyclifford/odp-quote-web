@@ -1,7 +1,7 @@
 import { HTTP_METHODS } from "../../lib/constants";
 import { Area } from "./area";
 
-const host = process.env.HOST ?? "http://localhost:3000";
+const host = process.env.NEXT_PUBLIC_HOST ?? "http://localhost:3000";
 
 export const AreaService = () => ({
   getQuoteAreas: async (quoteId: string): Promise<Array<Area>> => {

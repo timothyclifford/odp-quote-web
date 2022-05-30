@@ -1,10 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { Footer } from "../../components/Footer";
 import { Heading1 } from "../../components/Heading1";
 import { Layout } from "../../components/Layout";
-import { Navigation } from "../../components/Navigation";
 import { QuoteForm } from "../../components/forms/QuoteForm";
 import { buildQuote, QuoteMutation, Quote } from "../../domain/quote/quote";
 import { Row } from "../../components/Row";
