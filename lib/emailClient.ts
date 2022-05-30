@@ -3,9 +3,11 @@ import { DetailedQuote } from "../domain/quote/quote";
 import fs from "fs";
 import path from "path";
 import mjml2html from "mjml";
+import { getEnvironmentConfiguration } from "./environmentConfiguration";
 
 export const EmailClient = () => {
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
+  const env = getEnvironmentConfiguration();
+  sgMail.setApiKey(env.SENDGRID_API_KEY!);
   const buildQuoteEmail = (quote: DetailedQuote) => {
     const mjml = fs
       .readFileSync(path.join(__dirname, "./quote.mjml"))

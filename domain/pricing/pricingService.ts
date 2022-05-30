@@ -1,5 +1,6 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import NodeCache from "node-cache";
+import { getEnvironmentConfiguration } from "../../lib/environmentConfiguration";
 
 export type AreaPricing = {
   name: string;
@@ -11,12 +12,13 @@ export type ItemPricing = { name: string; price: number };
 export type ExtraPricing = { name: string; price: number };
 
 export const PricingService = () => {
+  const env = getEnvironmentConfiguration();
   const cache = new NodeCache({ stdTTL: 1800, checkperiod: 120 });
   const getPricingSpreadsheet = async () => {
-    const spreadsheet = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID!);
+    const spreadsheet = new GoogleSpreadsheet(env.GOOGLE_SHEET_ID!);
     await spreadsheet.useServiceAccountAuth({
-      client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL!,
-      private_key: process.env.GOOGLE_PRIVATE_KEY!.replace(/\\n/gm, "\n"),
+      client_email: env.GOOGLE_SERVICE_ACCOUNT_EMAIL!,
+      private_key: env.GOOGLE_PRIVATE_KEY!.replace(/\\n/gm, "\n"),
     });
     await spreadsheet.loadInfo();
     return spreadsheet;
