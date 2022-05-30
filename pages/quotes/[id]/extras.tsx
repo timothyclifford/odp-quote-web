@@ -51,9 +51,9 @@ const EditExtras: NextPage<Props> = ({
       body: JSON.stringify(extras),
     });
     if (response.ok) {
-      toast.success("Saved ✅");
+      toast.success("Saved");
     } else {
-      toast.error("Something went wrong 😭");
+      toast.error("Something went wrong");
     }
   };
 

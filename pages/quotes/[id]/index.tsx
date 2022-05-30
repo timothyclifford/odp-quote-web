@@ -19,9 +19,9 @@ const EditQuote: NextPage<Props> = ({ quote }) => {
   const save = async (quote: QuoteMutation) => {
     try {
       await service.updateQuote(quote);
-      toast.success("Saved ✅");
+      toast.success("Saved");
     } catch (error) {
-      toast.error("Something went wrong 😭");
+      toast.error("Something went wrong");
     }
   };
   return (

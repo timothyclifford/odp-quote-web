@@ -68,9 +68,9 @@ const EditQuote: NextPage<Props> = ({ quoteId, data }) => {
       body: JSON.stringify(buildInclusions()),
     });
     if (response.ok) {
-      toast.success("Saved ✅");
+      toast.success("Saved");
     } else {
-      toast.error("Something went wrong 😭");
+      toast.error("Something went wrong");
     }
   };
   return (

@@ -32,7 +32,7 @@ const CreateQuote: NextPage = () => {
     if (response.ok) {
       router.push(`/quotes/${quote.id}`);
     } else {
-      toast.error("Something went wrong 😭");
+      toast.error("Something went wrong");
     }
   };
   return (
