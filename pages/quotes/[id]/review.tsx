@@ -45,7 +45,10 @@ const EmailQuote: NextPage<Props> = ({ quote }) => {
           </Row>
           {quote.areas &&
             quote.areas.map((area) => (
-              <div className="border border-gray-200 p-5 mb-5 rounded">
+              <div
+                key={area.id}
+                className="border border-gray-200 p-5 mb-5 rounded"
+              >
                 <Row>
                   <Heading3>{area.name}</Heading3>
                 </Row>
@@ -63,7 +66,10 @@ const EmailQuote: NextPage<Props> = ({ quote }) => {
           </Row>
           {quote.extras &&
             quote.extras.map((extra) => (
-              <div className="border border-gray-200 p-5 mb-5 rounded">
+              <div
+                key={extra.id}
+                className="border border-gray-200 p-5 mb-5 rounded"
+              >
                 <Row>
                   {extra.quantity} x {extra.name}
                 </Row>
@@ -79,7 +85,11 @@ const EmailQuote: NextPage<Props> = ({ quote }) => {
                 {quote.inclusions.inclusions
                   .filter((x) => x.included)
                   .map((x) => {
-                    return <div className="mb-2">✅ {x.name}</div>;
+                    return (
+                      <div key={x.name} className="mb-2">
+                        ✅ {x.name}
+                      </div>
+                    );
                   })}
               </div>
               <div>
@@ -89,7 +99,11 @@ const EmailQuote: NextPage<Props> = ({ quote }) => {
                 {quote.inclusions.exclusions
                   .filter((x) => x.included)
                   .map((x) => {
-                    return <div className="mb-2">❌ {x.name}</div>;
+                    return (
+                      <div key={x.name} className="mb-2">
+                        ❌ {x.name}
+                      </div>
+                    );
                   })}
               </div>
             </div>
