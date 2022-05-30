@@ -16,6 +16,19 @@ type Props = {
 };
 
 const EmailQuote: NextPage<Props> = ({ quote }) => {
+  const emailQuote = async () => {
+    const really = confirm("Are you sure you want to email?");
+    if (really) {
+      const response = await fetch(`/api/quotes/${quote.id}/email`, {
+        method: "POST",
+      });
+      if (response.ok) {
+        alert("Emailed");
+      } else {
+        alert("An error occurred...");
+      }
+    }
+  };
   return (
     <Layout>
       <Head>
@@ -114,7 +127,9 @@ const EmailQuote: NextPage<Props> = ({ quote }) => {
           <Row>{quote.inclusions.comments}</Row>
         </Card>
         <Row>
-          <button className="btn">Complete quote</button>
+          <button className="btn" onClick={() => emailQuote()}>
+            Email quote to customer
+          </button>
         </Row>
       </main>
     </Layout>

@@ -8,8 +8,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const id = req.query.id as string;
   switch (method) {
     case HTTP_METHODS.GET: {
-      const quotes = await repo.getDetailedQuoteById(id);
-      return res.status(200).json(quotes);
+      const quote = await repo.getDetailedQuoteById(id);
+      if (quote === undefined) {
+        return res.status(404).send("Not found");
+      }
+      return res.status(200).json(quote);
     }
     default: {
       return res.status(404).send(`${method} not supported`);

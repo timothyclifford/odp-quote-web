@@ -1,26 +1,21 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { HTTP_METHODS } from "../../../../lib/constants";
 import { QuoteRepository } from "../../../../domain/quote/quoteRepository";
+import { EmailClient } from "../../../../lib/emailClient";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const repo = QuoteRepository();
   const method = req.method?.toUpperCase();
   const id = req.query.id as string;
   switch (method) {
-    case HTTP_METHODS.GET: {
-      const quote = await repo.getQuoteById(id);
+    case HTTP_METHODS.POST: {
+      const emailCient = EmailClient();
+      const quote = await repo.getDetailedQuoteById(id);
       if (quote === undefined) {
         return res.status(404).send("Not found");
       }
-      return res.status(200).json(quote);
-    }
-    case HTTP_METHODS.PUT: {
-      const quote = await repo.updateQuote(req.body);
-      return res.status(200).json(quote);
-    }
-    case HTTP_METHODS.DELETE: {
-      await repo.deleteQuote(id);
-      return res.status(200).json({});
+      emailCient.send("tim.cliford@gmail.com", quote);
+      return res.status(200).send("Email sent");
     }
     default: {
       return res.status(404).send(`${method} not supported`);

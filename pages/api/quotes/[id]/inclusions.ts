@@ -10,7 +10,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     case HTTP_METHODS.GET: {
       const inclusions = await repo.getInclusionsByQuoteId(quoteId);
       if (inclusions === undefined) {
-        return res.status(404).json({});
+        return res.status(404).send("Not found");
       }
       return res.status(200).json(inclusions);
     }

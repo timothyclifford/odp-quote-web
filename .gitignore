@@ -35,3 +35,6 @@ env.json
 
 # typescript
 *.tsbuildinfo
+
+# Sentry
+.sentryclirc

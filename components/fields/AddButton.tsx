@@ -29,7 +29,7 @@ export const AddButton = ({ label, options, onClick }: Props) => {
             return (
               <div
                 key={n}
-                className="w-72 py-3 my-3 mx-auto bg-white border border-pink-100 rounded cursor-pointer"
+                className="w-72 py-2 my-2 mx-auto bg-white border border-pink-100 rounded cursor-pointer"
                 onClick={() => {
                   select(n);
                 }}
