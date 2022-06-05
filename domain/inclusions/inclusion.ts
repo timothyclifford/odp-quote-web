@@ -12,7 +12,7 @@ export type Inclusions = {
   inclusions: Array<Inclusion>;
   exclusions: Array<Inclusion>;
   comments: string;
-  discountCode: string;
+  discount: number;
 };
 
 export const buildInclusions = (): Inclusions => ({
@@ -26,5 +26,5 @@ export const buildInclusions = (): Inclusions => ({
     { name: "Carptet cleaning", included: false },
   ],
   comments: "",
-  discountCode: "",
+  discount: 0,
 });

@@ -30,7 +30,7 @@ const EditQuote: NextPage<Props> = ({ quoteId, data }) => {
   const [inclusions, setInclusions] = useState(data.inclusions);
   const [exclusions, setExclusions] = useState(data.exclusions);
   const [comments, setComments] = useState(data.comments);
-  const [discountCode, setDiscountCode] = useState(data.discountCode);
+  const [discount, setDiscount] = useState(data.discount);
   const toggleIncluded = (name: string, checked: boolean) => {
     const updated: Array<Inclusion> = [];
     for (let x = 0; x < inclusions.length; x++) {
@@ -57,7 +57,7 @@ const EditQuote: NextPage<Props> = ({ quoteId, data }) => {
     inclusions,
     exclusions,
     comments,
-    discountCode,
+    discount: discount,
   });
   const save = async () => {
     const response = await fetch(`/api/quotes/${quoteId}/inclusions`, {
@@ -130,10 +130,11 @@ const EditQuote: NextPage<Props> = ({ quoteId, data }) => {
             ></TextAreaField>
           </Row>
           <Row>
-            <Label>Discount code</Label>
+            <Label>Discount</Label>
             <InputField
-              value={discountCode}
-              onChange={(e) => setDiscountCode(e)}
+              value={discount}
+              type="number"
+              onChange={(e) => setDiscount(parseInt(e))}
             ></InputField>
           </Row>
         </Card>

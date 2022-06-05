@@ -21,3 +21,6 @@ export const buildExtra = (
   price: pricing.find((p) => p.name === name)!.price,
   comment: "",
 });
+
+export const calculateExtraPrice = (extra: Extra) =>
+  extra.price * extra.quantity;

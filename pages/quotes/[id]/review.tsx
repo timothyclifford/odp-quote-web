@@ -1,7 +1,7 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { Layout } from "../../../components/Layout";
-import { DetailedQuote } from "../../../domain/quote/quote";
+import { DetailedQuote, Quote } from "../../../domain/quote/quote";
 import { QuoteService } from "../../../domain/quote/quoteService";
 import { QuoteNavigation } from "../../../components/QuoteNavigation";
 import { Heading1 } from "../../../components/Heading1";
@@ -11,12 +11,42 @@ import { Card } from "../../../components/Card";
 import { Heading2 } from "../../../components/Heading2";
 import { Heading3 } from "../../../components/Heading3";
 import toast from "react-hot-toast";
+import {
+  Area,
+  calculateAreaPrice,
+  calculateAreaTotalPrice,
+} from "../../../domain/area/area";
+import { calculateExtraPrice } from "../../../domain/extra/extra";
 
 type Props = {
   quote: DetailedQuote;
 };
 
 const EmailQuote: NextPage<Props> = ({ quote }) => {
+  const calculateSubTotal = (quote: DetailedQuote): number => {
+    const areasPrice = quote.areas
+      .map((x) => calculateAreaTotalPrice(x))
+      .reduce((previous, next) => previous + next);
+    const extrasPrice = quote.extras
+      .map((x) => calculateExtraPrice(x))
+      .reduce((previous, next) => previous + next);
+
+    return areasPrice + extrasPrice;
+  };
+
+  const calculateDiscount = (quote: DetailedQuote): number => {
+    const subtotal = calculateSubTotal(quote);
+
+    return subtotal / quote.inclusions.discount;
+  };
+
+  const calculateTotal = (quote: DetailedQuote): number => {
+    const subtotal = calculateSubTotal(quote);
+    const discount = calculateDiscount(quote);
+
+    return subtotal - discount;
+  };
+
   const emailQuote = async () => {
     const really = confirm("Are you sure you want to email?");
     if (really) {
@@ -64,14 +94,17 @@ const EmailQuote: NextPage<Props> = ({ quote }) => {
                 className="border border-gray-200 p-5 mb-5 rounded"
               >
                 <Row>
-                  <Heading3>{area.name}</Heading3>
+                  <Heading3>
+                    {area.name} - ${calculateAreaPrice(area)}
+                  </Heading3>
                 </Row>
                 <Row>Items</Row>
                 {area.items.map((item) => (
-                  <div key={item.id}>
-                    {item.quantity} x {item.name}
-                  </div>
+                  <Row key={item.id}>
+                    {item.quantity} x {item.name} = ${item.price}
+                  </Row>
                 ))}
+                <Row>Total ${calculateAreaTotalPrice(area)}</Row>
               </div>
             ))}
           {!quote.areas && <Row>No areas selected</Row>}
@@ -85,11 +118,25 @@ const EmailQuote: NextPage<Props> = ({ quote }) => {
                 className="border border-gray-200 p-5 mb-5 rounded"
               >
                 <Row>
-                  {extra.quantity} x {extra.name}
+                  {extra.quantity} x {extra.name} = $
+                  {calculateExtraPrice(extra)}
                 </Row>
               </div>
             ))}
           {!quote.extras && <Row>No extras selected</Row>}
+          <Row>
+            <Heading2>Subtotal</Heading2>
+          </Row>
+          <Row>${calculateSubTotal(quote)}</Row>
+          <Row></Row>
+          <Row>
+            <Heading2>Discount</Heading2>
+          </Row>
+          <Row>${calculateDiscount(quote)}</Row>
+          <Row>
+            <Heading2>Total</Heading2>
+          </Row>
+          <Row>${calculateTotal(quote)}</Row>
           <Row>
             <div className="grid grid-cols-2">
               <div>

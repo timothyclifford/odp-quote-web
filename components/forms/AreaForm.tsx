@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Area } from "../../domain/area/area";
+import { Area, calculateAreaPrice } from "../../domain/area/area";
 import { AreaItem, buildAreaItem } from "../../domain/area/areaItem";
 import { AddButton } from "../fields/AddButton";
 import { AreaItemForm } from "./AreaItemForm";
@@ -40,9 +40,7 @@ export const AreaForm = ({ area, itemPricing, onSave, onDelete }: Props) => {
   };
   useEffect(() => {
     onSave({
-      id: area.id,
-      name: area.name,
-      price,
+      ...area,
       includeCeilings,
       includeSkirting,
       items,
@@ -71,9 +69,11 @@ export const AreaForm = ({ area, itemPricing, onSave, onDelete }: Props) => {
         <InputField
           label="Price"
           groupLabel="$"
-          value={price}
+          value={calculateAreaPrice(area)}
           type="number"
-          onChange={(e) => setPrice(parseInt(e))}
+          onChange={(e) => {
+            setPrice(parseInt(e));
+          }}
         ></InputField>
       </Row>
       <Row>

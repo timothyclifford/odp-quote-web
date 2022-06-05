@@ -10,7 +10,9 @@ export type Area = {
   name: string;
   price: number;
   includeCeilings: boolean;
+  includeCeilingsPrice: number;
   includeSkirting: boolean;
+  includeSkirtingPrice: number;
   items: Array<AreaItem>;
   comment: string;
 };
@@ -20,7 +22,29 @@ export const buildArea = (name: string, pricing: AreaPricing[]): Area => ({
   name,
   price: pricing.find((p) => p.name === name)!.price,
   includeCeilings: false,
+  includeCeilingsPrice: pricing.find((p) => p.name === name)!.ifCeilings,
   includeSkirting: false,
+  includeSkirtingPrice: pricing.find((p) => p.name === name)!.ifSkirting,
   items: [],
   comment: "",
 });
+
+export const calculateAreaPrice = (area: Area) => {
+  return (
+    area.price +
+    (area.includeCeilings ? area.includeCeilingsPrice : 0) +
+    (area.includeSkirting ? area.includeSkirtingPrice : 0)
+  );
+};
+
+export const calculateAreaTotalPrice = (area: Area) => {
+  const itemsPrice: number = area.items
+    .map((x) => x.price * x.quantity)
+    .reduce((previous, next) => previous + next);
+  return (
+    area.price +
+    (area.includeCeilings ? area.includeCeilingsPrice : 0) +
+    (area.includeSkirting ? area.includeSkirtingPrice : 0) +
+    itemsPrice
+  );
+};
