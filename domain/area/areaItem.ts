@@ -19,3 +19,6 @@ export const buildAreaItem = (
   quantity: 1,
   price: pricing.find((p) => p.name === name)!.price,
 });
+
+export const calculateAreaItemPrice = (areaItem: AreaItem) =>
+  areaItem.quantity * areaItem.price;

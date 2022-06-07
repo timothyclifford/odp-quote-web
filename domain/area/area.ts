@@ -1,4 +1,4 @@
-import { AreaItem } from "./areaItem";
+import { AreaItem, calculateAreaItemPrice } from "./areaItem";
 
 import { customAlphabet } from "nanoid";
 import { AreaPricing } from "../pricing/pricingService";
@@ -39,12 +39,7 @@ export const calculateAreaPrice = (area: Area) => {
 
 export const calculateAreaTotalPrice = (area: Area) => {
   const itemsPrice: number = area.items
-    .map((x) => x.price * x.quantity)
+    .map(calculateAreaItemPrice)
     .reduce((previous, next) => previous + next);
-  return (
-    area.price +
-    (area.includeCeilings ? area.includeCeilingsPrice : 0) +
-    (area.includeSkirting ? area.includeSkirtingPrice : 0) +
-    itemsPrice
-  );
+  return calculateAreaPrice(area) + itemsPrice;
 };

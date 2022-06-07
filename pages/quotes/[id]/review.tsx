@@ -9,14 +9,13 @@ import { Row } from "../../../components/Row";
 import { HeadingWithAction } from "../../../components/HeadingWithAction";
 import { Card } from "../../../components/Card";
 import { Heading2 } from "../../../components/Heading2";
-import { Heading3 } from "../../../components/Heading3";
 import toast from "react-hot-toast";
 import {
-  Area,
   calculateAreaPrice,
   calculateAreaTotalPrice,
 } from "../../../domain/area/area";
 import { calculateExtraPrice } from "../../../domain/extra/extra";
+import { calculateAreaItemPrice } from "../../../domain/area/areaItem";
 
 type Props = {
   quote: DetailedQuote;
@@ -70,9 +69,6 @@ const EmailQuote: NextPage<Props> = ({ quote }) => {
         <Row>
           <HeadingWithAction>
             <Heading1>Quote {quote.id}</Heading1>
-            {/* <div>
-              <button className="btn">Email quote</button>
-            </div> */}
           </HeadingWithAction>
         </Row>
 
@@ -84,59 +80,88 @@ const EmailQuote: NextPage<Props> = ({ quote }) => {
               painting.
             </p>
           </Row>
+
           <Row>
-            <Heading2>Areas</Heading2>
+            <table className="area-items-table">
+              <thead>
+                <tr>
+                  <th style={{ textAlign: "left" }}>Name</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {quote.areas &&
+                  quote.areas.map((area) => {
+                    return (
+                      <>
+                        <tr key={area.id}>
+                          <td style={{ textAlign: "left" }}>{area.name}</td>
+                          <td className="w-32"></td>
+                          <td></td>
+                          <td>${calculateAreaPrice(area)}</td>
+                        </tr>
+                        {area.items.map((item) => (
+                          <tr key={item.id}>
+                            <td
+                              className="text-sm"
+                              style={{ textAlign: "left" }}
+                            >
+                              {item.name}
+                            </td>
+                            <td className="w-32">${item.price}</td>
+                            <td>{item.quantity}</td>
+                            <td>${calculateAreaItemPrice(item)}</td>
+                          </tr>
+                        ))}
+                        <tr key={area.id}>
+                          <td style={{ textAlign: "left" }}>
+                            {area.name} total
+                          </td>
+                          <td className="w-32"></td>
+                          <td></td>
+                          <td>${calculateAreaTotalPrice(area)}</td>
+                        </tr>
+                      </>
+                    );
+                  })}
+                <tr>
+                  <td style={{ textAlign: "left" }}>Extras</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                {quote.extras &&
+                  quote.extras.map((extra) => (
+                    <tr key={extra.id}>
+                      <td style={{ textAlign: "left" }}>{extra.name}</td>
+                      <td className="w-32">{extra.price}</td>
+                      <td>{extra.quantity}</td>
+                      <td>${calculateExtraPrice(extra)}</td>
+                    </tr>
+                  ))}
+                <tr>
+                  <td style={{ textAlign: "left" }}>Subtotal</td>
+                  <td></td>
+                  <td></td>
+                  <td>${calculateSubTotal(quote)}</td>
+                </tr>
+                <tr>
+                  <td style={{ textAlign: "left" }}>Discount</td>
+                  <td></td>
+                  <td></td>
+                  <td>${calculateDiscount(quote)}</td>
+                </tr>
+                <tr>
+                  <td style={{ textAlign: "left" }}>Total</td>
+                  <td></td>
+                  <td></td>
+                  <td>${calculateTotal(quote)}</td>
+                </tr>
+              </tbody>
+            </table>
           </Row>
-          {quote.areas &&
-            quote.areas.map((area) => (
-              <div
-                key={area.id}
-                className="border border-gray-200 p-5 mb-5 rounded"
-              >
-                <Row>
-                  <Heading3>
-                    {area.name} - ${calculateAreaPrice(area)}
-                  </Heading3>
-                </Row>
-                <Row>Items</Row>
-                {area.items.map((item) => (
-                  <Row key={item.id}>
-                    {item.quantity} x {item.name} = ${item.price}
-                  </Row>
-                ))}
-                <Row>Total ${calculateAreaTotalPrice(area)}</Row>
-              </div>
-            ))}
-          {!quote.areas && <Row>No areas selected</Row>}
-          <Row>
-            <Heading2>Extras</Heading2>
-          </Row>
-          {quote.extras &&
-            quote.extras.map((extra) => (
-              <div
-                key={extra.id}
-                className="border border-gray-200 p-5 mb-5 rounded"
-              >
-                <Row>
-                  {extra.quantity} x {extra.name} = $
-                  {calculateExtraPrice(extra)}
-                </Row>
-              </div>
-            ))}
-          {!quote.extras && <Row>No extras selected</Row>}
-          <Row>
-            <Heading2>Subtotal</Heading2>
-          </Row>
-          <Row>${calculateSubTotal(quote)}</Row>
-          <Row></Row>
-          <Row>
-            <Heading2>Discount</Heading2>
-          </Row>
-          <Row>${calculateDiscount(quote)}</Row>
-          <Row>
-            <Heading2>Total</Heading2>
-          </Row>
-          <Row>${calculateTotal(quote)}</Row>
           <Row>
             <div className="grid grid-cols-2">
               <div>
