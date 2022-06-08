@@ -1,10 +1,11 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import { Layout } from "../components/Layout";
 import { Quote } from "../domain/quote/quote";
 import { QuoteRepository } from "../domain/quote/quoteRepository";
+import { Row } from "../components/Row";
 
 type Props = {
   quotes: Array<Quote>;

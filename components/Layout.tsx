@@ -1,8 +1,13 @@
 import { PropsWithChildren } from "react";
 import { Footer } from "./Footer";
 import { Navigation } from "./Navigation";
+import { useSession } from "next-auth/react";
 
 export const Layout = ({ children }: PropsWithChildren<{}>) => {
+  const session = useSession({ required: true });
+  if (session.status === "loading") {
+    return <div>Loading or not authenticated...</div>;
+  }
   return (
     <main>
       <div
