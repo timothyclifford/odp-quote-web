@@ -16,6 +16,7 @@ import {
 } from "../../../domain/area/area";
 import { calculateExtraPrice } from "../../../domain/extra/extra";
 import { calculateAreaItemPrice } from "../../../domain/area/areaItem";
+import { useState } from "react";
 
 type Props = {
   quote: DetailedQuote;
@@ -34,17 +35,20 @@ const EmailQuote: NextPage<Props> = ({ quote }) => {
   };
 
   const calculateDiscount = (quote: DetailedQuote): number => {
-    const subtotal = calculateSubTotal(quote);
+    if (quote.inclusions && quote.inclusions.discount > 0) {
+      const subtotal = calculateSubTotal(quote);
+      return subtotal / quote.inclusions.discount;
+    }
 
-    return subtotal / quote.inclusions.discount;
+    return 0;
   };
 
-  const calculateTotal = (quote: DetailedQuote): number => {
-    const subtotal = calculateSubTotal(quote);
-    const discount = calculateDiscount(quote);
+  const calculateTotal = (quote: DetailedQuote): number =>
+    calculateSubTotal(quote) - calculateDiscount(quote);
 
-    return subtotal - discount;
-  };
+  const [subTotal] = useState(calculateSubTotal(quote));
+  const [discount] = useState(calculateDiscount(quote));
+  const [total] = useState(calculateTotal(quote));
 
   const emailQuote = async () => {
     const really = confirm("Are you sure you want to email?");
@@ -92,6 +96,12 @@ const EmailQuote: NextPage<Props> = ({ quote }) => {
                 </tr>
               </thead>
               <tbody>
+                <tr>
+                  <td style={{ textAlign: "left" }}>Areas</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
                 {quote.areas &&
                   quote.areas.map((area) => {
                     return (
@@ -115,7 +125,7 @@ const EmailQuote: NextPage<Props> = ({ quote }) => {
                             <td>${calculateAreaItemPrice(item)}</td>
                           </tr>
                         ))}
-                        <tr key={area.id}>
+                        <tr key={`${area.id}-${area.name}`}>
                           <td style={{ textAlign: "left" }}>
                             {area.name} total
                           </td>
@@ -142,62 +152,79 @@ const EmailQuote: NextPage<Props> = ({ quote }) => {
                     </tr>
                   ))}
                 <tr>
+                  <td style={{ textAlign: "left" }}></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
                   <td style={{ textAlign: "left" }}>Subtotal</td>
                   <td></td>
                   <td></td>
-                  <td>${calculateSubTotal(quote)}</td>
+                  <td>${subTotal}</td>
                 </tr>
-                <tr>
-                  <td style={{ textAlign: "left" }}>Discount</td>
-                  <td></td>
-                  <td></td>
-                  <td>${calculateDiscount(quote)}</td>
-                </tr>
+                {discount > 0 && (
+                  <tr>
+                    <td style={{ textAlign: "left" }}>Discount</td>
+                    <td></td>
+                    <td></td>
+                    <td>${discount}</td>
+                  </tr>
+                )}
+
                 <tr>
                   <td style={{ textAlign: "left" }}>Total</td>
                   <td></td>
                   <td></td>
-                  <td>${calculateTotal(quote)}</td>
+                  <td>${total}</td>
                 </tr>
               </tbody>
             </table>
           </Row>
-          <Row>
-            <div className="grid grid-cols-2">
-              <div>
-                <div className="mb-2">
-                  <Heading2>Inclusions</Heading2>
+          {quote.inclusions && (
+            <>
+              <Row>
+                <div className="grid grid-cols-2">
+                  <div>
+                    <div className="mb-2">
+                      <Heading2>Inclusions</Heading2>
+                    </div>
+                    {quote.inclusions.inclusions
+                      .filter((x) => x.included)
+                      .map((x) => {
+                        return (
+                          <div key={x.name} className="mb-2">
+                            ✅ {x.name}
+                          </div>
+                        );
+                      })}
+                  </div>
+                  <div>
+                    <div className="mb-2">
+                      <Heading2>Exclusions</Heading2>
+                    </div>
+                    {quote.inclusions.exclusions
+                      .filter((x) => x.included)
+                      .map((x) => {
+                        return (
+                          <div key={x.name} className="mb-2">
+                            ❌ {x.name}
+                          </div>
+                        );
+                      })}
+                  </div>
                 </div>
-                {quote.inclusions.inclusions
-                  .filter((x) => x.included)
-                  .map((x) => {
-                    return (
-                      <div key={x.name} className="mb-2">
-                        ✅ {x.name}
-                      </div>
-                    );
-                  })}
-              </div>
-              <div>
-                <div className="mb-2">
-                  <Heading2>Exclusions</Heading2>
-                </div>
-                {quote.inclusions.exclusions
-                  .filter((x) => x.included)
-                  .map((x) => {
-                    return (
-                      <div key={x.name} className="mb-2">
-                        ❌ {x.name}
-                      </div>
-                    );
-                  })}
-              </div>
-            </div>
-          </Row>
-          <Row>
-            <Heading2>Comments</Heading2>
-          </Row>
-          <Row>{quote.inclusions.comments}</Row>
+              </Row>
+              {quote.inclusions.comments && (
+                <>
+                  <Row>
+                    <Heading2>Comments</Heading2>
+                  </Row>
+                  <Row>{quote.inclusions.comments}</Row>
+                </>
+              )}
+            </>
+          )}
         </Card>
         <Row>
           <button className="btn" onClick={() => emailQuote()}>

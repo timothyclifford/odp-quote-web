@@ -21,6 +21,7 @@ const CreateQuote: NextPage = () => {
       },
       body: JSON.stringify({
         id: quote.id,
+        salesPerson: quote.salesPerson,
         firstName: quote.firstName,
         lastName: quote.lastName,
         email: quote.email,

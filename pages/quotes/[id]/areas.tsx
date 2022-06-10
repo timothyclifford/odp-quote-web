@@ -90,7 +90,7 @@ const EditAreas: NextPage<Props> = ({
         })}
         {areas.length === 0 && <Row>Nothing added yet...</Row>}
         <Row>
-          <button className="btn btn-save" onClick={() => save()}>
+          <button className="btn" onClick={() => save()}>
             Save
           </button>
         </Row>

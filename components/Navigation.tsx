@@ -22,14 +22,17 @@ export const Navigation = () => {
           </Link>
         </div>
         <div className="ml-5 text-center">
-          <Avatar
-            name={session.data?.user?.name ?? "One Day Paint"}
-            src="/avatar.png"
-            size="64"
-            round={true}
-            onClick={() => setModal(true)}
-            style={{ cursor: "pointer" }}
-          />
+          <div>
+            <Avatar
+              name={session.data?.user?.name ?? "One Day Paint"}
+              src="/avatar.png"
+              size="48"
+              round={true}
+              onClick={() => setModal(true)}
+              style={{ cursor: "pointer" }}
+            />
+          </div>
+          <div className="text-sm">{session.data?.user?.name}</div>
         </div>
       </div>
       <div
