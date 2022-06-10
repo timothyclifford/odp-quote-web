@@ -5,6 +5,7 @@ export const InputField = ({
   groupLabel,
   type = "text",
   value,
+  required = false,
   placeholder,
   disabled = false,
   onChange,
@@ -13,6 +14,7 @@ export const InputField = ({
   groupLabel?: string;
   type?: string;
   value?: string | number;
+  required?: boolean;
   placeholder?: string;
   disabled?: boolean;
   onChange?: (value: string) => void;
@@ -27,6 +29,7 @@ export const InputField = ({
         <input
           type={type}
           value={value}
+          required={required}
           placeholder={placeholder}
           disabled={disabled}
           onChange={(el) => (onChange ? onChange(el.target.value) : undefined)}
@@ -37,6 +40,7 @@ export const InputField = ({
       <input
         type={type}
         value={value}
+        required={required}
         placeholder={placeholder}
         disabled={disabled}
         onChange={(el) => (onChange ? onChange(el.target.value) : undefined)}

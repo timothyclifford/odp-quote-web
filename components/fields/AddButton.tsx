@@ -40,7 +40,7 @@ export const AddButton = ({ label, options, onClick }: Props) => {
           })}
         </div>
         <div
-          className="absolute top-5 right-8 px-4 py-2 bg-red-400 text-white text-xl rounded-3xl cursor-pointer"
+          className="absolute top-5 right-8 px-4 py-2 bg-red-400 text-white text-lg rounded-3xl cursor-pointer"
           onClick={() => setModal(false)}
         >
           ✖

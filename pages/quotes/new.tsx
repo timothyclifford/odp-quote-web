@@ -7,9 +7,12 @@ import { QuoteForm } from "../../components/forms/QuoteForm";
 import { buildQuote, QuoteMutation } from "../../domain/quote/quote";
 import { Row } from "../../components/Row";
 import toast from "react-hot-toast";
+import { useSession } from "next-auth/react";
 
 const CreateQuote: NextPage = () => {
   const router = useRouter();
+  const session = useSession();
+  const quote = buildQuote(session.data?.user?.name ?? "One Day Paint");
   const save = async (quote: QuoteMutation) => {
     const response = await fetch(`/api/quotes/`, {
       method: "POST",
@@ -42,7 +45,7 @@ const CreateQuote: NextPage = () => {
         <Row>
           <Heading1>New quote</Heading1>
         </Row>
-        <QuoteForm quote={buildQuote()} onSubmit={save}></QuoteForm>
+        <QuoteForm quote={quote} onSubmit={save}></QuoteForm>
       </main>
     </Layout>
   );

@@ -7,6 +7,7 @@ const id = customAlphabet("123456789", 8);
 
 export type Quote = {
   id: string;
+  salesPerson: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -26,19 +27,21 @@ export type DetailedQuote = Quote & {
 
 export type QuoteMutation = Omit<Quote, "created" | "updated">;
 
-export const buildQuote = (): QuoteMutation => ({
+export const buildQuote = (salesPerson: string): QuoteMutation => ({
   id: id(),
-  firstName: "Bob",
-  lastName: "Bobson",
-  email: "bob@bobson.com",
-  phone: "0400000000",
-  street: "123 Bob St",
-  suburb: "Bobville",
-  postcode: "3210",
+  salesPerson,
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  street: "",
+  suburb: "",
+  postcode: "",
 });
 
 export const stubQuote = (): Quote => ({
   id: id(),
+  salesPerson: "Oscar",
   firstName: "Bob",
   lastName: "Bobson",
   email: "bob@bobson.com",

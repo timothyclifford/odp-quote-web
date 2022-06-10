@@ -1,7 +1,6 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 import { Layout } from "../components/Layout";
 import { Quote } from "../domain/quote/quote";
 import { QuoteRepository } from "../domain/quote/quoteRepository";
@@ -43,10 +42,17 @@ const Dashboard: NextPage<Props> = ({ quotes }) => {
                     <button
                       className="btn"
                       onClick={() => router.push(`/quotes/${q.id}`)}
-                      title="View quote"
+                      title="View"
                     >
                       View
                     </button>
+                    {/* <button
+                      className="btn btn-delete ml-3"
+                      onClick={() => router.push(`/quotes/${q.id}`)}
+                      title="Delete"
+                    >
+                      Delete
+                    </button> */}
                   </td>
                 </tr>
               );
