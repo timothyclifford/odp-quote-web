@@ -15,7 +15,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       if (quote === undefined) {
         return res.status(404).send("Not found");
       }
-      emailCient.send("tim.cliford@gmail.com", quote);
+      emailCient.send(quote.email, quote);
       return res.status(200).send("Email sent");
     }
     default: {
