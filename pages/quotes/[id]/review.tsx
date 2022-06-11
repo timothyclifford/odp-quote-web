@@ -1,7 +1,13 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { Layout } from "../../../components/Layout";
-import { DetailedQuote, Quote } from "../../../domain/quote/quote";
+import {
+  calculateQuoteDiscount,
+  calculateQuoteSubTotal,
+  calculateQuoteTotal,
+  DetailedQuote,
+  Quote,
+} from "../../../domain/quote/quote";
 import { QuoteService } from "../../../domain/quote/quoteService";
 import { QuoteNavigation } from "../../../components/QuoteNavigation";
 import { Heading1 } from "../../../components/Heading1";
@@ -23,32 +29,9 @@ type Props = {
 };
 
 const EmailQuote: NextPage<Props> = ({ quote }) => {
-  const calculateSubTotal = (quote: DetailedQuote): number => {
-    const areasPrice = quote.areas
-      .map((x) => calculateAreaTotalPrice(x))
-      .reduce((previous, next) => previous + next);
-    const extrasPrice = quote.extras
-      .map((x) => calculateExtraPrice(x))
-      .reduce((previous, next) => previous + next);
-
-    return areasPrice + extrasPrice;
-  };
-
-  const calculateDiscount = (quote: DetailedQuote): number => {
-    if (quote.inclusions && quote.inclusions.discount > 0) {
-      const subtotal = calculateSubTotal(quote);
-      return subtotal / quote.inclusions.discount;
-    }
-
-    return 0;
-  };
-
-  const calculateTotal = (quote: DetailedQuote): number =>
-    calculateSubTotal(quote) - calculateDiscount(quote);
-
-  const [subTotal] = useState(calculateSubTotal(quote));
-  const [discount] = useState(calculateDiscount(quote));
-  const [total] = useState(calculateTotal(quote));
+  const [subTotal] = useState(calculateQuoteSubTotal(quote));
+  const [discount] = useState(calculateQuoteDiscount(quote));
+  const [total] = useState(calculateQuoteTotal(quote));
 
   const emailQuote = async () => {
     const really = confirm("Are you sure you want to email?");
@@ -57,7 +40,7 @@ const EmailQuote: NextPage<Props> = ({ quote }) => {
         method: "POST",
       });
       if (response.ok) {
-        toast.success("Saved");
+        toast.success("Email sent");
       } else {
         toast.error("Something went wrong");
       }
@@ -89,26 +72,25 @@ const EmailQuote: NextPage<Props> = ({ quote }) => {
             <table className="area-items-table">
               <thead>
                 <tr>
-                  <th style={{ textAlign: "left" }}>Name</th>
+                  <th style={{ textAlign: "left" }}></th>
                   <th>Price</th>
                   <th>Quantity</th>
                   <th>Total</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td style={{ textAlign: "left" }}>Areas</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
                 {quote.areas &&
                   quote.areas.map((area) => {
                     return (
                       <>
                         <tr key={area.id}>
-                          <td style={{ textAlign: "left" }}>{area.name}</td>
-                          <td className="w-32"></td>
+                          <td
+                            style={{ textAlign: "left" }}
+                            className="text-green"
+                          >
+                            {area.name}
+                          </td>
+                          <td></td>
                           <td></td>
                           <td>${calculateAreaPrice(area)}</td>
                         </tr>
@@ -118,26 +100,38 @@ const EmailQuote: NextPage<Props> = ({ quote }) => {
                               className="text-sm"
                               style={{ textAlign: "left" }}
                             >
-                              {item.name}
+                              &nbsp;&nbsp;&nbsp;&nbsp;{item.name}
                             </td>
-                            <td className="w-32">${item.price}</td>
-                            <td>{item.quantity}</td>
-                            <td>${calculateAreaItemPrice(item)}</td>
+                            <td className="text-sm">${item.price}</td>
+                            <td className="text-sm">{item.quantity}</td>
+                            <td className="text-sm">
+                              ${calculateAreaItemPrice(item)}
+                            </td>
                           </tr>
                         ))}
                         <tr key={`${area.id}-${area.name}`}>
-                          <td style={{ textAlign: "left" }}>
-                            {area.name} total
+                          <td style={{ textAlign: "left" }} className="text-sm">
+                            Total
                           </td>
-                          <td className="w-32"></td>
                           <td></td>
-                          <td>${calculateAreaTotalPrice(area)}</td>
+                          <td></td>
+                          <td className="text-sm">
+                            ${calculateAreaTotalPrice(area)}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
                         </tr>
                       </>
                     );
                   })}
                 <tr>
-                  <td style={{ textAlign: "left" }}>Extras</td>
+                  <td style={{ textAlign: "left" }} className="text-green">
+                    Extras
+                  </td>
                   <td></td>
                   <td></td>
                   <td></td>
@@ -146,34 +140,39 @@ const EmailQuote: NextPage<Props> = ({ quote }) => {
                   quote.extras.map((extra) => (
                     <tr key={extra.id}>
                       <td style={{ textAlign: "left" }}>{extra.name}</td>
-                      <td className="w-32">{extra.price}</td>
+                      <td>${extra.price}</td>
                       <td>{extra.quantity}</td>
                       <td>${calculateExtraPrice(extra)}</td>
                     </tr>
                   ))}
                 <tr>
-                  <td style={{ textAlign: "left" }}></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
                 </tr>
                 <tr>
-                  <td style={{ textAlign: "left" }}>Subtotal</td>
+                  <td style={{ textAlign: "left" }} className="text-green">
+                    Subtotal
+                  </td>
                   <td></td>
                   <td></td>
                   <td>${subTotal}</td>
                 </tr>
                 {discount > 0 && (
                   <tr>
-                    <td style={{ textAlign: "left" }}>Discount</td>
+                    <td style={{ textAlign: "left" }} className="text-green">
+                      Discount
+                    </td>
                     <td></td>
                     <td></td>
                     <td>${discount}</td>
                   </tr>
                 )}
-
                 <tr>
-                  <td style={{ textAlign: "left" }}>Total</td>
+                  <td style={{ textAlign: "left" }} className="text-green">
+                    Total
+                  </td>
                   <td></td>
                   <td></td>
                   <td>${total}</td>

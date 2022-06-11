@@ -1,68 +1,139 @@
 <mjml>
+  <mj-head>
+    <mj-font name="Work Sans" href="https://fonts.googleapis.com/css2?family=Work+Sans" />
+    <mj-attributes>
+      <mj-class name="hd-1" color="#FFFFFF" align="center" font-size="40px" />
+      <mj-class name="hd-2" color="#FFFFFF" align="center" font-size="25px" />
+      <mj-class name="para" color="#FFFFFF" align="center" font-size="15px" line-height="150%" />
+    </mj-attributes>
+  </mj-head>
   <mj-body>
-    <mj-section background-color="#FAF0F3">
-      <mj-column>
-        <mj-text>
-          OneDayPaint
-        </mj-text>
-      </mj-column>
-    </mj-section>
-    <mj-section background-color="#FAF0F3">
-      <mj-column>
-        <mj-text>
-          Hi {{FIRST_NAME}}
-        </mj-text>
-      </mj-column>
-    </mj-section>
-    <mj-section background-color="#FAF0F3">
-      <mj-column>
-        <mj-text>
-          Areas
-        </mj-text>
-      </mj-column>
-    </mj-section>
-    <mj-section background-color="#FAF0F3">
-      <mj-column>
-        <mj-text>
-          Extras
-        </mj-text>
-      </mj-column>
-    </mj-section>
-    <mj-section background-color="#FAF0F3">
-      <mj-column>
-        <mj-text>
-          Inclusions / exclusions
-        </mj-text>
-      </mj-column>
-    </mj-section>
-    <mj-section background-color="#FAF0F3">
-      <mj-column>
-        <mj-text>
-          Price
-        </mj-text>
-      </mj-column>
-    </mj-section>
-    <mj-section background-color="#FAF0F3">
-      <mj-column>
-        <mj-text>
-          Book now
-          Email us
-          Call us
-        </mj-text>
-      </mj-column>
-    </mj-section>
-    <mj-section background-color="#FAF0F3">
-      <mj-column>
-        <mj-text>
-          A member of our team will be in touch shortly.
-        </mj-text>
-        <mj-text>
-          Have a great day!
-        </mj-text>
-        <mj-text>
-          The team from One Day Paint
-        </mj-text>
-      </mj-column>
-    </mj-section>
+    <mj-wrapper full-width="full-width" background-color="#152C52" background-url="https://estimate.onedaypaint.com.au/images/paint-splat-blue-lg.png" background-size="600px" background-position="160% 0" background-repeat="no-repeat">
+      <mj-section>
+        <mj-column>
+          <mj-image width="300px" src="https://estimate.onedaypaint.com.au/images/logo-light.png" />
+        </mj-column>
+      </mj-section>
+      <mj-section>
+        <mj-column>
+          <mj-image width="80px" src="https://estimate.onedaypaint.com.au/images/divider-squiggle.png" />
+          <mj-text font-family="Work Sans,Arial,sans-serif" mj-class="hd-1">Painting quote</mj-text>
+          <mj-spacer height="30px"></mj-spacer>
+          <mj-text font-family="Work Sans,Arial,sans-serif" mj-class="para">Hi {{FIRST_NAME}}</mj-text>
+          <mj-text font-family="Work Sans,Arial,sans-serif" mj-class="para">Please find your quote details below.</mj-text>
+          <mj-text font-family="Work Sans,Arial,sans-serif" mj-class="para">We pride ourselves on efficient, hassle-free service without compromising on quality. This means that you can rely on One Day Paint to honour our commitment to start dates, durations and all-inclusive quotes.</mj-text>
+          <mj-spacer height="45px"></mj-spacer>
+          <mj-image src="https://estimate.onedaypaint.com.au/images/paint-brush.png" />
+          <mj-spacer height="30px"></mj-spacer>
+        </mj-column>
+      </mj-section>
+    </mj-wrapper>
+    <mj-wrapper background-color="#F8EBEE" full-width="full-width">
+      <mj-section>
+        <mj-column>
+          <mj-table cellpadding="10" align="center" font-family="Work Sans,Arial,sans-serif" color="#152C52">
+            <tr style="border-bottom:1px solid #C7C6D1">
+              <td>Quote number</td>
+              <td style="text-align:right">{{QUOTE_NUMBER}}</td>
+            </tr>
+            <tr style="border-bottom:1px solid #C7C6D1">
+              <td>Customer name</td>
+              <td style="text-align:right">{{FIRST_NAME}} {{LAST_NAME}}</td>
+            </tr>
+            <tr style="border-bottom:1px solid #C7C6D1">
+              <td>Customer email</td>
+              <td style="text-align:right">{{EMAIL}}</td>
+            </tr>
+            <tr style="border-bottom:1px solid #C7C6D1">
+              <td>Customer phone</td>
+              <td style="text-align:right">{{PHONE}}</td>
+            </tr>
+            <tr style="border-bottom:1px solid #C7C6D1">
+              <td>Customer address</td>
+              <td style="text-align:right">{{STREET}} {{SUBURB}} {{POSTCODE}}</td>
+            </tr>
+          </mj-table>
+        </mj-column>
+      </mj-section>
+      <mj-section>
+        <mj-column>
+          <mj-text font-family="Work Sans,Arial,sans-serif" mj-class="hd-2" color="#152C52">Quote details</mj-text>
+          <mj-image width="80px" src="https://estimate.onedaypaint.com.au/images/divider-squiggle.png" />
+          <mj-table cellpadding="10" align="center" font-family="Work Sans,Arial,sans-serif" color="#152C52">
+            <tr style="border-bottom:1px solid #C7C6D1">
+              <th style="text-align:left">Name</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+            </tr>
+            {{PRICE}}
+          </mj-table>
+        </mj-column>
+      </mj-section>
+      <mj-section>
+        <mj-column>
+          <mj-text font-family="Work Sans,Arial,sans-serif" mj-class="hd-2" color="#152C52">Quote inclusions</mj-text>
+          <mj-image width="80px" src="https://estimate.onedaypaint.com.au/images/divider-squiggle.png" />
+          {{INCLUSIONS}}
+        </mj-column>
+      </mj-section>
+      <mj-section>
+        <mj-column>
+          <mj-text font-family="Work Sans,Arial,sans-serif" mj-class="hd-2" color="#152C52">Quote exclusions</mj-text>
+          <mj-image width="80px" src="https://estimate.onedaypaint.com.au/images/divider-squiggle.png" />
+          {{EXCLUSIONS}}
+        </mj-column>
+      </mj-section>
+      <mj-section>
+        <mj-column>
+          <mj-text font-family="Work Sans,Arial,sans-serif" mj-class="hd-2" color="#152C52">Comments</mj-text>
+          <mj-image width="80px" src="https://estimate.onedaypaint.com.au/images/divider-squiggle.png" />
+          <mj-text mj-class="para" color="#152C52">{{COMMENTS}}</mj-text>
+        </mj-column>
+      </mj-section>
+      <mj-section>
+        <mj-column>
+          <mj-spacer height="25px"></mj-spacer>
+          <mj-button font-family="Work Sans,Arial,sans-serif" href="https://odp-painting.youcanbook.me/" background-color="#88ccc4" color="#FFF" width="100%" font-size="20px">
+            Book now
+          </mj-button>
+        </mj-column>
+      </mj-section>
+      <mj-section>
+        <mj-column>
+          <mj-button font-family="Work Sans,Arial,sans-serif" href="mailto:info@onedaypaint.com.au?subject=Quote%20number%20{{QUOTE_NUMBER}}" background-color="#152C52" color="#FFF" width="100%" font-size="20px">
+            Send us an email
+          </mj-button>
+        </mj-column>
+        <mj-column>
+          <mj-button font-family="Work Sans,Arial,sans-serif" href="tel:1800663329" background-color="#152C52" color="#FFF" width="100%" font-size="20px">
+            Give us a call
+          </mj-button>
+          <mj-spacer height="15px"></mj-spacer>
+        </mj-column>
+      </mj-section>
+      <mj-section>
+        <mj-column>
+          <mj-text color="#152C52" font-family="Work Sans,Arial,sans-serif" mj-class="para">A member of our team will be in touch shortly.</mj-text>
+          <mj-text color="#152C52" font-family="Work Sans,Arial,sans-serif" mj-class="para">Have a great day!</mj-text>
+          <mj-text color="#152C52" font-family="Work Sans,Arial,sans-serif" font-weight="bold" mj-class="para">One Day Paint</mj-text>
+        </mj-column>
+      </mj-section>
+      <mj-section>
+        <mj-column>
+          <mj-social font-size="15px" icon-size="30px" mode="horizontal">
+            <mj-social-element name="facebook" href="https://www.facebook.com/1800ONEDAY/" background-color="#152C52" padding-right="10px">
+              Facebook
+            </mj-social-element>
+            <mj-social-element name="instagram" href="https://www.instagram.com/onedaypaint/" background-color="#152C52">
+              Instagram
+            </mj-social-element>
+            <mj-social-element name="pinterest" href="https://www.pinterest.com.au/onedaypaint_aus/" background-color="#152C52" padding-left="10px">
+              Pintrest
+            </mj-social-element>
+          </mj-social>
+        </mj-column>
+      </mj-section>
+    </mj-wrapper>
   </mj-body>
 </mjml>

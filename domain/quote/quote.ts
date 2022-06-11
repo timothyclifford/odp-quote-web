@@ -1,6 +1,6 @@
 import { customAlphabet } from "nanoid";
-import { Area } from "../area/area";
-import { Extra } from "../extra/extra";
+import { Area, calculateAreaTotalPrice } from "../area/area";
+import { calculateExtraPrice, Extra } from "../extra/extra";
 import { Inclusions } from "../inclusions/inclusion";
 
 const id = customAlphabet("123456789", 8);
@@ -52,3 +52,26 @@ export const stubQuote = (): Quote => ({
   created: "01/01/2022",
   updated: "01/01/2022",
 });
+
+export const calculateQuoteSubTotal = (quote: DetailedQuote): number => {
+  const areasPrice = quote.areas
+    .map((x) => calculateAreaTotalPrice(x))
+    .reduce((previous, next) => previous + next);
+  const extrasPrice = quote.extras
+    .map((x) => calculateExtraPrice(x))
+    .reduce((previous, next) => previous + next);
+
+  return areasPrice + extrasPrice;
+};
+
+export const calculateQuoteDiscount = (quote: DetailedQuote): number => {
+  if (quote.inclusions && quote.inclusions.discount > 0) {
+    const subtotal = calculateQuoteSubTotal(quote);
+    return parseInt((subtotal / quote.inclusions.discount).toFixed(0));
+  }
+
+  return 0;
+};
+
+export const calculateQuoteTotal = (quote: DetailedQuote): number =>
+  calculateQuoteSubTotal(quote) - calculateQuoteDiscount(quote);
