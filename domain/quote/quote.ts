@@ -22,7 +22,7 @@ export type Quote = {
 export type DetailedQuote = Quote & {
   areas: Array<Area>;
   extras: Array<Extra>;
-  inclusions: Inclusions;
+  inclusions?: Inclusions;
 };
 
 export type QuoteMutation = Omit<Quote, "created" | "updated">;

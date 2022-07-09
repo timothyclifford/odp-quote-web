@@ -134,8 +134,9 @@ export const EmailClient = () => {
       appRoot.toString(),
       "./emails/quote.mjml"
     );
+    console.log(quote);
     const mjml = fs.readFileSync(templateFilePath).toString();
-    const template = mjml
+    let template = mjml
       .replace(/{{QUOTE_NUMBER}}/gi, quote.id)
       .replace(/{{FIRST_NAME}}/gi, quote.firstName)
       .replace(/{{LAST_NAME}}/gi, quote.lastName)
@@ -144,10 +145,18 @@ export const EmailClient = () => {
       .replace(/{{STREET}}/gi, quote.street)
       .replace(/{{SUBURB}}/gi, quote.suburb)
       .replace(/{{POSTCODE}}/gi, quote.postcode)
-      .replace(/{{PRICE}}/gi, buildPrice(quote))
-      .replace(/{{INCLUSIONS}}/gi, buildInclusions(quote.inclusions.inclusions))
-      .replace(/{{EXCLUSIONS}}/gi, buildExclusions(quote.inclusions.exclusions))
-      .replace(/{{COMMENTS}}/gi, quote.inclusions.comments);
+      .replace(/{{PRICE}}/gi, buildPrice(quote));
+    if (quote.inclusions) {
+      template = template.replace(
+        /{{INCLUSIONS}}/gi,
+        buildInclusions(quote.inclusions.inclusions)
+      );
+      template = template.replace(
+        /{{EXCLUSIONS}}/gi,
+        buildExclusions(quote.inclusions.exclusions)
+      );
+      template = template.replace(/{{COMMENTS}}/gi, quote.inclusions.comments);
+    }
 
     return mjml2html(template).html;
   };
