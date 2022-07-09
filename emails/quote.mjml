@@ -70,27 +70,9 @@
           </mj-table>
         </mj-column>
       </mj-section>
-      <mj-section>
-        <mj-column>
-          <mj-text font-family="Work Sans,Arial,sans-serif" mj-class="hd-2" color="#152C52">Quote inclusions</mj-text>
-          <mj-image width="80px" src="https://estimate.onedaypaint.com.au/images/divider-squiggle.png" />
-          {{INCLUSIONS}}
-        </mj-column>
-      </mj-section>
-      <mj-section>
-        <mj-column>
-          <mj-text font-family="Work Sans,Arial,sans-serif" mj-class="hd-2" color="#152C52">Quote exclusions</mj-text>
-          <mj-image width="80px" src="https://estimate.onedaypaint.com.au/images/divider-squiggle.png" />
-          {{EXCLUSIONS}}
-        </mj-column>
-      </mj-section>
-      <mj-section>
-        <mj-column>
-          <mj-text font-family="Work Sans,Arial,sans-serif" mj-class="hd-2" color="#152C52">Comments</mj-text>
-          <mj-image width="80px" src="https://estimate.onedaypaint.com.au/images/divider-squiggle.png" />
-          <mj-text mj-class="para" color="#152C52">{{COMMENTS}}</mj-text>
-        </mj-column>
-      </mj-section>
+      {{INCLUSIONS}}
+      {{EXCLUSIONS}}
+      {{COMMENTS}}
       <mj-section>
         <mj-column>
           <mj-spacer height="25px"></mj-spacer>

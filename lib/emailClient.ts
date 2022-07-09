@@ -110,21 +110,50 @@ const buildExtrasEmail = (extras: Array<Extra>) =>
     )
     .reduce((previous, next) => previous.concat(next));
 
-const buildInclusions = (inclusions: Array<Inclusion>): string =>
-  inclusions
+const buildInclusions = (inclusions: Array<Inclusion>): string => {
+  const html = inclusions
     .filter((x) => x.included)
     .map((x) => {
       return `<mj-text mj-class="para" color="#152C52">✅ ${x.name}</mj-text>`;
     })
     .reduce((previous, next) => previous.concat(next));
+  return `
+    <mj-section>
+      <mj-column>
+        <mj-text font-family="Work Sans,Arial,sans-serif" mj-class="hd-2" color="#152C52">Quote inclusions</mj-text>
+        <mj-image width="80px" src="https://estimate.onedaypaint.com.au/images/divider-squiggle.png" />
+        ${html}
+      </mj-column>
+    </mj-section>`;
+};
 
-const buildExclusions = (exclusions: Array<Inclusion>): string =>
-  exclusions
+const buildExclusions = (exclusions: Array<Inclusion>): string => {
+  const html = exclusions
     .filter((x) => x.included)
     .map((x) => {
       return `<mj-text mj-class="para" color="#152C52">❌ ${x.name}</mj-text>`;
     })
     .reduce((previous, next) => previous.concat(next));
+  return `
+    <mj-section>
+      <mj-column>
+        <mj-text font-family="Work Sans,Arial,sans-serif" mj-class="hd-2" color="#152C52">Quote exclusions</mj-text>
+        <mj-image width="80px" src="https://estimate.onedaypaint.com.au/images/divider-squiggle.png" />
+        ${html}
+      </mj-column>
+    </mj-section>`;
+};
+
+const buildComments = (comments: string): string => {
+  return `
+    <mj-section>
+      <mj-column>
+        <mj-text font-family="Work Sans,Arial,sans-serif" mj-class="hd-2" color="#152C52">Comments</mj-text>
+        <mj-image width="80px" src="https://estimate.onedaypaint.com.au/images/divider-squiggle.png" />
+        <mj-text mj-class="para" color="#152C52">${comments}</mj-text>
+      </mj-column>
+    </mj-section>`;
+};
 
 export const EmailClient = () => {
   const env = getEnvironmentConfiguration();
@@ -147,15 +176,30 @@ export const EmailClient = () => {
       .replace(/{{POSTCODE}}/gi, quote.postcode)
       .replace(/{{PRICE}}/gi, buildPrice(quote));
     if (quote.inclusions) {
-      template = template.replace(
-        /{{INCLUSIONS}}/gi,
-        buildInclusions(quote.inclusions.inclusions)
-      );
-      template = template.replace(
-        /{{EXCLUSIONS}}/gi,
-        buildExclusions(quote.inclusions.exclusions)
-      );
-      template = template.replace(/{{COMMENTS}}/gi, quote.inclusions.comments);
+      if (
+        quote.inclusions.inclusions &&
+        quote.inclusions.inclusions.length > 0
+      ) {
+        template = template.replace(
+          /{{INCLUSIONS}}/gi,
+          buildInclusions(quote.inclusions.inclusions)
+        );
+      }
+      if (
+        quote.inclusions.exclusions &&
+        quote.inclusions.exclusions.length > 0
+      ) {
+        template = template.replace(
+          /{{EXCLUSIONS}}/gi,
+          buildExclusions(quote.inclusions.exclusions)
+        );
+      }
+      if (quote.inclusions.comments && quote.inclusions.comments.length > 0) {
+        template = template.replace(
+          /{{COMMENTS}}/gi,
+          buildComments(quote.inclusions.comments)
+        );
+      }
     }
 
     return mjml2html(template).html;
