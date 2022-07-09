@@ -159,12 +159,11 @@ export const EmailClient = () => {
   const env = getEnvironmentConfiguration();
   sgMail.setApiKey(env.SENDGRID_API_KEY!);
   const buildQuoteEmail = (quote: DetailedQuote) => {
-    const templateFilePath = path.join(
-      appRoot.toString(),
-      "./emails/quote.mjml"
-    );
-    console.log(quote);
-    const mjml = fs.readFileSync(templateFilePath).toString();
+    const templateFilePath = path.join(process.cwd(), "emails");
+    // const templateFilePath = path.join(appRoot.toString(), "emails/quote.mjml");
+    const mjml = fs
+      .readFileSync(templateFilePath + "/quote.mjml", "utf8")
+      .toString();
     let template = mjml
       .replace(/{{QUOTE_NUMBER}}/gi, quote.id)
       .replace(/{{FIRST_NAME}}/gi, quote.firstName)
