@@ -4,7 +4,7 @@ const id = customAlphabet("123456789", 4);
 
 export type Inclusion = {
   name: string;
-  included: boolean;
+  default: boolean;
 };
 
 export type Inclusions = {
@@ -15,16 +15,13 @@ export type Inclusions = {
   discount: number;
 };
 
-export const buildInclusions = (): Inclusions => ({
+export const buildInclusions = (
+  inclusions: Array<Inclusion>,
+  exclusions: Array<Inclusion>
+): Inclusions => ({
   id: id(),
-  inclusions: [
-    { name: "Minor patching", included: false },
-    { name: "10 year warranty", included: false },
-  ],
-  exclusions: [
-    { name: "Aluminium windows", included: false },
-    { name: "Carptet cleaning", included: false },
-  ],
+  inclusions: inclusions,
+  exclusions: exclusions,
   comments: "",
   discount: 0,
 });

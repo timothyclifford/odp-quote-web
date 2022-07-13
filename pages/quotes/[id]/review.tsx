@@ -189,7 +189,7 @@ const EmailQuote: NextPage<Props> = ({ quote }) => {
                       <Heading2>Inclusions</Heading2>
                     </div>
                     {quote.inclusions.inclusions
-                      .filter((x) => x.included)
+                      .filter((x) => x.default)
                       .map((x) => {
                         return (
                           <div key={x.name} className="mb-2">
@@ -203,7 +203,7 @@ const EmailQuote: NextPage<Props> = ({ quote }) => {
                       <Heading2>Exclusions</Heading2>
                     </div>
                     {quote.inclusions.exclusions
-                      .filter((x) => x.included)
+                      .filter((x) => x.default)
                       .map((x) => {
                         return (
                           <div key={x.name} className="mb-2">

@@ -2,8 +2,6 @@ import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { Layout } from "../../../components/Layout";
 import { QuoteNavigation } from "../../../components/QuoteNavigation";
-import { Heading2 } from "../../../components/Heading2";
-import { Heading3 } from "../../../components/Heading3";
 import { Row } from "../../../components/Row";
 import { useState } from "react";
 import { TextAreaField } from "../../../components/fields/TextArea";
@@ -20,6 +18,7 @@ import { Card } from "../../../components/Card";
 import { Label } from "../../../components/fields/Label";
 import { HeadingWithAction } from "../../../components/HeadingWithAction";
 import toast from "react-hot-toast";
+import { PricingService } from "../../../domain/pricing/pricingService";
 
 type Props = {
   quoteId: string;
@@ -35,7 +34,7 @@ const EditQuote: NextPage<Props> = ({ quoteId, data }) => {
     const updated: Array<Inclusion> = [];
     for (let x = 0; x < inclusions.length; x++) {
       if (inclusions[x].name === name) {
-        updated.push({ name, included: checked });
+        updated.push({ name, default: checked });
       } else {
         updated.push(inclusions.slice(x, x + 1)[0]);
       }
@@ -46,7 +45,7 @@ const EditQuote: NextPage<Props> = ({ quoteId, data }) => {
     const updated: Array<Inclusion> = [];
     for (let x = 0; x < exclusions.length; x++) {
       if (exclusions[x].name === name) {
-        updated.push({ name, included: checked });
+        updated.push({ name, default: checked });
       } else {
         updated.push(exclusions.slice(x, x + 1)[0]);
       }
@@ -95,7 +94,7 @@ const EditQuote: NextPage<Props> = ({ quoteId, data }) => {
                     <div className="mb-2" key={inc.name}>
                       <Checkbox
                         label={inc.name}
-                        checked={inc.included}
+                        checked={inc.default}
                         onChange={(e) =>
                           toggleIncluded(inc.name, e.target.checked)
                         }
@@ -111,7 +110,7 @@ const EditQuote: NextPage<Props> = ({ quoteId, data }) => {
                     <div className="mb-2" key={exc.name}>
                       <Checkbox
                         label={exc.name}
-                        checked={exc.included}
+                        checked={exc.default}
                         onChange={(e) =>
                           toggleExcluded(exc.name, e.target.checked)
                         }
@@ -148,12 +147,16 @@ const EditQuote: NextPage<Props> = ({ quoteId, data }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const quoteId = context.params!.id as string;
-  const service = InclusionsService();
-  let inclusions = await service.getQuoteInclusions(quoteId);
+  const pricingService = PricingService();
+  const inclusions = await pricingService.getInclusions();
+  const exclusions = await pricingService.getExclusions();
+  const inclusionsService = InclusionsService();
+  const defaultInclusions = buildInclusions(inclusions, exclusions);
+  let savedData = await inclusionsService.getQuoteInclusions(quoteId);
   return {
     props: {
       quoteId,
-      data: inclusions ?? buildInclusions(),
+      data: savedData ?? defaultInclusions,
     },
   };
 };

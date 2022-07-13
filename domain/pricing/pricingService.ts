@@ -10,6 +10,7 @@ export type AreaPricing = {
 };
 export type ItemPricing = { name: string; price: number };
 export type ExtraPricing = { name: string; price: number };
+export type Inclusion = { name: string; default: boolean };
 
 export const PricingService = () => {
   const env = getEnvironmentConfiguration();
@@ -79,6 +80,46 @@ export const PricingService = () => {
         .map((r) => ({ name: r["Name"], price: parseFloat(r["Price"]) }));
 
       setCachedPricing("getExtraPricing", data);
+
+      return data;
+    },
+    getInclusions: async (): Promise<Array<Inclusion>> => {
+      const cached = getCachedPricing<Inclusion>("getInclusions");
+      if (cached !== undefined) {
+        return cached;
+      }
+
+      const spreadsheet = await getPricingSpreadsheet();
+      const sheet = spreadsheet.sheetsByTitle["Inclusions"];
+      const rows = await sheet.getRows();
+      const data = rows
+        .filter((r) => r["Name"] && r["Default"])
+        .map((r) => ({
+          name: r["Name"],
+          default: r["Default"].toLowerCase() === "true",
+        }));
+
+      setCachedPricing("getInclusions", data);
+
+      return data;
+    },
+    getExclusions: async (): Promise<Array<Inclusion>> => {
+      const cached = getCachedPricing<Inclusion>("getExclusions");
+      if (cached !== undefined) {
+        return cached;
+      }
+
+      const spreadsheet = await getPricingSpreadsheet();
+      const sheet = spreadsheet.sheetsByTitle["Exclusions"];
+      const rows = await sheet.getRows();
+      const data = rows
+        .filter((r) => r["Name"] && r["Default"])
+        .map((r) => ({
+          name: r["Name"],
+          default: r["Default"].toLowerCase() === "true",
+        }));
+
+      setCachedPricing("getExclusions", data);
 
       return data;
     },

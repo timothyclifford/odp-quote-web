@@ -112,7 +112,7 @@ const buildExtrasEmail = (extras: Array<Extra>) =>
 
 const buildInclusions = (inclusions: Array<Inclusion>): string => {
   const html = inclusions
-    .filter((x) => x.included)
+    .filter((x) => x.default)
     .map((x) => {
       return `<mj-text mj-class="para" color="#152C52">✅ ${x.name}</mj-text>`;
     })
@@ -129,7 +129,7 @@ const buildInclusions = (inclusions: Array<Inclusion>): string => {
 
 const buildExclusions = (exclusions: Array<Inclusion>): string => {
   const html = exclusions
-    .filter((x) => x.included)
+    .filter((x) => x.default)
     .map((x) => {
       return `<mj-text mj-class="para" color="#152C52">❌ ${x.name}</mj-text>`;
     })

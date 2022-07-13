@@ -20,8 +20,8 @@ export type Quote = {
 };
 
 export type DetailedQuote = Quote & {
-  areas: Array<Area>;
-  extras: Array<Extra>;
+  areas?: Array<Area>;
+  extras?: Array<Extra>;
   inclusions?: Inclusions;
 };
 
@@ -55,11 +55,15 @@ export const stubQuote = (): Quote => ({
 
 export const calculateQuoteSubTotal = (quote: DetailedQuote): number => {
   const areasPrice = quote.areas
-    .map((x) => calculateAreaTotalPrice(x))
-    .reduce((previous, next) => previous + next);
+    ? quote.areas
+        .map((x) => calculateAreaTotalPrice(x))
+        .reduce((previous, next) => previous + next)
+    : 0;
   const extrasPrice = quote.extras
-    .map((x) => calculateExtraPrice(x))
-    .reduce((previous, next) => previous + next);
+    ? quote.extras
+        .map((x) => calculateExtraPrice(x))
+        .reduce((previous, next) => previous + next)
+    : 0;
 
   return areasPrice + extrasPrice;
 };
