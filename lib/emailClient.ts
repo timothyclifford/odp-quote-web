@@ -27,14 +27,14 @@ const spacer = `<tr style="border-bottom:1px solid #C7C6D1">
 </tr>`;
 
 const buildPrice = (quote: DetailedQuote): string =>
-  `${buildAreasEmail(quote.areas)}
+  `${buildAreasEmail(quote.areas ?? [])}
   <tr style="border-bottom:1px solid #C7C6D1">
     <td style="text-align:left">Extras</td>
     <td style="text-align:center"></td>
     <td style="text-align:center"></td>
     <td style="text-align:center"></td>
   </tr>
-  ${buildExtrasEmail(quote.extras)}
+  ${buildExtrasEmail(quote.extras ?? [])}
   ${spacer}
   ${
     calculateQuoteDiscount(quote)
