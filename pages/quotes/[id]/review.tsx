@@ -101,7 +101,7 @@ const EmailQuote: NextPage<Props> = ({ quote }) => {
                           <td style={{ textAlign: "left" }}>
                             <div>{area.name}</div>
                             {area.items.map((item) => (
-                              <div className="text-sm">
+                              <div key={item.id} className="text-sm">
                                 • {item.name} x {item.quantity}
                               </div>
                             ))}
@@ -152,65 +152,63 @@ const EmailQuote: NextPage<Props> = ({ quote }) => {
             </table>
           </Row>
           {quote.inclusions && (
-            <>
-              <Row>
-                <table className="area-items-table">
-                  <tbody>
-                    {quote.inclusions.comments && (
-                      <tr>
-                        <td
-                          style={{ textAlign: "left" }}
-                          className="bg-gray-300 w-48"
-                        >
-                          Comments:
-                        </td>
-                        <td style={{ textAlign: "left" }}>
-                          {quote.inclusions.comments}
-                        </td>
-                      </tr>
-                    )}
+            <Row>
+              <table className="area-items-table">
+                <tbody>
+                  {quote.inclusions.comments && (
                     <tr>
                       <td
                         style={{ textAlign: "left" }}
                         className="bg-gray-300 w-48"
                       >
-                        Also included:
+                        Comments:
                       </td>
                       <td style={{ textAlign: "left" }}>
-                        {quote.inclusions.inclusions
-                          .filter((x) => x.default)
-                          .map((x) => {
-                            return (
-                              <div key={x.name} className="mb-2">
-                                ✅ {x.name}
-                              </div>
-                            );
-                          })}
+                        {quote.inclusions.comments}
                       </td>
                     </tr>
-                    <tr>
-                      <td
-                        style={{ textAlign: "left" }}
-                        className="bg-gray-300 w-48"
-                      >
-                        Exclusions:
-                      </td>
-                      <td style={{ textAlign: "left" }}>
-                        {quote.inclusions.exclusions
-                          .filter((x) => x.default)
-                          .map((x) => {
-                            return (
-                              <div key={x.name} className="mb-2">
-                                ❌ {x.name}
-                              </div>
-                            );
-                          })}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </Row>
-            </>
+                  )}
+                  <tr>
+                    <td
+                      style={{ textAlign: "left" }}
+                      className="bg-gray-300 w-48"
+                    >
+                      Also included:
+                    </td>
+                    <td style={{ textAlign: "left" }}>
+                      {quote.inclusions.inclusions
+                        .filter((x) => x.default)
+                        .map((x) => {
+                          return (
+                            <div key={x.name} className="mb-2">
+                              ✅ {x.name}
+                            </div>
+                          );
+                        })}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      style={{ textAlign: "left" }}
+                      className="bg-gray-300 w-48"
+                    >
+                      Exclusions:
+                    </td>
+                    <td style={{ textAlign: "left" }}>
+                      {quote.inclusions.exclusions
+                        .filter((x) => x.default)
+                        .map((x) => {
+                          return (
+                            <div key={x.name} className="mb-2">
+                              ❌ {x.name}
+                            </div>
+                          );
+                        })}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </Row>
           )}
           <Row>
             <p>&nbsp;</p>
