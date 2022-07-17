@@ -95,21 +95,19 @@ const EmailQuote: NextPage<Props> = ({ quote }) => {
                 {quote.areas &&
                   quote.areas.map((area) => {
                     return (
-                      <>
-                        <tr key={area.id}>
-                          <td style={{ textAlign: "left" }}>
-                            <div>{area.name}</div>
-                            {area.items.map((item) => (
-                              <div key={item.id} className="text-sm">
-                                • {item.name} x {item.quantity}
-                              </div>
-                            ))}
-                          </td>
-                          <td>
-                            {currency.format(calculateAreaTotalPrice(area))}
-                          </td>
-                        </tr>
-                      </>
+                      <tr key={area.id}>
+                        <td style={{ textAlign: "left" }}>
+                          <div>{area.name}</div>
+                          {area.items.map((item) => (
+                            <div key={item.id} className="text-sm">
+                              • {item.name} x {item.quantity}
+                            </div>
+                          ))}
+                        </td>
+                        <td>
+                          {currency.format(calculateAreaTotalPrice(area))}
+                        </td>
+                      </tr>
                     );
                   })}
                 <tr>

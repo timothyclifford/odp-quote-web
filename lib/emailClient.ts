@@ -95,7 +95,7 @@ const buildItemsEmail = (items: Array<AreaItem>): string =>
       )}</td>
     </tr>`
     )
-    .reduce((previous, next) => previous.concat(next));
+    .reduce((previous, next) => previous.concat(next), "");
 
 const buildExtrasEmail = (extras: Array<Extra>) =>
   extras
