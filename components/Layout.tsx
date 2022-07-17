@@ -2,11 +2,19 @@ import { PropsWithChildren } from "react";
 import { Footer } from "./Footer";
 import { Navigation } from "./Navigation";
 import { useSession } from "next-auth/react";
+import { Puff } from "svg-loaders-react";
 
 export const Layout = ({ children }: PropsWithChildren<{}>) => {
   const session = useSession({ required: true });
   if (session.status === "loading") {
-    return <div>Loading or not authenticated...</div>;
+    return (
+      <div className="absolute top-0 left-0 w-full h-full bg-white flex flex-col justify-center items-center">
+        <div className="m-2">
+          <Puff stroke="#94D1CA" />
+        </div>
+        <div>Loading</div>
+      </div>
+    );
   }
   return (
     <main>

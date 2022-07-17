@@ -1,4 +1,5 @@
 import { customAlphabet } from "nanoid";
+import quotes from "../../pages/api/quotes";
 import { Area, calculateAreaTotalPrice } from "../area/area";
 import { calculateExtraPrice, Extra } from "../extra/extra";
 import { Inclusions } from "../inclusions/inclusion";
@@ -52,6 +53,9 @@ export const stubQuote = (): Quote => ({
   created: "01/01/2022",
   updated: "01/01/2022",
 });
+
+export const getAddress = (quote: Quote): string =>
+  `${quote.street}, ${quote.suburb} ${quote.postcode}`;
 
 export const calculateQuoteSubTotal = (quote: DetailedQuote): number => {
   const areasPrice = quote.areas

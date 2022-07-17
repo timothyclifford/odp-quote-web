@@ -1,9 +1,9 @@
-import { PricingService } from "../domain/pricing/pricingService";
+import { CMSService } from "../domain/cms/cmsService";
 
 describe("PricingService", () => {
   describe("getAreaPricing", () => {
     it("downloads area pricing", async () => {
-      const service = PricingService();
+      const service = CMSService();
       const pricing = await service.getAreaPricing();
 
       expect(pricing).not.toBeNull();
@@ -12,7 +12,7 @@ describe("PricingService", () => {
   });
   describe("getItemPricing", () => {
     it("downloads item pricing", async () => {
-      const service = PricingService();
+      const service = CMSService();
       const pricing = await service.getItemPricing();
 
       expect(pricing).not.toBeNull();
@@ -21,7 +21,7 @@ describe("PricingService", () => {
   });
   describe("getExtraPricing", () => {
     it("downloads extra pricing", async () => {
-      const service = PricingService();
+      const service = CMSService();
       const pricing = await service.getExtraPricing();
 
       expect(pricing).not.toBeNull();

@@ -15,10 +15,10 @@ type Props = {
 };
 
 const EditQuote: NextPage<Props> = ({ quote }) => {
-  const service = QuoteService();
   const save = async (quote: QuoteMutation) => {
     try {
-      await service.updateQuote(quote);
+      const quoteService = QuoteService();
+      await quoteService.updateQuote(quote);
       toast.success("Saved");
     } catch (error) {
       toast.error("Something went wrong");
@@ -46,8 +46,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   context
 ) => {
   const quoteId = context.params!.id as string;
-  const service = QuoteService();
-  const quote = await service.getById(quoteId);
+  const quoteService = QuoteService();
+  const quote = await quoteService.getById(quoteId);
   if (quote === undefined) {
     throw Error(`Unable to find quote ${quoteId}`);
   }

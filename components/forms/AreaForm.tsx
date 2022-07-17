@@ -11,7 +11,7 @@ import { Heading2 } from "../Heading2";
 import { Checkbox } from "../fields/Checkbox";
 import { Card } from "../Card";
 import { HeadingWithAction } from "../HeadingWithAction";
-import { ItemPricing } from "../../domain/pricing/pricingService";
+import { ItemPricing } from "../../domain/cms/cmsService";
 
 type Props = {
   area: Area;

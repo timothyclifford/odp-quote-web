@@ -1,10 +1,10 @@
+import { compareDesc, parse } from "date-fns";
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { Layout } from "../components/Layout";
 import { Quote } from "../domain/quote/quote";
 import { QuoteRepository } from "../domain/quote/quoteRepository";
-import { Row } from "../components/Row";
 
 type Props = {
   quotes: Array<Quote>;
@@ -22,7 +22,7 @@ const Dashboard: NextPage<Props> = ({ quotes }) => {
           <thead>
             <tr>
               <th>Number</th>
-              <th>Date</th>
+              <th>Created</th>
               <th>Email</th>
               <th>Last name</th>
               <th>Suburb</th>
@@ -67,9 +67,15 @@ const Dashboard: NextPage<Props> = ({ quotes }) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const repository = QuoteRepository();
   const quotes = await repository.getAllQuotes();
+  quotes.sort((a, b) =>
+    compareDesc(
+      parse(a.created, "dd/MM/yyyy", new Date()),
+      parse(b.created, "dd/MM/yyyy", new Date())
+    )
+  );
   return {
     props: {
-      quotes: quotes,
+      quotes,
     },
   };
 };

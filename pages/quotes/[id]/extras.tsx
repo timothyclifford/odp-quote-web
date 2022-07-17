@@ -10,10 +10,7 @@ import { buildExtra, Extra } from "../../../domain/extra/extra";
 import { QuoteNavigation } from "../../../components/QuoteNavigation";
 import { ExtraService } from "../../../domain/extra/extraService";
 import { HeadingWithAction } from "../../../components/HeadingWithAction";
-import {
-  ExtraPricing,
-  PricingService,
-} from "../../../domain/pricing/pricingService";
+import { ExtraPricing, CMSService } from "../../../domain/cms/cmsService";
 import toast from "react-hot-toast";
 
 type Props = {
@@ -102,7 +99,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   const quoteId = context.params!.id as string;
   const service = ExtraService();
   const quoteExtras = await service.getQuoteExtras(quoteId);
-  const pricingService = PricingService();
+  const pricingService = CMSService();
   const extraPricing = await pricingService.getExtraPricing();
   return {
     props: {

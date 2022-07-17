@@ -13,8 +13,8 @@ import { HeadingWithAction } from "../../../components/HeadingWithAction";
 import {
   AreaPricing,
   ItemPricing,
-  PricingService,
-} from "../../../domain/pricing/pricingService";
+  CMSService,
+} from "../../../domain/cms/cmsService";
 import toast from "react-hot-toast";
 
 type Props = {
@@ -105,7 +105,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   const quoteId = context.params!.id as string;
   const areaService = AreaService();
   const quoteAreas = await areaService.getQuoteAreas(quoteId);
-  const pricingService = PricingService();
+  const pricingService = CMSService();
   const areaPricing = await pricingService.getAreaPricing();
   const itemPricing = await pricingService.getItemPricing();
   return {

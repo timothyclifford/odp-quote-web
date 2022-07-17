@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Extra } from "../../domain/extra/extra";
-import { ExtraPricing } from "../../domain/pricing/pricingService";
+import { ExtraPricing } from "../../domain/cms/cmsService";
 import { Card } from "../Card";
 import { InputField } from "../fields/InputField";
 import { QuantityField } from "../fields/QuantityField";

@@ -1,19 +1,19 @@
-import { add, isAfter } from "date-fns";
+import { add } from "date-fns";
 import fs from "fs";
 import path from "path";
 
-type CachedPricing<T> = {
+type CachedContent<T> = {
   expires: Date;
-  pricing: Array<T>;
+  data: Array<T>;
 };
 
-export const getCachedPricing = <T>(key: string): Array<T> | undefined => {
+export const get = <T>(key: string): Array<T> | undefined => {
   try {
-    const cached: CachedPricing<T> = JSON.parse(
+    const cached: CachedContent<T> = JSON.parse(
       fs.readFileSync(path.join(__dirname, key), "utf8")
     );
     if (cached !== undefined && new Date(cached.expires) > new Date()) {
-      return cached.pricing;
+      return cached.data;
     }
   } catch (error) {
     console.log("Cache is empty");
@@ -22,7 +22,7 @@ export const getCachedPricing = <T>(key: string): Array<T> | undefined => {
   return undefined;
 };
 
-export const setCachedPricing = <T>(key: string, pricing: Array<T>) => {
+export const set = <T>(key: string, pricing: Array<T>) => {
   try {
     const expires = add(new Date(), { hours: 2 });
     fs.writeFileSync(

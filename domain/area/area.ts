@@ -1,7 +1,7 @@
 import { AreaItem, calculateAreaItemPrice } from "./areaItem";
 
 import { customAlphabet } from "nanoid";
-import { AreaPricing } from "../pricing/pricingService";
+import { AreaPricing } from "../cms/cmsService";
 
 const id = customAlphabet("123456789", 4);
 

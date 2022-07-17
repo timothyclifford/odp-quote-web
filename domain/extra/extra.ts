@@ -1,5 +1,5 @@
 import { customAlphabet } from "nanoid";
-import { ExtraPricing } from "../pricing/pricingService";
+import { ExtraPricing } from "../cms/cmsService";
 
 const id = customAlphabet("123456789", 4);
 

@@ -1,6 +1,6 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { getEnvironmentConfiguration } from "../../lib/environmentConfiguration";
-import { getCachedPricing, setCachedPricing } from "./pricingServiceCache";
+import { get, set } from "./cmsCache";
 
 export type AreaPricing = {
   name: string;
@@ -12,7 +12,7 @@ export type ItemPricing = { name: string; price: number };
 export type ExtraPricing = { name: string; price: number };
 export type Inclusion = { name: string; default: boolean };
 
-export const PricingService = () => {
+export const CMSService = () => {
   const env = getEnvironmentConfiguration();
   const getPricingSpreadsheet = async () => {
     const spreadsheet = new GoogleSpreadsheet(env.GOOGLE_SHEET_ID!);
@@ -26,7 +26,7 @@ export const PricingService = () => {
   };
   return {
     getAreaPricing: async (): Promise<Array<AreaPricing>> => {
-      const cached = getCachedPricing<AreaPricing>("getAreaPricing");
+      const cached = get<AreaPricing>("getAreaPricing");
       if (cached !== undefined) {
         return cached;
       }
@@ -45,12 +45,12 @@ export const PricingService = () => {
           ifSkirting: parseFloat(r["If skirting"]),
         }));
 
-      setCachedPricing("getAreaPricing", data);
+      set("getAreaPricing", data);
 
       return data;
     },
     getItemPricing: async (): Promise<Array<ItemPricing>> => {
-      const cached = getCachedPricing<ItemPricing>("getItemPricing");
+      const cached = get<ItemPricing>("getItemPricing");
       if (cached !== undefined) {
         return cached;
       }
@@ -62,12 +62,12 @@ export const PricingService = () => {
         .filter((r) => r["Name"] && r["Price"])
         .map((r) => ({ name: r["Name"], price: parseFloat(r["Price"]) }));
 
-      setCachedPricing("getItemPricing", data);
+      set("getItemPricing", data);
 
       return data;
     },
     getExtraPricing: async (): Promise<Array<ExtraPricing>> => {
-      const cached = getCachedPricing<ExtraPricing>("getExtraPricing");
+      const cached = get<ExtraPricing>("getExtraPricing");
       if (cached !== undefined) {
         return cached;
       }
@@ -79,12 +79,12 @@ export const PricingService = () => {
         .filter((r) => r["Name"] && r["Price"])
         .map((r) => ({ name: r["Name"], price: parseFloat(r["Price"]) }));
 
-      setCachedPricing("getExtraPricing", data);
+      set("getExtraPricing", data);
 
       return data;
     },
     getInclusions: async (): Promise<Array<Inclusion>> => {
-      const cached = getCachedPricing<Inclusion>("getInclusions");
+      const cached = get<Inclusion>("getInclusions");
       if (cached !== undefined) {
         return cached;
       }
@@ -99,12 +99,12 @@ export const PricingService = () => {
           default: r["Default"].toLowerCase() === "true",
         }));
 
-      setCachedPricing("getInclusions", data);
+      set("getInclusions", data);
 
       return data;
     },
     getExclusions: async (): Promise<Array<Inclusion>> => {
-      const cached = getCachedPricing<Inclusion>("getExclusions");
+      const cached = get<Inclusion>("getExclusions");
       if (cached !== undefined) {
         return cached;
       }
@@ -119,7 +119,7 @@ export const PricingService = () => {
           default: r["Default"].toLowerCase() === "true",
         }));
 
-      setCachedPricing("getExclusions", data);
+      set("getExclusions", data);
 
       return data;
     },
