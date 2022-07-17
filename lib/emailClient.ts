@@ -17,7 +17,6 @@ import {
 import { AreaItem, calculateAreaItemPrice } from "../domain/area/areaItem";
 import { Inclusion } from "../domain/inclusions/inclusion";
 import { calculateExtraPrice, Extra } from "../domain/extra/extra";
-const appRoot = require("app-root-path");
 
 const spacer = `<tr style="border-bottom:1px solid #C7C6D1">
   <td>&nbsp;</td>
@@ -78,7 +77,7 @@ const buildAreasEmail = (areas: Array<Area>): string =>
     </tr>
     ${spacer}`
     )
-    .reduce((previous, next) => previous.concat(next));
+    .reduce((previous, next) => previous.concat(next), "");
 
 const buildItemsEmail = (items: Array<AreaItem>): string =>
   items
@@ -108,7 +107,7 @@ const buildExtrasEmail = (extras: Array<Extra>) =>
           <td style="text-align:center">$${calculateExtraPrice(extra)}</td>
         </tr>`
     )
-    .reduce((previous, next) => previous.concat(next));
+    .reduce((previous, next) => previous.concat(next), "");
 
 const buildInclusions = (inclusions: Array<Inclusion>): string => {
   const html = inclusions
@@ -116,7 +115,7 @@ const buildInclusions = (inclusions: Array<Inclusion>): string => {
     .map((x) => {
       return `<mj-text mj-class="para" color="#152C52">✅ ${x.name}</mj-text>`;
     })
-    .reduce((previous, next) => previous.concat(next));
+    .reduce((previous, next) => previous.concat(next), "");
   return `
     <mj-section>
       <mj-column>
@@ -133,7 +132,7 @@ const buildExclusions = (exclusions: Array<Inclusion>): string => {
     .map((x) => {
       return `<mj-text mj-class="para" color="#152C52">❌ ${x.name}</mj-text>`;
     })
-    .reduce((previous, next) => previous.concat(next));
+    .reduce((previous, next) => previous.concat(next), "");
   return `
     <mj-section>
       <mj-column>
@@ -160,7 +159,6 @@ export const EmailClient = () => {
   sgMail.setApiKey(env.SENDGRID_API_KEY!);
   const buildQuoteEmail = (quote: DetailedQuote) => {
     const templateFilePath = path.join(process.cwd(), "emails");
-    // const templateFilePath = path.join(appRoot.toString(), "emails/quote.mjml");
     const mjml = fs
       .readFileSync(templateFilePath + "/quote.mjml", "utf8")
       .toString();

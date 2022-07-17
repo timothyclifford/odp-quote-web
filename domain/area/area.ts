@@ -42,7 +42,7 @@ export const calculateAreaTotalPrice = (area: Area) => {
   if (area.items.length > 0) {
     itemsPrice = area.items
       .map(calculateAreaItemPrice)
-      .reduce((previous, next) => previous + next);
+      .reduce((previous, next) => previous + next, 0);
   }
   return calculateAreaPrice(area) + itemsPrice;
 };
