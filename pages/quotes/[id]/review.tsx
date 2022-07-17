@@ -14,7 +14,6 @@ import { Heading1 } from "../../../components/Heading1";
 import { Row } from "../../../components/Row";
 import { HeadingWithAction } from "../../../components/HeadingWithAction";
 import { Card } from "../../../components/Card";
-import { Heading2 } from "../../../components/Heading2";
 import toast from "react-hot-toast";
 import { calculateAreaTotalPrice } from "../../../domain/area/area";
 import { calculateExtraPrice } from "../../../domain/extra/extra";
@@ -24,7 +23,7 @@ import { format } from "date-fns";
 var currency = new Intl.NumberFormat("en-AU", {
   style: "currency",
   currency: "AUD",
-  maximumFractionDigits: 0,
+  // maximumFractionDigits: 0,
 });
 
 type Props = {
