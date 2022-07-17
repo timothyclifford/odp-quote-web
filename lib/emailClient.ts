@@ -205,8 +205,8 @@ export const EmailClient = () => {
     send: async (to: string, quote: DetailedQuote) => {
       const msg = {
         to: to,
-        from: "info@onedaypaint.com.au",
-        subject: "OneDayPaint In-Home Quote",
+        from: { name: "One Day Paint", email: "info@onedaypaint.com.au" },
+        subject: "Your In-Home Quote",
         html: buildQuoteEmail(quote),
       };
       await sgMail.send(msg);
